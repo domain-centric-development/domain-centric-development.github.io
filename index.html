@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Domain-Centric Development</title>
+<meta name="description" content="Domain-Centric Development — coming soon.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: #171d29;
+    color: #e8eaf0;
+    font-family: 'Space Grotesk', 'Avenir Next', 'Trebuchet MS', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .mark { width: min(38vw, 190px); height: auto; }
+  h1 { margin-top: 34px; font-size: clamp(26px, 5vw, 40px); font-weight: 700; letter-spacing: -0.8px; color: #ffffff; }
+  h1 .tld { color: #148f96; }
+  p { margin-top: 14px; font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,234,240,0.55); }
+  @media (prefers-reduced-motion: no-preference) {
+    .spoke { stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw 0.9s ease-out forwards; }
+    .spoke:nth-of-type(2) { animation-delay: 0.10s; } .spoke:nth-of-type(3) { animation-delay: 0.20s; }
+    .spoke:nth-of-type(4) { animation-delay: 0.30s; } .spoke:nth-of-type(5) { animation-delay: 0.40s; }
+    .spoke:nth-of-type(6) { animation-delay: 0.50s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+  }
+</style>
+</head>
+<body>
+<main>
+  <svg class="mark" viewBox="8 8 104 104" role="img" aria-label="Domain-Centric Development logo: six nodes on a hexagonal boundary, connected to a teal core">
+    <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#e8eaf0" stroke-width="5" stroke-linejoin="round" fill="none"/>
+    <line class="spoke" x1="60" y1="60" x2="60" y2="20" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <line class="spoke" x1="60" y1="60" x2="94.6" y2="40" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <line class="spoke" x1="60" y1="60" x2="94.6" y2="80" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <line class="spoke" x1="60" y1="60" x2="60" y2="100" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <line class="spoke" x1="60" y1="60" x2="25.4" y2="80" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <line class="spoke" x1="60" y1="60" x2="25.4" y2="40" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="4"/>
+    <circle cx="60" cy="20" r="7" fill="#e8eaf0"/>
+    <circle cx="94.6" cy="40" r="7" fill="#e8eaf0"/>
+    <circle cx="94.6" cy="80" r="7" fill="#e8eaf0"/>
+    <circle cx="60" cy="100" r="7" fill="#e8eaf0"/>
+    <circle cx="25.4" cy="80" r="7" fill="#e8eaf0"/>
+    <circle cx="25.4" cy="40" r="7" fill="#e8eaf0"/>
+    <circle cx="60" cy="60" r="12" fill="#148f96"/>
+  </svg>
+  <h1>domaincentric<span class="tld">.dev</span></h1>
+  <p>coming soon</p>
+</main>
+</body>
+</html>
