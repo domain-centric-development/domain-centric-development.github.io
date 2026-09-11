@@ -56,6 +56,9 @@
   .btn.primary:hover { background: #0b5b60; color: #ffffff; }      /* 7.84:1 */
   .btn.ghost { color: var(--mist); border: 1px solid rgba(232,234,240,0.35); }
   .btn.ghost:hover { border-color: var(--teal); color: var(--teal); }
+  /* Every link that leaves domaincentric.dev says so. An arrow costs one character and
+     removes the surprise of landing in a markdown file with no way back. */
+  a.ext::after { content: "\2197"; font-size: 0.85em; margin-left: 0.35em; vertical-align: baseline; opacity: 0.75; }
 
   /* the mark as a living context map */
   .figure { text-align: center; }
@@ -201,7 +204,7 @@
         <a href="#with-ai">AI tooling</a>
         <a href="#principles">Principles</a>
       </span>
-      <a class="gh" href="https://github.com/domain-centric-development" rel="noopener">GitHub</a>
+      <a class="gh ext" href="https://github.com/domain-centric-development" rel="noopener">GitHub</a>
     </nav>
 
     <div class="hero-grid">
@@ -212,8 +215,8 @@
         combines architectural guidance, executable checks and AI development tools for Java and .NET.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Add architecture checks</a>
-          <a class="btn ghost" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">Read the guide</a>
-          <a class="btn ghost" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">Explore the sample</a>
+          <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener" title="Opens the dca-guide repository on GitHub">Read the guide on GitHub</a>
+          <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener" title="Opens the Java reference implementation on GitHub">Explore the sample on GitHub</a>
         </div>
       </div>
 
@@ -325,7 +328,7 @@ checkout.adapter.outgoing
         <h3>The compact guide</h3>
         <p>The decisions, once, in a form you can hand to a new team member or an agent: tactical DDD,
         ports &amp; adapters, naming, package layout and what each rule is for. A few pages, not a book.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
       </article>
       <article class="card">
         <p class="tag">Building blocks</p>
@@ -334,15 +337,15 @@ checkout.adapter.outgoing
         for the DDD and hexagonal building blocks, plus 113 rule identifiers shared by Java and .NET —
         what each one selects and checks is documented per platform. The markers carry no dependencies;
         frameworks appear only as presets. On Maven Central and NuGet.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
-        <a class="more" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · Java</p>
         <h3>A working webshop</h3>
         <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns — and the rule catalog
         that fails the build when a structural rule is broken. Clone it, run it, break one and watch it happen.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · .NET</p>
@@ -350,7 +353,7 @@ checkout.adapter.outgoing
         <p>ASP.NET Core, one project per bounded context, the same routes, markup and ubiquitous
         language, the same six end-user flows. The style is demonstrated in two stacks rather than
         argued.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge catalog</p>
@@ -359,7 +362,7 @@ checkout.adapter.outgoing
         and every rule as one cross-linked graph, so it builds from the catalog and cites the node it
         used. Over 500 typed nodes — rules, sections, templates, pitfalls, decisions, recipes —
         generated from the sources, never written by hand. Tool-agnostic.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Tooling</p>
@@ -369,7 +372,7 @@ checkout.adapter.outgoing
         gate between the stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs
         without DCA assumptions. Plain skill folders — Claude Code, Codex and OpenCode read the same
         ones.</p>
-        <a class="more" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
+        <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
   </div>
@@ -466,7 +469,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
           and names the three that are not applicable, with the reason. A shared id means the same
           intent; what it selects and checks is written down per platform rather than assumed
           identical.</p>
-          <p style="margin-top:10px"><a href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
+          <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
         </div>
       </li>
       <li>
@@ -511,11 +514,11 @@ dotnet test                   <span class="c"># .NET — the architecture projec
     <p class="section-lede">Described, not compared — no benchmark or compatibility test was run.</p>
 
     <ul class="plain">
-      <li><b><a href="https://github.com/xmolecules/jmolecules" rel="noopener">jMolecules</a></b>
+      <li><b><a class="ext" href="https://github.com/xmolecules/jmolecules" rel="noopener">jMolecules</a></b>
       expresses DDD and architecture concepts as annotations and types. DCA developed independently —
       similar markers do not make one a derivation of the other — and its rules tolerate jMolecules in
       the domain where a project already uses it.</li>
-      <li><b><a href="https://hycle.org/" rel="noopener">hycle</a></b> describes how to organise
+      <li><b><a class="ext" href="https://hycle.org/" rel="noopener">hycle</a></b> describes how to organise
       software work as an internal factory. Its argument for the word factory — turning a
       non-deterministic system into a deterministic one — is the premise this project shares: hycle
       works on the organisation around the factory, DCA on the inside of it. Shared premise, not an
@@ -561,12 +564,12 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <span class="wordmark">domaincentric<span class="tld">.dev</span></span>
     </p>
     <nav aria-label="Footer">
-      <a href="https://github.com/domain-centric-development/dca-guide" rel="noopener">guide</a>
-      <a href="https://github.com/domain-centric-development/dca-java" rel="noopener">java</a>
-      <a href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">.net</a>
-      <a href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">reference</a>
-      <a href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">catalog</a>
-      <a href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">plugins</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">guide</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">java</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">.net</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">reference</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">catalog</a>
+      <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">plugins</a>
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Blömer.
     The doctrine is tool-agnostic: any LLM, any harness, any editor.<br>
