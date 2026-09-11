@@ -60,6 +60,18 @@
      removes the surprise of landing in a markdown file with no way back. */
   a.ext::after { content: "\2197"; font-size: 0.85em; margin-left: 0.35em; vertical-align: baseline; opacity: 0.75; }
 
+  /* ---------- teasers that stay on the page ---------- */
+  .teaser { border-top: 1px solid var(--line); }
+  .teaser .cta-row { margin-top: 36px; }
+  .shot { margin-top: 40px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #ffffff; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot figcaption { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding: 12px 18px; border-top: 1px solid var(--line); }
+  .facts { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; list-style: none; }
+  .facts b { font-family: var(--display); font-size: 19px; display: block; margin-bottom: 4px; }
+  .facts span { font-size: 16px; color: #39414e; }
+  @media (max-width: 860px) { .facts { grid-template-columns: 1fr; } }
+
+
   /* the mark as a living context map */
   .figure { text-align: center; }
   .figure svg { width: min(100%, 700px); height: auto; overflow: visible; }
@@ -200,6 +212,8 @@
       </a>
       <span class="sections">
         <a href="#start">Start</a>
+        <a href="#guide">Guide</a>
+        <a href="#sample">Sample</a>
         <a href="#artifacts">Artifacts</a>
         <a href="#with-ai">AI tooling</a>
         <a href="#principles">Principles</a>
@@ -215,8 +229,8 @@
         combines architectural guidance, executable checks and AI development tools for Java and .NET.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Add architecture checks</a>
-          <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener" title="Opens the dca-guide repository on GitHub">Read the guide on GitHub</a>
-          <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener" title="Opens the Java reference implementation on GitHub">Explore the sample on GitHub</a>
+          <a class="btn ghost" href="#guide">Read the guide</a>
+          <a class="btn ghost" href="#sample">Explore the sample</a>
         </div>
       </div>
 
@@ -314,6 +328,81 @@ checkout.adapter.outgoing
     </div>
   </div>
 </div>
+
+<section id="guide" class="teaser">
+  <div class="wrap">
+    <p class="kicker">The guide</p>
+    <h2>The decisions, before the code</h2>
+    <p class="section-lede">Every pattern here was decided once and written down once. The guide is the
+    place those decisions live — short enough to read in an afternoon, structured so you can look one
+    thing up a year later.</p>
+
+    <div class="cards">
+      <article class="card">
+        <p class="tag">architecture/</p>
+        <h3>The style itself</h3>
+        <p>The four layers and what lives in each · the use-case pattern · aggregates, value objects
+        and the two persistence-shaped ports · the rule catalog in prose · package templates and
+        progressive complexity · which way dependencies run · integration between contexts.</p>
+      </article>
+      <article class="card">
+        <p class="tag">topics/</p>
+        <h3>Where it meets a stack</h3>
+        <p>Enforcing the rules with ArchUnit · contexts as Spring Modulith modules · the same
+        architecture in C#/.NET · how it differs from Clean Architecture · deployment from modular
+        monolith to self-contained systems · teams and boundaries · end-user tests.</p>
+      </article>
+      <article class="card">
+        <p class="tag">process/</p>
+        <h3>How work is delivered</h3>
+        <p>One story from plan to documentation, with a gate between the stages — and the template for
+        recording an architectural decision so the next reader knows why, not just what.</p>
+      </article>
+      <article class="card">
+        <p class="tag">Reading path</p>
+        <h3>Three documents, in this order</h3>
+        <p><b>Elements</b> for the vocabulary, <b>Rules</b> for what the build will hold you to,
+        <b>Package structure</b> for where to put the file you are about to write. The rest is
+        lookup.</p>
+      </article>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">Read the full guide on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<section id="sample" class="teaser">
+  <div class="wrap">
+    <p class="kicker">The reference implementation</p>
+    <h2>A shop that runs, not a snippet</h2>
+    <p class="section-lede">Every pattern in the guide is demonstrated in a working webshop — twice,
+    in Java and in .NET, with the same routes, the same markup and the same seed data. Either
+    end-user suite runs against either shop, so a difference in behaviour breaks a build.</p>
+
+    <figure class="shot">
+      <img src="assets/shop.webp" width="1800" height="1125"
+           alt="The reference shop's product catalog: three products with description, price in EUR and an in-stock badge, under a domaincentric.commerce header with Home, Products, Cart, Login and Register"
+           loading="lazy">
+      <figcaption>docker compose up --build &mdash; the product catalog on localhost:8080. The ribbon says which of the two shops you are looking at.</figcaption>
+    </figure>
+
+    <ul class="facts">
+      <li><b>8 bounded contexts</b><span>account, product, pricing, inventory, cart, checkout, portal,
+      backoffice — each with its own model, talking through published contracts and events.</span></li>
+      <li><b>Java 25 · Spring Boot 4</b><span>and the .NET twin on ASP.NET Core, one project per
+      context. The style is demonstrated in two stacks rather than argued about.</span></li>
+      <li><b>The rules run in the build</b><span>break a boundary on purpose and watch the build fail
+      with the rule id that caught you.</span></li>
+    </ul>
+
+    <div class="cta-row">
+      <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">Explore the Java shop on GitHub</a>
+      <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">…and the .NET twin</a>
+    </div>
+  </div>
+</section>
 
 <section id="artifacts">
   <div class="wrap">
