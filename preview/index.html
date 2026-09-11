@@ -68,6 +68,20 @@
   .shot figcaption { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding: 12px 18px; border-top: 1px solid var(--line); }
   .facts { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; list-style: none; }
   .facts b { font-family: var(--display); font-size: 19px; display: block; margin-bottom: 4px; }
+  /* two implementations, one at a time — the tabs carry what the ghost link could not */
+  .tabs { margin-top: 40px; }
+  .tablist { display: flex; gap: 6px; border-bottom: 1px solid var(--line); }
+  .tablist button { font-family: var(--display); font-weight: 500; font-size: 16px; color: var(--muted);
+    background: none; border: 0; border-bottom: 2px solid transparent; padding: 12px 18px; cursor: pointer; margin-bottom: -1px; }
+  .tablist button:hover { color: var(--ink); }
+  .tablist button[aria-selected="true"] { color: var(--teal-dark); border-bottom-color: var(--teal-dark); }
+  .tablist button:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: 2px; border-radius: 4px 4px 0 0; }
+  .tabpanel { padding-top: 8px; }
+  .tabpanel .shot { margin-top: 26px; }
+  /* without JavaScript both panels stay readable, each behind its own heading */
+  .tabpanel > h3 { font-family: var(--display); font-weight: 700; font-size: 20px; margin-top: 26px; }
+  .js .tabpanel > h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
   .facts span { font-size: 16px; color: #39414e; }
   @media (max-width: 860px) { .facts { grid-template-columns: 1fr; } }
 
@@ -381,25 +395,51 @@ checkout.adapter.outgoing
     in Java and in .NET, with the same routes, the same markup and the same seed data. Either
     end-user suite runs against either shop, so a difference in behaviour breaks a build.</p>
 
-    <figure class="shot">
-      <img src="assets/shop.webp" width="1800" height="1125"
-           alt="The reference shop's product catalog: three products with description, price in EUR and an in-stock badge, under a domaincentric.commerce header with Home, Products, Cart, Login and Register"
-           loading="lazy">
-      <figcaption>docker compose up --build &mdash; the product catalog on localhost:8080. The ribbon says which of the two shops you are looking at.</figcaption>
-    </figure>
+    <div class="tabs">
+      <div class="tablist" role="tablist" aria-label="Reference implementations">
+        <button type="button" role="tab" id="tab-java" aria-controls="panel-java" aria-selected="true">Java · Spring Boot</button>
+        <button type="button" role="tab" id="tab-dotnet" aria-controls="panel-dotnet" aria-selected="false">.NET · ASP.NET Core</button>
+      </div>
 
-    <ul class="facts">
-      <li><b>8 bounded contexts</b><span>account, product, pricing, inventory, cart, checkout, portal,
-      backoffice — each with its own model, talking through published contracts and events.</span></li>
-      <li><b>Java 25 · Spring Boot 4</b><span>and the .NET twin on ASP.NET Core, one project per
-      context. The style is demonstrated in two stacks rather than argued about.</span></li>
-      <li><b>The rules run in the build</b><span>break a boundary on purpose and watch the build fail
-      with the rule id that caught you.</span></li>
-    </ul>
+      <div class="tabpanel" id="panel-java" role="tabpanel" aria-labelledby="tab-java" tabindex="0">
+        <h3>Java · Spring Boot</h3>
+        <figure class="shot">
+          <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
+               alt="The Java shop: the domaincentric.commerce home page with its hero, the browse and cart buttons, and an orange JAVA ribbon in the corner">
+          <figcaption>docker compose up --build &mdash; localhost:8080. The ribbon says which shop you are on.</figcaption>
+        </figure>
+        <ul class="facts">
+          <li><b>Java 25 · Spring Boot 4</b><span>Spring Modulith for the module boundaries, the event
+          publication registry as the outbox.</span></li>
+          <li><b>8 bounded contexts</b><span>account, product, pricing, inventory, cart, checkout,
+          portal, backoffice — each with its own model.</span></li>
+          <li><b>113 rules in the build</b><span><code>./gradlew test-architecture</code>. Break a
+          boundary and the build names the rule that caught you.</span></li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">The Java shop on GitHub</a>
+        </div>
+      </div>
 
-    <div class="cta-row">
-      <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">Explore the Java shop on GitHub</a>
-      <a class="btn ghost ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">…and the .NET twin</a>
+      <div class="tabpanel" id="panel-dotnet" role="tabpanel" aria-labelledby="tab-dotnet" tabindex="0">
+        <h3>.NET · ASP.NET Core</h3>
+        <figure class="shot">
+          <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
+               alt="The .NET shop: the same domaincentric.commerce home page, pixel for pixel, with a violet .NET ribbon in the corner instead of the orange JAVA one">
+          <figcaption>docker compose up --build &mdash; localhost:5080. The same page, down to the wording.</figcaption>
+        </figure>
+        <ul class="facts">
+          <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
+          solution layout instead of a module system.</span></li>
+          <li><b>The same shop</b><span>same routes, same markup, same seed data — either end-user
+          suite runs against either shop.</span></li>
+          <li><b>The same rule ids</b><span><code>dotnet test</code>, on ArchUnitNET. A finding means
+          the same thing in both stacks, plus six <code>DCA-NET</code> rules that only exist here.</span></li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">The .NET shop on GitHub</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -666,5 +706,35 @@ dotnet test                   <span class="c"># .NET — the architecture projec
   </div>
 </footer>
 
+<script>
+  // Tabs, enhanced rather than required: without this script both panels are visible,
+  // each under its own heading, and both links work.
+  document.documentElement.classList.add("js");
+  for (const tabs of document.querySelectorAll(".tabs")) {
+    const buttons = [...tabs.querySelectorAll('[role="tab"]')];
+    const select = (button) => {
+      for (const other of buttons) {
+        const panel = document.getElementById(other.getAttribute("aria-controls"));
+        const chosen = other === button;
+        other.setAttribute("aria-selected", String(chosen));
+        other.tabIndex = chosen ? 0 : -1;
+        panel.hidden = !chosen;
+      }
+    };
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => select(button));
+      button.addEventListener("keydown", (event) => {
+        const step = { ArrowLeft: -1, ArrowRight: 1 }[event.key];
+        if (step) {
+          const next = buttons[(buttons.indexOf(button) + step + buttons.length) % buttons.length];
+          next.focus();
+          select(next);
+          event.preventDefault();
+        }
+      });
+    });
+    select(buttons[0]);
+  }
+</script>
 </body>
 </html>
