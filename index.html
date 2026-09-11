@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Domain-Centric Development</title>
-<meta name="description" content="Domain-Centric Architecture: a practical synthesis of Domain-Driven Design, Hexagonal Architecture and Clean Architecture — with a compact guide, a working reference implementation, and machine-readable knowledge for AI-assisted development.">
+<meta name="description" content="Domain-Centric Architecture: a practical synthesis of Domain-Driven Design, Hexagonal Architecture and Clean Architecture — a compact guide, marker and rule libraries for Java and .NET, two reference implementations, and a machine-readable knowledge catalog for AI-assisted development.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,6 +120,21 @@
   .plist b { font-family: var(--display); font-weight: 500; display: block; font-size: 18px; letter-spacing: -0.2px; }
   .plist span { font-size: 16.5px; color: rgba(232,234,240,0.72); }
 
+  /* start small: the command plate and the evidence limits */
+  .start { background: #ffffff; border-top: 1px solid var(--line); }
+  .plate { margin-top: 36px; background: var(--deep); color: var(--mist); border-radius: 12px; padding: 24px 26px; overflow-x: auto; }
+  .plate pre { font-family: var(--mono); font-size: 14px; line-height: 1.85; white-space: pre; }
+  .plate .c { color: rgba(232,234,240,0.5); }
+  .plate .t { color: var(--teal); }
+  .limits { margin-top: 36px; border-left: 3px solid var(--teal); padding: 4px 0 4px 22px; }
+  .limits h3 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.3px; margin-bottom: 10px; }
+  .limits p { font-size: 17px; color: #39414e; max-width: 40em; }
+  .limits p + p { margin-top: 10px; }
+
+  /* how it relates */
+  .relates .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .relates .card p:last-child { flex-grow: 0; }
+
   /* footer */
   footer { padding: 44px 0 56px; }
   footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
@@ -132,9 +147,10 @@
   @media (max-width: 860px) {
     .rule .chain { white-space: normal; font-size: 17px; }
     .hero-grid { grid-template-columns: 1fr; padding: 40px 0 64px; gap: 40px; }
-    .figure { order: -1; }
+    /* the bleed is a wide-screen gesture; at this width it just pushes the page sideways */
+    .figure { order: -1; margin-right: 0; }
     .figure svg { width: min(80vw, 380px); }
-    .cards, .plist, .steps { grid-template-columns: 1fr; }
+    .cards, .plist, .steps, .relates .cards { grid-template-columns: 1fr; }
     section { padding: 56px 0; }
   }
 </style>
@@ -163,10 +179,11 @@
         <h1>The dom<span class="ai" title="yes, it is in there">ai</span>n at the center.<br>Everything else <span class="accent">points inward</span>.</h1>
         <p class="lede">Domain-Centric Architecture is a practical synthesis of Domain-Driven Design,
         Hexagonal Architecture and Clean Architecture — documented as a compact guide, packaged as
-        building blocks and executable rules for Java and .NET, proven in the same webshop built twice,
-        and published as machine-readable knowledge your AI tooling can build from.</p>
+        building blocks and executable rules for Java and .NET, demonstrated in the same webshop built
+        twice, and published as machine-readable knowledge your AI tooling can build from.</p>
         <div class="cta-row">
-          <a class="btn primary" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">Read the guide</a>
+          <a class="btn primary" href="#start">Start with one use case</a>
+          <a class="btn ghost" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">Read the guide</a>
           <a class="btn ghost" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">See it running</a>
         </div>
       </div>
@@ -221,7 +238,8 @@
   <div class="wrap">
     <p class="chain">Infrastructure <span class="arrow">&rarr;</span> Adapters <span class="arrow">&rarr;</span> Application <span class="arrow">&rarr;</span> <span class="domain">Domain</span></p>
     <p>One rule governs everything: dependencies point inward. The domain layer knows no framework,
-    no database, no protocol — and an ArchUnit test suite fails the build when anyone forgets.</p>
+    no database, no protocol — and an ArchUnit test suite fails the build when anyone forgets. It
+    checks structure; whether the model is <em>right</em> stays a human question.</p>
   </div>
 </div>
 
@@ -243,44 +261,122 @@
       <article class="card">
         <p class="tag">Building blocks</p>
         <h3>Markers and rules as libraries</h3>
-        <p>The DDD and hexagonal marker interfaces plus one governance rule catalog — the same rule ids
-        in both stacks. Java: <code>dev.domaincentric:dca-building-blocks</code> and
-        <code>dca-archunit</code> on Maven Central. .NET: <code>DomainCentric.BuildingBlocks</code> and
-        <code>DomainCentric.ArchRules</code> on ArchUnitNET.</p>
+        <p>The DDD and hexagonal marker interfaces plus one governance rule catalog — 113 shared rule
+        identifiers, with what each one selects and checks documented per platform. Java:
+        <code>dev.domaincentric:dca-building-blocks</code> 0.2.0 and <code>dca-archunit</code> 0.4.0 on
+        Maven Central. .NET: <code>DomainCentric.BuildingBlocks</code> 0.1.1 and
+        <code>DomainCentric.ArchRules</code> 0.4.0 on NuGet, built on ArchUnitNET. Zero dependencies in
+        the markers; frameworks appear in the rules only as presets.</p>
         <a class="more" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
         <a class="more" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · Java</p>
         <h3>A working webshop</h3>
-        <p>Java 25, Spring Boot, eight bounded contexts, full tactical patterns — and the rule catalog
+        <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns — and the rule catalog
         that fails the build when a structural rule is broken. Clone it, run it, break one and watch it happen.</p>
         <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · .NET</p>
         <h3>The same shop, built twice</h3>
-        <p>ASP.NET Core, one project per bounded context, the same routes, markup and ubiquitous language —
-        so the same end-to-end suite runs against either shop. The proof that the architecture is not a
-        framework artefact.</p>
+        <p>ASP.NET Core, one project per bounded context, the same routes, markup and ubiquitous
+        language, and the same six end-user flows tested in both stacks. The style is demonstrated in
+        two stacks rather than argued — it is designed to reduce unnecessary variation between them.</p>
         <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge catalog</p>
         <h3>Machine-readable doctrine</h3>
-        <p>The full guide, the marker contracts and all governance rules as one cross-linked markdown
-        graph (Open Knowledge Format) — built for LLMs and coding agents to construct DCA projects
-        from the catalog instead of from memory. Tool-agnostic by design.</p>
-        <span class="soon">repository coming soon</span>
+        <p>The full guide text, the marker contracts and every rule as one cross-linked markdown graph
+        (Open Knowledge Format): 119 rule nodes, 129 guide sections, 29 marker contracts, 49 templates,
+        28 pitfalls, 22 decisions and 19 recipes. Generated from the guide and the two rule libraries,
+        with a manifest recording which revision of each it was built from — so an agent builds from
+        the catalog instead of from memory, and cites the node. Tool-agnostic by design.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Tooling</p>
-        <h3>Claude Code plugins</h3>
-        <p>Skills, review agents and scaffolding that put the doctrine to work: bootstrap a project,
-        review changes against the rules, query the knowledge catalog — plus a tool-independent
-        craftsmanship plugin.</p>
-        <a class="more" href="https://github.com/chbloemer/dca-marketplace" rel="noopener">dca-marketplace</a>
+        <h3>Three plugins, plain skill folders</h3>
+        <p>Three plugins in one marketplace: <code>dca-core</code> bootstraps a project, scaffolds
+        types, reviews a change and answers from the catalog; <code>dca-factory</code> takes one backlog
+        story through plan, test, build, tidy, judge and document with a deterministic gate between the
+        stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs with no DCA
+        assumptions. Plain Agent-Skills folders — Claude Code installs them as plugins, Codex and
+        OpenCode read the same folders.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="start">
+  <div class="wrap">
+    <p class="kicker">Start small</p>
+    <h2>One bootstrap, one architecture test</h2>
+    <p class="section-lede">Adopting DCA does not begin with a rewrite. It begins with one test that
+    fails when a dependency points the wrong way — on the project you already have.</p>
+
+    <div class="plate">
+<pre><span class="c"># in Claude Code — the same skill folders work in Codex and OpenCode</span>
+/plugin marketplace add domain-centric-development/dca-marketplace
+/plugin install dca-core@dca-marketplace
+
+<span class="c"># on an existing Java or .NET project</span>
+<span class="t">/dca-bootstrap</span>   <span class="c"># adds the building blocks and one architecture test,
+                  # wired to the layout this project actually has</span>
+
+./gradlew test-architecture   <span class="c"># Java</span>
+dotnet test                   <span class="c"># .NET — the architecture project, Debug build</span></pre>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>Adapt, do not overwrite</h3>
+          <p>Marker-like interfaces a project already has are aliased or kept and declared through its
+          layout description. Nothing is replaced because it has a different name.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>Select what you are ready for</h3>
+          <p>Rules come in sets and are selected per project. A rule that does not fit yet is switched
+          off by id, in writing — not quietly ignored.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>Then grow the model</h3>
+          <p>Aggregates, value objects and use cases come next, with the naming conventions and the
+          per-context glossary the rules check.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>Deliver through the pipeline, if you want it</h3>
+          <p>One story through plan, test, build, tidy, judge and document, with a gate between the
+          stages that reads the project's own test reports rather than a stage's word for it. Optional:
+          the architecture works without it.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="limits">
+      <h3>What the checks do and do not show</h3>
+      <p>The rule suites check <b>structure</b>: where a type may live, what it may depend on, what it
+      must be named, which layer may reach which. 113 shared identifiers in Java and .NET, plus six
+      .NET-specific ones, each with its selector and its check written down — so a green run says
+      exactly which encoded expectations held, and the catalogs say which those were.</p>
+      <p>It does not say the domain model is correct, that the behaviour is right, or that a use case
+      does what the business meant. Those need behaviour tests, a domain expert and review — and the
+      rules mark what needs judgement as informational rather than quietly assuming it. Architecture
+      tests check structure; behaviour tests and domain review check whether the software does the
+      right thing.</p>
     </div>
   </div>
 </section>
@@ -289,18 +385,26 @@
   <div class="wrap">
     <p class="kicker">Why it is built this way</p>
     <h2>Architecture an agent can be held to</h2>
-    <p class="section-lede">DCA is meant for building software <em>with</em> AI. Not because the patterns
-    are new — because a model that writes fast needs a boundary it cannot argue with. Every part of this
-    project exists to give it one.</p>
+    <p class="section-lede">DCA is meant for building software <em>with</em> AI. Not because the
+    patterns are new — because a model that writes fast needs a boundary it cannot argue with. The aim
+    is to make a non-deterministic writer produce a <em>deterministic result</em> wherever that can be
+    decided by a machine: the structure of the code, and the evidence that a criterion was red before
+    it was green. What is left over — whether the model is the right one — is named as a judgement
+    call instead of being absorbed into a green build. How repeatably an agent gets the domain right
+    is not measured yet; that is open work, not a claim made here.</p>
 
     <ol class="steps">
       <li>
         <span class="step-no">01</span>
         <div>
           <h3>The rules are executable, and they have ids</h3>
-          <p>More than a hundred rules, each with an id like <code>DCA-USE-009</code>, shipped as a library
-          for Java and .NET. An agent's output is judged by a build, not by review taste — and the same
-          id means the same rule in both stacks.</p>
+          <p>113 shared rule identifiers, each one like <code>DCA-USE-009</code>, shipped as a library
+          for Java and .NET. Java enforces 108 and marks 5 informational; .NET enforces 112 of its 119 —
+          six are .NET-specific — and names the three that are not applicable, with the reason. A shared
+          id means the same rule intent; what it selects and checks is written down per platform rather
+          than assumed identical. So a structural expectation is answered by a build instead of by
+          review taste — and the domain question is left where it belongs.</p>
+          <p style="margin-top:10px"><a href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
         </div>
       </li>
       <li>
@@ -315,21 +419,72 @@
       <li>
         <span class="step-no">03</span>
         <div>
-          <h3>The tooling puts it to work</h3>
-          <p>Skills, review agents and scaffolding that bootstrap a project, review a change against the
-          rules and answer questions from the catalog. Tool-agnostic doctrine, with a Claude Code
-          implementation you can install today.</p>
+          <h3>The pipeline decides, not the stage</h3>
+          <p>One story runs through plan, test, build, tidy, judge and document, each stage handing over
+          a file rather than a conversation. Between them sits a gate that is a script, not an opinion:
+          one end-user test per acceptance criterion, <b>red before green</b> read out of the runner's
+          own report — an exit code says how a process ended, not that a test ran — then the
+          architecture suite, the formatter and, at the end, every documentation claim checked against
+          the repository. A stage never declares its own work done; three rounds without convergence
+          stop the run and ask a human.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
-          <h3>The proof is two webshops</h3>
+          <h3>Two webshops, as evidence and as the experiment field</h3>
           <p>The same shop in Java and .NET, drafted mainly by Claude, directed and reviewed by the
-          author — and green against the same rule catalog and the same end-to-end suite.</p>
+          author — green against the shared rule ids and the same six end-user flows. That is a
+          demonstration about structure, not a measurement of how repeatably an agent gets the domain
+          right. The shops also exist to find the places where two agents build one story differently,
+          so the fix can go into a rule, a marker or the catalog.</p>
         </div>
       </li>
     </ol>
+  </div>
+</section>
+
+<section id="relates" class="relates">
+  <div class="wrap">
+    <p class="kicker">How it relates</p>
+    <h2>Adjacent work, named plainly</h2>
+    <p class="section-lede">DCA is not the only project in this space, and it did not come out of the
+    others. What follows is a description, not a comparison — no benchmark or compatibility test was
+    run.</p>
+
+    <div class="cards">
+      <article class="card">
+        <p class="tag">jMolecules</p>
+        <h3>Adjacent, not derived</h3>
+        <p>jMolecules expresses DDD and architecture concepts as annotations and types, with
+        integrations for validation, documentation and framework mapping. DCA developed independently;
+        similar markers do not make one a derivation of the other. The DCA rules tolerate jMolecules
+        inside the domain where a project already uses it.</p>
+        <a class="more" href="https://github.com/xmolecules/jmolecules" rel="noopener">xmolecules/jmolecules</a>
+      </article>
+      <article class="card">
+        <p class="tag">hycle</p>
+        <h3>Conceptual overlap, not an integration</h3>
+        <p>hycle is an evolving account of organising software work as an internal software factory:
+        explicit stories with an intent, acceptance evidence, reusable capabilities, product ownership.
+        Its argument for the word factory — turning a non-deterministic system into a deterministic
+        one — is the same one this project is built on, and DCA works the inside of that factory:
+        structure held by executable rules, criteria held by end-user tests a gate has seen fail first.
+        hycle describes the organisation around it. That is a shared premise and an overlap in scope,
+        not an integration, an endorsement or evidence for anyone's operating model — and the
+        behaviour half stays with tests and review, not with rules.</p>
+        <a class="more" href="https://hycle.org/" rel="noopener">hycle.org</a>
+      </article>
+      <article class="card">
+        <p class="tag">Conventions</p>
+        <h3>Not convention over configuration</h3>
+        <p>Predictable layout, discovery and defaults are part of it — but domain decisions stay
+        explicit. Which contexts exist, which subdomain is core, which rules a project adopts: that is
+        configuration and judgement, written down. The conventions are the part a build can hold you
+        to.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -337,6 +492,9 @@
   <div class="wrap">
     <p class="kicker">Principles</p>
     <h2>Opinionated where it pays, pragmatic where it doesn't</h2>
+    <p class="section-lede" style="color: rgba(232,234,240,0.8)">Conventions you can check: humans and
+    AI start from the same architectural expectations, and the ones that can be encoded are encoded.
+    The rest is named as a judgement call rather than assumed.</p>
     <ul class="plist">
       <li><span class="dot"></span><div><b>Framework-free domain</b>
         <span>Business logic depends on nothing. Spring lives in adapters and infrastructure.</span></div></li>
@@ -345,9 +503,9 @@
       <li><span class="dot"></span><div><b>Architecture as tests</b>
         <span>Structural rules are executable tests — ArchUnit in Java, ArchUnitNET in .NET, same rule ids. What needs judgement is marked as review, not quietly assumed. Erosion fails the build, not the retrospective.</span></div></li>
       <li><span class="dot"></span><div><b>Ubiquitous language</b>
-        <span>Names come from the domain, per bounded context. No Manager, Helper or Util.</span></div></li>
+        <span>Names come from the domain, per bounded context. The rules refuse technical suffixes on domain types — <code>Helper</code>, <code>Util</code>, <code>Impl</code> — and packages named after patterns instead of concepts. A domain word that happens to sound technical is not on that list.</span></div></li>
       <li><span class="dot"></span><div><b>Progressive complexity</b>
-        <span>Start with the four layers and no nesting inside them. Sub-packages arrive when the code asks for them.</span></div></li>
+        <span>Four layers, and one consistent depth inside the application layer: use cases sit flat below it, or grouped into domain-named features. <code>DCA-USE-014</code> accepts either and refuses a mix within one module — the choice is the project's, the consistency is checked.</span></div></li>
       <li><span class="dot"></span><div><b>Pattern choice per subdomain</b>
         <span>Core subdomains get the full tactical toolbox; supporting ones may stay simple.</span></div></li>
     </ul>
@@ -368,7 +526,8 @@
       <a href="https://github.com/domain-centric-development/dca-java" rel="noopener">java</a>
       <a href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">.net</a>
       <a href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">reference</a>
-      <a href="https://github.com/chbloemer/dca-marketplace" rel="noopener">plugins</a>
+      <a href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">catalog</a>
+      <a href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">plugins</a>
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Blömer.
     The doctrine is tool-agnostic: any LLM, any harness, any editor.<br>
