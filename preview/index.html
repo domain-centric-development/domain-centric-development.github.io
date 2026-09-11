@@ -86,6 +86,13 @@
     gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 8px 8px 0 0; background: #ffffff; }
   .js .viewswitch { display: inline-flex; }
   .tablist { flex-wrap: wrap; row-gap: 6px; }
+  /* On a phone the stack names alone carry the distinction; spelling out the frameworks pushed each
+     tab onto a line of its own and left the switch stranded on a third. */
+  @media (max-width: 560px) {
+    .tab-sub { display: none; }
+    .tablist button { padding: 12px 14px; }
+    .viewswitch button { padding: 6px 11px; }
+  }
   .viewswitch button { font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--muted);
     background: none; border: 0; border-radius: 5px; padding: 6px 14px; cursor: pointer; }
   .viewswitch button:hover { color: var(--ink); }
@@ -422,8 +429,8 @@ checkout.adapter.outgoing
 
     <div class="tabs">
       <div class="tablist" role="tablist" aria-label="Reference implementations">
-        <button type="button" role="tab" id="tab-java" aria-controls="panel-java" aria-selected="true">Java · Spring Boot</button>
-        <button type="button" role="tab" id="tab-dotnet" aria-controls="panel-dotnet" aria-selected="false">.NET · ASP.NET Core</button>
+        <button type="button" role="tab" id="tab-java" aria-controls="panel-java" aria-selected="true">Java<span class="tab-sub"> · Spring Boot</span></button>
+        <button type="button" role="tab" id="tab-dotnet" aria-controls="panel-dotnet" aria-selected="false">.NET<span class="tab-sub"> · ASP.NET Core</span></button>
         <div class="viewswitch" role="group" aria-label="Screenshot size">
           <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
           <button type="button" data-view="phone" aria-pressed="false">Phone</button>
