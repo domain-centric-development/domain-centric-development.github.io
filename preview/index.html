@@ -86,9 +86,11 @@
     gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 8px 8px 0 0; background: #ffffff; }
   .js .viewswitch { display: inline-flex; }
   .tablist { flex-wrap: wrap; row-gap: 6px; }
-  /* On a phone the stack names alone carry the distinction; spelling out the frameworks pushed each
-     tab onto a line of its own and left the switch stranded on a third. */
-  @media (max-width: 560px) {
+  /* The stack names alone carry the distinction once the row gets tight: spelling out the frameworks
+     pushed each tab onto a line of its own and left the switch stranded on a third. Measured — with
+     the long labels the row breaks at 580 px and is down to 14 px of air at 590, so the short ones
+     start well above that rather than at the first width where it visibly fails. */
+  @media (max-width: 660px) {
     .tab-sub { display: none; }
     .tablist button { padding: 12px 14px; }
     .viewswitch button { padding: 6px 11px; }
