@@ -79,8 +79,13 @@
   .tabpanel { padding-top: 8px; }
   .tabpanel .shot { margin-top: 26px; }
   /* Desktop- und Handy-Aufnahme: der Breakpoint setzt den Startzustand, der Schalter überstimmt ihn */
-  .viewswitch { display: none; margin-top: 26px; gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: #ffffff; }
+  /* The switch belongs to the tab row: pushed to its right end, sitting on the rule the tabs sit on,
+     its own border continuing that line. On a narrow screen the row wraps and it takes a line below,
+     which is the same control either way. */
+  .viewswitch { display: none; margin-left: auto; align-self: flex-end; margin-bottom: -1px;
+    gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 8px 8px 0 0; background: #ffffff; }
   .js .viewswitch { display: inline-flex; }
+  .tablist { flex-wrap: wrap; row-gap: 6px; }
   .viewswitch button { font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--muted);
     background: none; border: 0; border-radius: 5px; padding: 6px 14px; cursor: pointer; }
   .viewswitch button:hover { color: var(--ink); }
@@ -419,14 +424,14 @@ checkout.adapter.outgoing
       <div class="tablist" role="tablist" aria-label="Reference implementations">
         <button type="button" role="tab" id="tab-java" aria-controls="panel-java" aria-selected="true">Java · Spring Boot</button>
         <button type="button" role="tab" id="tab-dotnet" aria-controls="panel-dotnet" aria-selected="false">.NET · ASP.NET Core</button>
+        <div class="viewswitch" role="group" aria-label="Screenshot size">
+          <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
+        </div>
       </div>
 
       <div class="tabpanel" id="panel-java" role="tabpanel" aria-labelledby="tab-java" tabindex="0">
         <h3>Java · Spring Boot</h3>
-        <div class="viewswitch" role="group" aria-label="Screenshot size, Java">
-          <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
-          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
-        </div>
         <figure class="shot shot--desktop">
           <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
                alt="The Java shop on a desktop browser: the domaincentric.commerce home page with its hero and a orange JAVA ribbon in the corner">
@@ -452,10 +457,6 @@ checkout.adapter.outgoing
 
       <div class="tabpanel" id="panel-dotnet" role="tabpanel" aria-labelledby="tab-dotnet" tabindex="0">
         <h3>.NET · ASP.NET Core</h3>
-        <div class="viewswitch" role="group" aria-label="Screenshot size, .NET">
-          <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
-          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
-        </div>
         <figure class="shot shot--desktop">
           <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
                alt="The .NET shop on a desktop browser: the domaincentric.commerce home page with its hero and a violet .NET ribbon in the corner">
@@ -776,10 +777,10 @@ dotnet test                   <span class="c"># .NET — the architecture projec
 
   // Screenshot size: the breakpoint picks the first view, a click overrides it for the rest of the visit.
   for (const group of document.querySelectorAll(".viewswitch")) {
-    const panel = group.closest(".tabpanel");
+    const tabs = group.closest(".tabs");
     const buttons = [...group.querySelectorAll("button")];
     const show = (view) => {
-      panel.dataset.view = view;
+      tabs.dataset.view = view;
       for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.view === view));
     };
     for (const button of buttons) button.addEventListener("click", () => show(button.dataset.view));
