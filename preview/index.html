@@ -404,9 +404,12 @@ checkout.adapter.outgoing
       <div class="tabpanel" id="panel-java" role="tabpanel" aria-labelledby="tab-java" tabindex="0">
         <h3>Java · Spring Boot</h3>
         <figure class="shot">
-          <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
-               alt="The Java shop: the domaincentric.commerce home page with its hero, the browse and cart buttons, and an orange JAVA ribbon in the corner">
-          <figcaption>docker compose up --build &mdash; localhost:8080. The ribbon says which shop you are on.</figcaption>
+          <picture>
+            <source media="(max-width: 700px)" srcset="assets/shop-java-mobile.webp" width="589" height="1200">
+            <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
+                 alt="The Java shop: the domaincentric.commerce home page with its hero, the browse and cart buttons, and an orange JAVA ribbon in the corner">
+          </picture>
+          <figcaption>docker compose up --build &mdash; localhost:8080. On a phone you get the phone's view of it.</figcaption>
         </figure>
         <ul class="facts">
           <li><b>Java 25 · Spring Boot 4</b><span>Spring Modulith for the module boundaries, the event
@@ -424,9 +427,12 @@ checkout.adapter.outgoing
       <div class="tabpanel" id="panel-dotnet" role="tabpanel" aria-labelledby="tab-dotnet" tabindex="0">
         <h3>.NET · ASP.NET Core</h3>
         <figure class="shot">
-          <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
-               alt="The .NET shop: the same domaincentric.commerce home page, pixel for pixel, with a violet .NET ribbon in the corner instead of the orange JAVA one">
-          <figcaption>docker compose up --build &mdash; localhost:5080. The same page, down to the wording.</figcaption>
+          <picture>
+            <source media="(max-width: 700px)" srcset="assets/shop-dotnet-mobile.webp" width="589" height="1200">
+            <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
+                 alt="The .NET shop: the same domaincentric.commerce home page, pixel for pixel, with a violet .NET ribbon in the corner instead of the orange JAVA one">
+          </picture>
+          <figcaption>docker compose up --build &mdash; localhost:5080. The same page, down to the wording, at either size.</figcaption>
         </figure>
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
