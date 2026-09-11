@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Domain-Centric Development</title>
+<meta name="description" content="Domain-Centric Architecture: a practical synthesis of Domain-Driven Design, Hexagonal Architecture and Clean Architecture — a compact guide, marker and rule libraries for Java and .NET, two reference implementations, and a machine-readable knowledge catalog for AI-assisted development.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink: #1c2433;
+    --deep: #171d29;
+    --paper: #f7f6f3;
+    --mist: #e8eaf0;
+    --teal: #148f96;
+    --teal-dark: #0d6b70;
+    --muted: #5b6472;
+    --line: #dedbd3;
+    --display: 'Space Grotesk', 'Avenir Next', 'Trebuchet MS', sans-serif;
+    --body: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 19px; line-height: 1.6; }
+  a { color: var(--teal-dark); }
+  a:hover { color: var(--teal); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- header ---------- */
+  .hero { background: var(--deep); color: var(--mist); }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .nav .brand { display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--mist); text-decoration: none; letter-spacing: -0.3px; }
+  .nav .brand .tld { color: var(--teal); }
+  .nav a.gh { font-family: var(--mono); font-size: 14px; color: var(--mist); text-decoration: none; border: 1px solid rgba(232,234,240,0.35); padding: 7px 14px; border-radius: 6px; }
+  .nav a.gh:hover { border-color: var(--teal); color: var(--teal); }
+  .nav .sections { display: flex; gap: 20px; margin-left: auto; margin-right: 22px; }
+  .nav .sections a { font-family: var(--mono); font-size: 13px; letter-spacing: 0.4px; color: rgba(232,234,240,0.72); text-decoration: none; }
+  .nav .sections a:hover { color: var(--teal); }
+
+  .hero-grid { display: grid; grid-template-columns: 5.2fr 6.8fr; gap: 40px; align-items: center; padding: 64px 0 88px; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 5vw, 58px); line-height: 1.06; letter-spacing: -1.5px; color: #ffffff; }
+  h1 .accent { color: var(--teal); }
+  .ai { color: var(--teal); position: relative; }
+  .ai::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.08em; border-bottom: 0.06em solid currentColor; opacity: 0.55; }
+  .hero p.lede { margin-top: 26px; font-size: 21px; line-height: 1.55; color: rgba(232,234,240,0.82); max-width: 34em; }
+  .cta-row { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { font-family: var(--display); font-weight: 500; font-size: 16px; text-decoration: none; padding: 13px 22px; border-radius: 8px; display: inline-block; }
+  .btn.primary { background: var(--teal-dark); color: #ffffff; }   /* 6.26:1 on white text */
+  .btn.primary:hover { background: #0b5b60; color: #ffffff; }      /* 7.84:1 */
+  .btn.ghost { color: var(--mist); border: 1px solid rgba(232,234,240,0.35); }
+  .btn.ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* the mark as a living context map */
+  .figure { text-align: center; }
+  .figure svg { width: min(100%, 700px); height: auto; overflow: visible; }
+  /* the field may bleed past the text column — but only where there is room beside it,
+     otherwise the overhang widens the page and the whole document scrolls sideways */
+  @media (min-width: 1180px) {
+    .figure { margin-right: calc(-1 * min(4vw, 70px)); }
+  }
+  .figure .caption { font-family: var(--mono); font-size: 12.5px; color: rgba(232,234,240,0.55); margin-top: -6px; }
+  /* labels knock out the lines behind them, the way annotation does on a drawing */
+  .node-label, .core-label { paint-order: stroke; stroke: var(--deep); stroke-width: 3px; stroke-linejoin: round; }
+  .node-label { font-family: var(--mono); font-size: 7.5px; fill: rgba(232,234,240,0.75); }
+  .core-label { font-family: var(--mono); font-size: 8px; font-weight: 500; fill: #ffffff; stroke-width: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .spoke { stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw 0.9s ease-out forwards; }
+    .spoke:nth-of-type(2) { animation-delay: 0.10s; } .spoke:nth-of-type(3) { animation-delay: 0.20s; }
+    .spoke:nth-of-type(4) { animation-delay: 0.30s; } .spoke:nth-of-type(5) { animation-delay: 0.40s; }
+    .spoke:nth-of-type(6) { animation-delay: 0.50s; }
+    .node, .node-label { opacity: 0; animation: appear 0.5s ease-out forwards; animation-delay: 0.7s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes appear { to { opacity: 1; } }
+    .node-label { animation-name: appear-label; }
+    @keyframes appear-label { to { opacity: 0.9; } }
+  }
+
+  /* ---------- dependency rule strip ---------- */
+  .rule { border-bottom: 1px solid var(--line); }
+  .rule .wrap { display: flex; align-items: baseline; gap: 28px; padding: 34px 24px; flex-wrap: wrap; }
+  .rule .chain { font-family: var(--display); font-weight: 500; font-size: 19px; letter-spacing: -0.2px; white-space: nowrap; }
+  .rule .chain .arrow { color: var(--teal); padding: 0 6px; }
+  .rule .chain .domain { color: var(--teal-dark); font-weight: 700; }
+  .rule p { font-size: 17px; color: var(--muted); max-width: 34em; }
+
+  /* the one concrete thing, before any more explanation */
+  .example .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #ffffff; margin-top: 8px; padding: 0; }
+  .example .step { padding: 24px 26px; border-right: 1px solid var(--line); }
+  .example .step:last-child { border-right: 0; }
+  .example .step > b { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal-dark); display: block; margin-bottom: 12px; }
+  .example pre b { font-weight: 500; }
+  .example pre { font-family: var(--mono); font-size: 13px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+  .example .bad { color: #a33a2a; }
+  .example .good { color: var(--teal-dark); }
+  .example p { font-size: 16px; color: var(--muted); margin-top: 12px; }
+  .example .outer { padding: 0 24px; max-width: 1100px; margin: 0 auto; }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0; }
+  .kicker { font-family: var(--mono); font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 14px; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 3.4vw, 38px); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 18px; }
+  .section-lede { font-size: 20px; max-width: 36em; color: #39414e; }
+
+  /* artifact cards */
+  .cards { margin-top: 44px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .card { background: #ffffff; border: 1px solid var(--line); border-radius: 12px; padding: 28px 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .card .tag { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal-dark); flex-grow: 0; }
+  .card h3 { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -0.4px; }
+  .card p { font-size: 17px; color: #39414e; flex-grow: 1; }
+  .card a.more { font-family: var(--display); font-size: 15.5px; font-weight: 500; text-decoration: none; }
+  .card a.more::after { content: " \2192"; }
+  .card a.more + a.more { margin-top: 4px; }
+  .card code { font-family: var(--mono); font-size: 0.84em; background: var(--mist); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+  .card a.more, .card p { overflow-wrap: anywhere; }
+  .card .soon { font-family: var(--display); font-size: 15.5px; font-weight: 500; color: var(--muted); }
+
+  /* why AI */
+  .with-ai { background: #ffffff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .with-ai .section-lede em { font-style: italic; color: var(--teal-dark); }
+  .steps { margin-top: 40px; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; counter-reset: step; }
+  .steps li { display: flex; gap: 18px; }
+  .step-no { font-family: var(--mono); font-size: 13px; color: var(--teal); padding-top: 6px; }
+  .steps h3 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.3px; margin-bottom: 8px; }
+  .steps p { font-size: 17px; color: #39414e; }
+  .steps code { font-family: var(--mono); font-size: 0.84em; background: var(--mist); padding: 1px 5px; border-radius: 4px; }
+
+  /* principles */
+  .principles { background: var(--deep); color: var(--mist); }
+  .principles .kicker { color: var(--teal); }
+  .principles h2 { color: #ffffff; }
+  .plist { margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 48px; list-style: none; }
+  .plist li { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(232,234,240,0.14); }
+  .plist .dot { flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); margin-top: 9px; }
+  .plist b { font-family: var(--display); font-weight: 500; display: block; font-size: 18px; letter-spacing: -0.2px; }
+  .plist span { font-size: 16.5px; color: rgba(232,234,240,0.72); }
+
+  /* start small: the command plate and the evidence limits */
+  .start { background: #ffffff; border-top: 1px solid var(--line); }
+  .plate { margin-top: 36px; background: var(--deep); color: var(--mist); border-radius: 12px; padding: 24px 26px; overflow-x: auto; }
+  .plate pre { font-family: var(--mono); font-size: 14px; line-height: 1.85; white-space: pre; }
+  .plate .c { color: rgba(232,234,240,0.5); }
+  .plate .t { color: var(--teal); }
+  .limits { margin-top: 36px; border-left: 3px solid var(--teal); padding: 4px 0 4px 22px; }
+  .limits h3 { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -0.3px; margin-bottom: 10px; }
+  .limits p { font-size: 17px; color: #39414e; max-width: 40em; }
+  .limits p + p { margin-top: 10px; }
+
+  /* how it relates */
+  .relates .plain { margin-top: 28px; list-style: none; max-width: 44em; }
+  .relates .plain li { padding: 14px 0; border-top: 1px solid var(--line); font-size: 17px; color: #39414e; }
+  .relates .plain b { font-family: var(--display); font-weight: 500; color: var(--ink); }
+
+  /* footer */
+  footer { padding: 44px 0 56px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+  footer .fbrand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; }
+  footer .fbrand .tld { color: var(--teal-dark); }
+  footer nav { display: flex; gap: 22px; flex-wrap: wrap; }
+  footer nav a { font-family: var(--mono); font-size: 13.5px; text-decoration: none; }
+  footer .note { width: 100%; margin-top: 18px; font-size: 15px; color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .rule .chain { white-space: normal; font-size: 17px; }
+    .hero-grid { grid-template-columns: 1fr; padding: 40px 0 64px; gap: 40px; }
+    /* the message first: a visitor should read what this is before seeing a diagram of it */
+    .figure svg { width: min(80vw, 380px); }
+    .nav .sections { display: none; }
+    .example .wrap { grid-template-columns: 1fr; }
+    .example .step { border-right: 0; border-bottom: 1px solid var(--line); }
+    .example .step:last-child { border-bottom: 0; }
+    .cards, .plist, .steps, .relates .cards { grid-template-columns: 1fr; }
+    section { padding: 56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="/">
+        <svg width="30" height="30" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#e8eaf0" stroke-width="6" stroke-linejoin="round"/>
+          <circle cx="60" cy="20" r="9" fill="#e8eaf0"/><circle cx="94.6" cy="40" r="9" fill="#e8eaf0"/>
+          <circle cx="94.6" cy="80" r="9" fill="#e8eaf0"/><circle cx="60" cy="100" r="9" fill="#e8eaf0"/>
+          <circle cx="25.4" cy="80" r="9" fill="#e8eaf0"/><circle cx="25.4" cy="40" r="9" fill="#e8eaf0"/>
+          <circle cx="60" cy="60" r="14" fill="#148f96"/>
+        </svg>
+        <span class="wordmark">domaincentric<span class="tld">.dev</span></span>
+      </a>
+      <span class="sections">
+        <a href="#start">Start</a>
+        <a href="#artifacts">Artifacts</a>
+        <a href="#with-ai">AI tooling</a>
+        <a href="#principles">Principles</a>
+      </span>
+      <a class="gh" href="https://github.com/domain-centric-development" rel="noopener">GitHub</a>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Domain-Centric Development</p>
+        <h1>The dom<span class="ai" title="yes, it is in there">ai</span>n at the center.<br>Everything else <span class="accent">points inward</span>.</h1>
+        <p class="lede">Keep business logic independent of frameworks. Domain-Centric Architecture
+        combines architectural guidance, executable checks and AI development tools for Java and .NET.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#start">Add architecture checks</a>
+          <a class="btn ghost" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">Read the guide</a>
+          <a class="btn ghost" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">Explore the sample</a>
+        </div>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="-56 -26.5 232 173" role="img" aria-label="The Domain-Centric mark read as one bounded context: adapters and ports on the hexagonal boundary, the domain model at the center, every dependency pointing inward — neighbouring contexts fading out towards the upper right, each with a domain core of its own">
+          <defs>
+            <radialGradient id="fade" gradientUnits="userSpaceOnUse" cx="60" cy="60" r="118">
+              <stop offset="0.28" stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset="0.66" stop-color="#ffffff" stop-opacity="0.4"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <mask id="neighbours-fade"><rect x="-60" y="-100" width="330" height="280" fill="url(#fade)"/></mask>
+          </defs>
+          <g mask="url(#neighbours-fade)">
+            <polygon points="94.6,-40 129.2,-20 129.2,20 94.6,40 60,20 60,-20" stroke="#e8eaf0" stroke-opacity="0.26" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+            <circle cx="94.6" cy="0" r="5" fill="#148f96" fill-opacity="0.45"/>
+            <polygon points="129.3,20 163.9,40 163.9,80 129.3,100 94.7,80 94.7,40" stroke="#e8eaf0" stroke-opacity="0.26" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+            <circle cx="129.3" cy="60" r="5" fill="#148f96" fill-opacity="0.45"/>
+            <polygon points="163.9,-40 198.5,-20 198.5,20 163.9,40 129.3,20 129.3,-20" stroke="#e8eaf0" stroke-opacity="0.26" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+            <circle cx="163.9" cy="0" r="5" fill="#148f96" fill-opacity="0.45"/>
+          </g>
+          <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#e8eaf0" stroke-width="3.2" stroke-linejoin="round" fill="none"/>
+          <line class="spoke" x1="60" y1="60" x2="60" y2="20" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <line class="spoke" x1="60" y1="60" x2="94.6" y2="40" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <line class="spoke" x1="60" y1="60" x2="94.6" y2="80" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <line class="spoke" x1="60" y1="60" x2="60" y2="100" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <line class="spoke" x1="60" y1="60" x2="25.4" y2="80" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <line class="spoke" x1="60" y1="60" x2="25.4" y2="40" stroke="#e8eaf0" stroke-opacity="0.4" stroke-width="2.5"/>
+          <circle class="node" cx="60" cy="20" r="5" fill="#e8eaf0"/>
+          <circle class="node" cx="94.6" cy="40" r="5" fill="#e8eaf0"/>
+          <circle class="node" cx="94.6" cy="80" r="5" fill="#e8eaf0"/>
+          <circle class="node" cx="60" cy="100" r="5" fill="#e8eaf0"/>
+          <circle class="node" cx="25.4" cy="80" r="5" fill="#e8eaf0"/>
+          <circle class="node" cx="25.4" cy="40" r="5" fill="#e8eaf0"/>
+          <circle cx="60" cy="60" r="9.5" fill="#148f96"/>
+          <text class="node-label" x="60" y="12" text-anchor="middle">web</text>
+          <text class="node-label" x="100" y="37" text-anchor="start">rest</text>
+          <text class="node-label" x="100" y="85" text-anchor="start">events</text>
+          <text class="node-label" x="60" y="110.5" text-anchor="middle">persistence</text>
+          <text class="node-label" x="20" y="85" text-anchor="end">mcp</text>
+          <text class="node-label" x="20" y="37" text-anchor="end">scheduler</text>
+          <text class="core-label" x="60" y="62.6" text-anchor="middle">domain</text>
+        </svg>
+        <p class="caption">the mark is the architecture: one bounded context — adapters on the boundary, the domain at the core, neighbor contexts each with a core of their own</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="rule">
+  <div class="wrap">
+    <p class="chain">Infrastructure <span class="arrow">&rarr;</span> Adapters <span class="arrow">&rarr;</span> Application <span class="arrow">&rarr;</span> <span class="domain">Domain</span></p>
+    <p>One rule governs everything: dependencies point inward. The domain layer knows no framework,
+    no database, no protocol — and an ArchUnit test suite fails the build when anyone forgets. It
+    checks structure; whether the model is <em>right</em> stays a human question.</p>
+  </div>
+</div>
+
+<div class="example">
+  <div class="outer">
+    <div class="wrap">
+      <div class="step">
+        <b>1 · the mistake</b>
+<pre>package shop.checkout.<b>domain</b>;
+
+import shop.checkout
+  .<span class="bad">infrastructure.persistence</span>
+  .<span class="bad">OrderRow</span>;</pre>
+        <p>An entity reaches for the row it happens to be stored in. Nothing stops it, and a year later
+        the model cannot be changed without the database.</p>
+      </div>
+      <div class="step">
+        <b>2 · the rule that catches it</b>
+<pre><span class="good">DCA-LAY-002</span>
+Domain must not depend on
+Infrastructure
+
+selects  classes in *.domain..
+checks   no dependency on
+         *.infrastructure..</pre>
+        <p>One of 113 rules with the same id in Java and .NET. It runs in the build, so the mistake is
+        a red test rather than a review comment.</p>
+      </div>
+      <div class="step">
+        <b>3 · the boundary</b>
+<pre>checkout.application.shared
+  <span class="good">OrderRepository</span>   ← interface
+
+checkout.adapter.outgoing
+  .persistence
+  <span class="good">JpaOrderRepository</span></pre>
+        <p>The domain states what it needs; the adapter implements it. The dependency now points inward,
+        and the same rule proves it stays that way.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="artifacts">
+  <div class="wrap">
+    <p class="kicker">One architecture, six artifacts</p>
+    <h2>Everything describes the same system</h2>
+    <p class="section-lede">Guide, building blocks, two reference implementations, knowledge catalog and
+    tooling are kept consistent with each other — change a pattern in one, and the others follow.</p>
+
+    <div class="cards">
+      <article class="card">
+        <p class="tag">Guide</p>
+        <h3>The compact guide</h3>
+        <p>The decisions, once, in a form you can hand to a new team member or an agent: tactical DDD,
+        ports &amp; adapters, naming, package layout and what each rule is for. A few pages, not a book.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
+      </article>
+      <article class="card">
+        <p class="tag">Building blocks</p>
+        <h3>Markers and rules as libraries</h3>
+        <p>Add two dependencies and the architecture becomes a test your build runs. Marker interfaces
+        for the DDD and hexagonal building blocks, plus 113 rule identifiers shared by Java and .NET —
+        what each one selects and checks is documented per platform. The markers carry no dependencies;
+        frameworks appear only as presets. On Maven Central and NuGet.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
+        <a class="more" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
+      </article>
+      <article class="card">
+        <p class="tag">Reference implementation · Java</p>
+        <h3>A working webshop</h3>
+        <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns — and the rule catalog
+        that fails the build when a structural rule is broken. Clone it, run it, break one and watch it happen.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
+      </article>
+      <article class="card">
+        <p class="tag">Reference implementation · .NET</p>
+        <h3>The same shop, built twice</h3>
+        <p>ASP.NET Core, one project per bounded context, the same routes, markup and ubiquitous
+        language, the same six end-user flows. The style is demonstrated in two stacks rather than
+        argued.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
+      </article>
+      <article class="card">
+        <p class="tag">Knowledge catalog</p>
+        <h3>Machine-readable doctrine</h3>
+        <p>Point an agent at this instead of hoping it remembers: the guide text, the marker contracts
+        and every rule as one cross-linked graph, so it builds from the catalog and cites the node it
+        used. Over 500 typed nodes — rules, sections, templates, pitfalls, decisions, recipes —
+        generated from the sources, never written by hand. Tool-agnostic.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
+      </article>
+      <article class="card">
+        <p class="tag">Tooling</p>
+        <h3>Three plugins, plain skill folders</h3>
+        <p>Install the method instead of explaining it every session. <code>dca-core</code> bootstraps,
+        scaffolds and reviews; <code>dca-factory</code> runs one story from plan to documentation with a
+        gate between the stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs
+        without DCA assumptions. Plain skill folders — Claude Code, Codex and OpenCode read the same
+        ones.</p>
+        <a class="more" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="start">
+  <div class="wrap">
+    <p class="kicker">Start small</p>
+    <h2>One bootstrap, one architecture test</h2>
+    <p class="section-lede">Adopting DCA does not begin with a rewrite. It begins with one test that
+    fails when a dependency points the wrong way — on the project you already have.</p>
+
+    <div class="plate">
+<pre><span class="c"># in Claude Code — the same skill folders work in Codex and OpenCode</span>
+/plugin marketplace add domain-centric-development/dca-marketplace
+/plugin install dca-core@dca-marketplace
+
+<span class="c"># on an existing Java or .NET project</span>
+<span class="t">/dca-bootstrap</span>   <span class="c"># adds the building blocks and one architecture test,
+                  # wired to the layout this project actually has</span>
+
+./gradlew test-architecture   <span class="c"># Java</span>
+dotnet test                   <span class="c"># .NET — the architecture project, Debug build</span></pre>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>Adapt, do not overwrite</h3>
+          <p>Marker-like interfaces a project already has are aliased or kept and declared through its
+          layout description. Nothing is replaced because it has a different name.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>Select what you are ready for</h3>
+          <p>Rules come in sets and are selected per project. A rule that does not fit yet is switched
+          off by id, in writing — not quietly ignored.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>Then grow the model</h3>
+          <p>Aggregates, value objects and use cases come next, with the naming conventions and the
+          per-context glossary the rules check.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>Deliver through the pipeline, if you want it</h3>
+          <p>One story through plan, test, build, tidy, judge and document, with a gate between the
+          stages that reads the project's own test reports rather than a stage's word for it. Optional:
+          the architecture works without it.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="limits">
+      <h3>What the checks do and do not show</h3>
+      <p>The rule suites check <b>structure</b>: where a type may live, what it may depend on, what it
+      must be named, which layer may reach which. 113 shared identifiers in Java and .NET, plus six
+      .NET-specific ones, each with its selector and its check written down — so a green run says
+      exactly which encoded expectations held, and the catalogs say which those were.</p>
+      <p>It does not say the domain model is correct, that the behaviour is right, or that a use case
+      does what the business meant. Those need behaviour tests, a domain expert and review — and the
+      rules mark what needs judgement as informational rather than quietly assuming it. Architecture
+      tests check structure; behaviour tests and domain review check whether the software does the
+      right thing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="with-ai" class="with-ai">
+  <div class="wrap">
+    <p class="kicker">Why it is built this way</p>
+    <h2>Architecture an agent can be held to</h2>
+    <p class="section-lede">A model that writes fast needs a boundary it cannot argue with. The aim is
+    to make a non-deterministic writer produce a <em>deterministic result</em> wherever a machine can
+    decide it — the structure of the code, and the evidence that a criterion was red before it was
+    green. How repeatably an agent gets the <em>domain</em> right is not measured yet, and is not
+    claimed here.</p>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>The rules are executable, and they have ids</h3>
+          <p>113 shared identifiers like <code>DCA-USE-009</code>, in a library for both stacks. Java
+          enforces 108 and marks 5 informational; .NET enforces 112 of its 119 — six are .NET-specific —
+          and names the three that are not applicable, with the reason. A shared id means the same
+          intent; what it selects and checks is written down per platform rather than assumed
+          identical.</p>
+          <p style="margin-top:10px"><a href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>The doctrine is machine-readable</h3>
+          <p>Guide text, marker contracts and every rule as one cross-linked graph in Open Knowledge
+          Format. The agent builds from the catalog instead of from a half-remembered blog post — and
+          cites the node it used.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>The pipeline decides, not the stage</h3>
+          <p>One story runs through plan, test, build, tidy, judge and document, each stage handing over
+          a file rather than a conversation. Between them sits a gate that is a script: one end-user test
+          per acceptance criterion, <b>red before green</b> read out of the runner's own report — an exit
+          code says how a process ended, not that a test ran — then the architecture suite and, at the
+          end, every documentation claim checked against the repository. No stage declares its own work
+          done; three rounds without convergence stop and ask a human.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>Two webshops, as evidence and as the experiment field</h3>
+          <p>The same shop in Java and .NET, drafted mainly by Claude, directed and reviewed by the
+          author, green against the shared rule ids and the same six flows. They also exist to find the
+          places where two agents build one story differently — each difference is a gap to close in a
+          rule, a marker or the catalog rather than in the code.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="relates" class="relates">
+  <div class="wrap">
+    <p class="kicker">How it relates</p>
+    <h2>Adjacent work, named plainly</h2>
+    <p class="section-lede">Described, not compared — no benchmark or compatibility test was run.</p>
+
+    <ul class="plain">
+      <li><b><a href="https://github.com/xmolecules/jmolecules" rel="noopener">jMolecules</a></b>
+      expresses DDD and architecture concepts as annotations and types. DCA developed independently —
+      similar markers do not make one a derivation of the other — and its rules tolerate jMolecules in
+      the domain where a project already uses it.</li>
+      <li><b><a href="https://hycle.org/" rel="noopener">hycle</a></b> describes how to organise
+      software work as an internal factory. Its argument for the word factory — turning a
+      non-deterministic system into a deterministic one — is the premise this project shares: hycle
+      works on the organisation around the factory, DCA on the inside of it. Shared premise, not an
+      integration or an endorsement.</li>
+      <li><b>Not convention over configuration.</b> Layout and defaults are predictable, but which
+      contexts exist and which rules a project adopts stay explicit decisions. The conventions are
+      the part a build can hold you to.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="principles" class="principles">
+  <div class="wrap">
+    <p class="kicker">Principles</p>
+    <h2>Opinionated where it pays, pragmatic where it doesn't</h2>
+    <p class="section-lede" style="color: rgba(232,234,240,0.8)">Conventions you can check: humans and
+    AI start from the same architectural expectations, and the ones that can be encoded are encoded.
+    The rest is named as a judgement call rather than assumed.</p>
+    <ul class="plist">
+      <li><span class="dot"></span><div><b>Framework-free domain</b>
+        <span>Business logic depends on nothing. Spring lives in adapters and infrastructure.</span></div></li>
+      <li><span class="dot"></span><div><b>Ports &amp; adapters</b>
+        <span>Use cases behind typed input ports; repositories, stores and publishers behind output ports.</span></div></li>
+      <li><span class="dot"></span><div><b>Architecture as tests</b>
+        <span>Structural rules are executable tests — ArchUnit in Java, ArchUnitNET in .NET, same rule ids. What needs judgement is marked as review, not quietly assumed. Erosion fails the build, not the retrospective.</span></div></li>
+      <li><span class="dot"></span><div><b>Ubiquitous language</b>
+        <span>Names come from the domain, per bounded context. The rules refuse technical suffixes on domain types — <code>Helper</code>, <code>Util</code>, <code>Impl</code> — and packages named after patterns instead of concepts. A domain word that happens to sound technical is not on that list.</span></div></li>
+      <li><span class="dot"></span><div><b>Progressive complexity</b>
+        <span>Four layers, and one consistent depth inside the application layer: use cases sit flat below it, or grouped into domain-named features. <code>DCA-USE-014</code> accepts either and refuses a mix within one module — the choice is the project's, the consistency is checked.</span></div></li>
+      <li><span class="dot"></span><div><b>Pattern choice per subdomain</b>
+        <span>Core subdomains get the full tactical toolbox; supporting ones may stay simple.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="fbrand">
+      <svg width="22" height="22" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+        <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#1c2433" stroke-width="7" stroke-linejoin="round"/>
+        <circle cx="60" cy="60" r="15" fill="#148f96"/>
+      </svg>
+      <span class="wordmark">domaincentric<span class="tld">.dev</span></span>
+    </p>
+    <nav aria-label="Footer">
+      <a href="https://github.com/domain-centric-development/dca-guide" rel="noopener">guide</a>
+      <a href="https://github.com/domain-centric-development/dca-java" rel="noopener">java</a>
+      <a href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">.net</a>
+      <a href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">reference</a>
+      <a href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">catalog</a>
+      <a href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">plugins</a>
+    </nav>
+    <p class="note">Domain-Centric Development is an open project by Christoph Blömer.
+    The doctrine is tool-agnostic: any LLM, any harness, any editor.<br>
+    Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025. The architecture rules in every build are part of how that work is verified.</p>
+  </div>
+</footer>
+
+</body>
+</html>
