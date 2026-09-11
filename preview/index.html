@@ -78,6 +78,26 @@
   .tablist button:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: 2px; border-radius: 4px 4px 0 0; }
   .tabpanel { padding-top: 8px; }
   .tabpanel .shot { margin-top: 26px; }
+  /* Desktop- und Handy-Aufnahme: der Breakpoint setzt den Startzustand, der Schalter überstimmt ihn */
+  .viewswitch { display: none; margin-top: 26px; gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: #ffffff; }
+  .js .viewswitch { display: inline-flex; }
+  .viewswitch button { font-family: var(--display); font-size: 14px; font-weight: 500; color: var(--muted);
+    background: none; border: 0; border-radius: 5px; padding: 6px 14px; cursor: pointer; }
+  .viewswitch button:hover { color: var(--ink); }
+  .viewswitch button[aria-pressed="true"] { background: var(--mist); color: var(--teal-dark); }
+  .viewswitch button:focus-visible { outline: 2px solid var(--teal-dark); outline-offset: 2px; }
+  .shot--phone { display: none; }
+  .shot--phone img { max-width: 360px; margin: 0 auto; }
+  @media (max-width: 700px) {
+    .shot--desktop { display: none; }
+    .shot--phone { display: block; }
+  }
+  /* die Wahl des Lesers schlägt den Breakpoint — höhere Spezifität, unabhängig von der Media Query */
+  [data-view="desktop"] .shot--desktop { display: block; }
+  [data-view="desktop"] .shot--phone { display: none; }
+  [data-view="phone"] .shot--phone { display: block; }
+  [data-view="phone"] .shot--desktop { display: none; }
+
   /* without JavaScript both panels stay readable, each behind its own heading */
   .tabpanel > h3 { font-family: var(--display); font-weight: 700; font-size: 20px; margin-top: 26px; }
   .js .tabpanel > h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -403,13 +423,19 @@ checkout.adapter.outgoing
 
       <div class="tabpanel" id="panel-java" role="tabpanel" aria-labelledby="tab-java" tabindex="0">
         <h3>Java · Spring Boot</h3>
-        <figure class="shot">
-          <picture>
-            <source media="(max-width: 700px)" srcset="assets/shop-java-mobile.webp" width="589" height="1200">
-            <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
-                 alt="The Java shop: the domaincentric.commerce home page with its hero, the browse and cart buttons, and an orange JAVA ribbon in the corner">
-          </picture>
-          <figcaption>docker compose up --build &mdash; localhost:8080. On a phone you get the phone's view of it.</figcaption>
+        <div class="viewswitch" role="group" aria-label="Screenshot size, Java">
+          <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
+        </div>
+        <figure class="shot shot--desktop">
+          <img src="assets/shop-java.webp" width="1800" height="1125" loading="lazy"
+               alt="The Java shop on a desktop browser: the domaincentric.commerce home page with its hero and a orange JAVA ribbon in the corner">
+          <figcaption>docker compose up --build &mdash; localhost:8080. The ribbon says which shop you are on.</figcaption>
+        </figure>
+        <figure class="shot shot--phone">
+          <img src="assets/shop-java-mobile.webp" width="589" height="1200" loading="lazy"
+               alt="The same Java shop on a phone: the logo on its own line, every link under it, the orange JAVA tag in the top-right corner">
+          <figcaption>The same page at 393&nbsp;px &mdash; links under the logo, the stack tag in the corner.</figcaption>
         </figure>
         <ul class="facts">
           <li><b>Java 25 · Spring Boot 4</b><span>Spring Modulith for the module boundaries, the event
@@ -426,13 +452,19 @@ checkout.adapter.outgoing
 
       <div class="tabpanel" id="panel-dotnet" role="tabpanel" aria-labelledby="tab-dotnet" tabindex="0">
         <h3>.NET · ASP.NET Core</h3>
-        <figure class="shot">
-          <picture>
-            <source media="(max-width: 700px)" srcset="assets/shop-dotnet-mobile.webp" width="589" height="1200">
-            <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
-                 alt="The .NET shop: the same domaincentric.commerce home page, pixel for pixel, with a violet .NET ribbon in the corner instead of the orange JAVA one">
-          </picture>
-          <figcaption>docker compose up --build &mdash; localhost:5080. The same page, down to the wording, at either size.</figcaption>
+        <div class="viewswitch" role="group" aria-label="Screenshot size, .NET">
+          <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
+        </div>
+        <figure class="shot shot--desktop">
+          <img src="assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
+               alt="The .NET shop on a desktop browser: the domaincentric.commerce home page with its hero and a violet .NET ribbon in the corner">
+          <figcaption>docker compose up --build &mdash; localhost:5080. The same page, down to the wording.</figcaption>
+        </figure>
+        <figure class="shot shot--phone">
+          <img src="assets/shop-dotnet-mobile.webp" width="589" height="1200" loading="lazy"
+               alt="The same .NET shop on a phone: the logo on its own line, every link under it, the violet .NET tag in the top-right corner">
+          <figcaption>The same page at 393&nbsp;px &mdash; links under the logo, the stack tag in the corner.</figcaption>
         </figure>
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
@@ -740,6 +772,18 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       });
     });
     select(buttons[0]);
+  }
+
+  // Screenshot size: the breakpoint picks the first view, a click overrides it for the rest of the visit.
+  for (const group of document.querySelectorAll(".viewswitch")) {
+    const panel = group.closest(".tabpanel");
+    const buttons = [...group.querySelectorAll("button")];
+    const show = (view) => {
+      panel.dataset.view = view;
+      for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.view === view));
+    };
+    for (const button of buttons) button.addEventListener("click", () => show(button.dataset.view));
+    show(window.matchMedia("(max-width: 700px)").matches ? "phone" : "desktop");
   }
 </script>
 </body>
