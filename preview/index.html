@@ -215,10 +215,6 @@
   .limits p { font-size: 17px; color: #39414e; max-width: 40em; }
   .limits p + p { margin-top: 10px; }
 
-  /* how it relates */
-  .relates .plain { margin-top: 28px; list-style: none; max-width: 44em; }
-  .relates .plain li { padding: 14px 0; border-top: 1px solid var(--line); font-size: 17px; color: #39414e; }
-  .relates .plain b { font-family: var(--display); font-weight: 500; color: var(--ink); }
 
   /* footer */
   footer { padding: 44px 0 56px; }
@@ -238,7 +234,7 @@
     .example .wrap { grid-template-columns: 1fr; }
     .example .step { border-right: 0; border-bottom: 1px solid var(--line); }
     .example .step:last-child { border-bottom: 0; }
-    .cards, .plist, .steps, .relates .cards { grid-template-columns: 1fr; }
+    .cards, .plist, .steps { grid-template-columns: 1fr; }
     section { padding: 56px 0; }
   }
 </style>
@@ -681,29 +677,6 @@ dotnet test                   <span class="c"># .NET — the architecture projec
         </div>
       </li>
     </ol>
-  </div>
-</section>
-
-<section id="relates" class="relates">
-  <div class="wrap">
-    <p class="kicker">How it relates</p>
-    <h2>Adjacent work, named plainly</h2>
-    <p class="section-lede">Described, not compared — no benchmark or compatibility test was run.</p>
-
-    <ul class="plain">
-      <li><b><a class="ext" href="https://github.com/xmolecules/jmolecules" rel="noopener">jMolecules</a></b>
-      expresses DDD and architecture concepts as annotations and types. DCA developed independently —
-      similar markers do not make one a derivation of the other — and its rules tolerate jMolecules in
-      the domain where a project already uses it.</li>
-      <li><b><a class="ext" href="https://hycle.org/" rel="noopener">hycle</a></b> describes how to organise
-      software work as an internal factory. Its argument for the word factory — turning a
-      non-deterministic system into a deterministic one — is the premise this project shares: hycle
-      works on the organisation around the factory, DCA on the inside of it. Shared premise, not an
-      integration or an endorsement.</li>
-      <li><b>Not convention over configuration.</b> Layout and defaults are predictable, but which
-      contexts exist and which rules a project adopts stay explicit decisions. The conventions are
-      the part a build can hold you to.</li>
-    </ul>
   </div>
 </section>
 
