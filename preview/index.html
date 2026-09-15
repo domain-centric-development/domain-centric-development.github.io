@@ -266,9 +266,11 @@
   @media (max-width: 960px) { .nav .sections { display: none; } .nav a.gh { margin-left: auto; } }
   @media (max-width: 860px) {
     .rule .chain { white-space: normal; font-size: 17px; }
-    .hero-grid { grid-template-columns: 1fr; padding: 40px 0 64px; gap: 40px; }
-    /* the message first: a visitor should read what this is before seeing a diagram of it */
-    .figure svg { width: min(80vw, 380px); }
+    .hero-grid { grid-template-columns: 1fr; padding: 24px 0 64px; gap: 12px; }
+    /* on a phone the mark comes first, small, so the page opens on the drawing and the claim together */
+    .figure { order: -1; margin-bottom: -24px; }
+    .figure svg { width: min(72vw, 300px); }
+    .figure .caption { display: none; }
     .example .wrap { grid-template-columns: 1fr; }
     .example .step { border-right: 0; border-bottom: 1px solid var(--line); }
     .example .step:last-child { border-bottom: 0; }
