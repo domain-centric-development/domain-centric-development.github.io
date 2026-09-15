@@ -7,6 +7,9 @@
 <meta name="description" content="Domain-Centric Architecture: a practical synthesis of Domain-Driven Design, Hexagonal Architecture and Clean Architecture — a compact guide, marker and rule libraries for Java and .NET, two reference implementations, and a machine-readable knowledge catalog for AI-assisted development.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="canonical" href="https://domaincentric.dev/">
+<link rel="alternate" hreflang="en" href="https://domaincentric.dev/">
+<link rel="alternate" hreflang="de" href="https://domaincentric.dev/de/">
+<link rel="alternate" hreflang="x-default" href="https://domaincentric.dev/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Domain-Centric Development">
 <meta property="og:url" content="https://domaincentric.dev/">
@@ -48,6 +51,8 @@
   .nav .brand { display: flex; align-items: center; gap: 1ex; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--mist); text-decoration: none; letter-spacing: -0.3px; }
   .nav .brand .tld { color: var(--teal); }
   .nav a.gh { font-family: var(--mono); font-size: 14px; color: var(--mist); text-decoration: none; border: 1px solid rgba(232,234,240,0.35); padding: 7px 14px; border-radius: 6px; }
+  .nav a.lang { font-family: var(--mono); font-size: 13px; letter-spacing: 0.4px; color: rgba(232,234,240,0.72); text-decoration: none; margin-left: 16px; }
+  .nav a.lang:hover { color: var(--teal); }
   .nav a.gh:hover { border-color: var(--teal); color: var(--teal); }
   .nav .sections { display: flex; gap: 20px; margin-left: auto; margin-right: 22px; }
   .nav .sections a { font-family: var(--mono); font-size: 13px; letter-spacing: 0.4px; color: rgba(232,234,240,0.72); text-decoration: none; }
@@ -60,6 +65,8 @@
   .ai { color: var(--teal); position: relative; }
   .ai::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.08em; border-bottom: 0.06em solid currentColor; opacity: 0.55; }
   .hero p.lede { margin-top: 26px; font-size: 21px; line-height: 1.55; color: rgba(232,234,240,0.82); max-width: 34em; }
+  .hero p.gain { margin-top: 18px; font-size: 17px; line-height: 1.55; color: rgba(232,234,240,0.7); max-width: 38em; }
+  .hero p.gain span { font-family: var(--mono); font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-right: 10px; }
   .cta-row { margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; }
   /* in the hero the break is deliberate: the one action on its own line, the two places to read
      beneath it. An empty item that fills the row does the breaking; the buttons keep their own width. */
@@ -255,12 +262,12 @@
   footer nav a { font-family: var(--mono); font-size: 13.5px; text-decoration: none; }
   footer .note { width: 100%; margin-top: 18px; font-size: 15px; color: var(--muted); }
 
+  @media (max-width: 960px) { .nav .sections { display: none; } }
   @media (max-width: 860px) {
     .rule .chain { white-space: normal; font-size: 17px; }
     .hero-grid { grid-template-columns: 1fr; padding: 40px 0 64px; gap: 40px; }
     /* the message first: a visitor should read what this is before seeing a diagram of it */
     .figure svg { width: min(80vw, 380px); }
-    .nav .sections { display: none; }
     .example .wrap { grid-template-columns: 1fr; }
     .example .step { border-right: 0; border-bottom: 1px solid var(--line); }
     .example .step:last-child { border-bottom: 0; }
@@ -293,14 +300,19 @@
         <a href="#principles">Principles</a>
       </span>
       <a class="gh ext" href="https://github.com/domain-centric-development" rel="noopener">GitHub</a>
+      <a class="lang" href="de/" hreflang="de" lang="de" title="Diese Seite auf Deutsch">DE</a>
     </nav>
 
     <div class="hero-grid">
       <div>
         <p class="eyebrow">Domain-Centric Development</p>
         <h1>The dom<span class="ai" title="yes, it is in there">ai</span>n at the center.<br>Everything else <span class="accent">points inward</span>.</h1>
-        <p class="lede">Keep business logic independent of frameworks. Domain-Centric Architecture
-        combines architectural guidance, executable checks and AI development tools for Java and .NET.</p>
+        <p class="lede">Business rules end up in controllers, database entities and service classes —
+        scattered, partly duplicated, with no single source of truth. An agent writing at speed gets there
+        in weeks. We put the business logic in the domain and let the build enforce it, in Java and .NET.</p>
+        <p class="gain"><span>What you get</span> what belongs together lives in one place and changes
+        together, a framework update leaves the business logic alone, the build names the boundary that
+        broke, and an agent is held to the same expectations as a colleague.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Add architecture checks</a>
           <span class="cta-break" aria-hidden="true"></span>
@@ -560,7 +572,7 @@ checkout.adapter.outgoing
       </article>
       <article class="card">
         <p class="tag">Knowledge catalog</p>
-        <h3>Machine-readable doctrine</h3>
+        <h3>Knowledge that travels, machine-readable</h3>
         <p>Point an agent at this instead of hoping it remembers: the guide text, the marker contracts
         and every rule as one cross-linked graph, so it builds from the catalog and cites the node it
         used. Over 500 typed nodes — rules, sections, templates, pitfalls, decisions, recipes —
@@ -678,7 +690,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <li>
         <span class="step-no">02</span>
         <div>
-          <h3>The doctrine is machine-readable</h3>
+          <h3>The knowledge is machine-readable</h3>
           <p>Guide text, marker contracts and every rule as one cross-linked graph in Open Knowledge
           Format. The agent builds from the catalog instead of from a half-remembered blog post — and
           cites the node it used.</p>
@@ -756,9 +768,10 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <a class="ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">reference</a>
       <a class="ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">catalog</a>
       <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">plugins</a>
+      <a href="de/" hreflang="de" lang="de">Deutsch</a>
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Blömer.
-    The doctrine is tool-agnostic: any LLM, any harness, any editor.<br>
+    The guide, the rules and the catalog are tool-agnostic: any LLM, any harness, any editor.<br>
     Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025. The architecture rules in every build are part of how that work is verified.</p>
   </div>
 </footer>
