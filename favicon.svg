@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 120 120" fill="none">
-  <!-- Favicon: simplified for 16-32px — hexagon boundary, context nodes, teal core.
-       Below ~20px browsers render this fine; the nodes merge into the boundary visually. -->
-  <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#1c2433" stroke-width="7" stroke-linejoin="round"/>
-  <circle cx="60" cy="20" r="10" fill="#1c2433"/>
-  <circle cx="94.6" cy="40" r="10" fill="#1c2433"/>
-  <circle cx="94.6" cy="80" r="10" fill="#1c2433"/>
-  <circle cx="60" cy="100" r="10" fill="#1c2433"/>
-  <circle cx="25.4" cy="80" r="10" fill="#1c2433"/>
-  <circle cx="25.4" cy="40" r="10" fill="#1c2433"/>
-  <circle cx="60" cy="60" r="15" fill="#148f96"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="36" viewBox="17.4 12 85.2 96" fill="none">
+  <!-- Favicon: the same drawing in the text cut (under 44 px) — heavier boundary, larger ports.
+       Ink on the light tab background, hence the 10 % heavier boundary. -->
+  <polygon points="60,20 94.6,40 94.6,80 60,100 25.4,80 25.4,40" stroke="#1c2433" stroke-width="7.7" stroke-linejoin="round"/>
+  <circle cx="60" cy="20" r="8" fill="#1c2433"/>
+  <circle cx="94.6" cy="40" r="8" fill="#1c2433"/>
+  <circle cx="94.6" cy="80" r="8" fill="#1c2433"/>
+  <circle cx="60" cy="100" r="8" fill="#1c2433"/>
+  <circle cx="25.4" cy="80" r="8" fill="#1c2433"/>
+  <circle cx="25.4" cy="40" r="8" fill="#1c2433"/>
+  <circle cx="60" cy="60" r="12" fill="#148f96"/>
 </svg>
