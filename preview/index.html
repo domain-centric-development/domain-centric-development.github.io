@@ -149,8 +149,10 @@
   .node-label { paint-order: stroke; stroke: var(--deep); stroke-width: 3px; stroke-linejoin: round; }
   .node-label { font-family: var(--mono); font-size: 7.5px; fill: rgba(232,234,240,0.75); }
   .leader { fill: none; stroke: rgba(232,234,240,0.4); stroke-width: 0.7; }
+  /* the leader lies over the boundary: a knock-out in the ground colour cuts the boundary where it crosses */
+  .leader-knockout { fill: none; stroke: var(--deep); stroke-width: 2.4; }
   @media (prefers-reduced-motion: no-preference) {
-    .node, .node-label, .leader { opacity: 0; animation: appear 0.5s ease-out forwards; animation-delay: 0.3s; }
+    .node, .node-label, .leader, .leader-knockout { opacity: 0; animation: appear 0.5s ease-out forwards; animation-delay: 0.3s; }
     @keyframes appear { to { opacity: 1; } }
     .node-label { animation-name: appear-label; }
     @keyframes appear-label { to { opacity: 0.9; } }
@@ -329,6 +331,7 @@
           <text class="node-label" x="16" y="85" text-anchor="end">mcp</text>
           <text class="node-label" x="16" y="37" text-anchor="end">scheduler</text>
           <!-- the core is named the way a drawing annotates: a fine leader line, the word set beside it -->
+          <polyline class="leader-knockout" points="54.5,52.5 30,16 16,16"/>
           <polyline class="leader" points="54.5,52.5 30,16 16,16"/>
           <text class="node-label" x="13" y="18.4" text-anchor="end">domain</text>
         </svg>
