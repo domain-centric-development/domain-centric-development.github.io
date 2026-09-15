@@ -151,11 +151,23 @@
   .leader { fill: none; stroke: rgba(232,234,240,0.4); stroke-width: 0.7; }
   /* the leader lies over the boundary: a knock-out in the ground colour cuts the boundary where it crosses */
   .leader-knockout { fill: none; stroke: var(--deep); stroke-width: 1.6; }
+  /* The drawing is annotated in order: the boundary stands, the ports appear clockwise from the
+     top, each label follows its port, and last the leader draws itself from the core outwards
+     and names it. Without motion everything stands at once. */
   @media (prefers-reduced-motion: no-preference) {
-    .node, .node-label, .leader, .leader-knockout { opacity: 0; animation: appear 0.5s ease-out forwards; animation-delay: 0.3s; }
-    @keyframes appear { to { opacity: 1; } }
+    .node, .node-label { opacity: 0; animation: appear 0.4s ease-out forwards; }
+    .node:nth-of-type(1) { animation-delay: 0.30s; } .node-label:nth-of-type(1) { animation-delay: 0.42s; }
+    .node:nth-of-type(2) { animation-delay: 0.38s; } .node-label:nth-of-type(2) { animation-delay: 0.50s; }
+    .node:nth-of-type(3) { animation-delay: 0.46s; } .node-label:nth-of-type(3) { animation-delay: 0.58s; }
+    .node:nth-of-type(4) { animation-delay: 0.54s; } .node-label:nth-of-type(4) { animation-delay: 0.66s; }
+    .node:nth-of-type(5) { animation-delay: 0.62s; } .node-label:nth-of-type(5) { animation-delay: 0.74s; }
+    .node:nth-of-type(6) { animation-delay: 0.70s; } .node-label:nth-of-type(6) { animation-delay: 0.82s; }
     .node-label { animation-name: appear-label; }
+    .node-label.core-name { animation-delay: 1.30s; }
+    .leader, .leader-knockout { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 0.4s ease-out 0.95s forwards; }
+    @keyframes appear { to { opacity: 1; } }
     @keyframes appear-label { to { opacity: 0.9; } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
   }
 
   /* ---------- dependency rule strip ---------- */
@@ -333,7 +345,7 @@
           <!-- the core is named the way a drawing annotates: a fine leader line, the word set beside it -->
           <polyline class="leader-knockout" points="54.5,52.5 30,16 16,16"/>
           <polyline class="leader" points="54.5,52.5 30,16 16,16"/>
-          <text class="node-label" x="13" y="18.4" text-anchor="end">domain</text>
+          <text class="node-label core-name" x="13" y="18.4" text-anchor="end">domain</text>
         </svg>
         <p class="caption">the mark is the architecture: one bounded context — adapters on the boundary, the domain at the core, a call coming in and its answers going out; neighbor contexts each with a core of their own</p>
       </div>
@@ -890,7 +902,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
     if (inFlight > 0) { setTimeout(loop, 150); return; }
     setTimeout(loop, call() + PAUSE * (0.6 + Math.random()));
   }
-  setTimeout(loop, 900);
+  setTimeout(loop, 1800); // after the drawing has annotated itself
 })();
 </script>
 
