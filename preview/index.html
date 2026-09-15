@@ -163,8 +163,8 @@
     .node:nth-of-type(5) { animation-delay: 0.86s; } .node-label:nth-of-type(5) { animation-delay: 0.98s; }
     .node:nth-of-type(6) { animation-delay: 1.00s; } .node-label:nth-of-type(6) { animation-delay: 1.12s; }
     .node-label { animation-name: appear-label; }
-    .node-label.core-name { animation-delay: 2.05s; }
-    .leader, .leader-knockout { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 0.4s ease-out 1.6s forwards; }
+    .node-label.core-name { animation-delay: 2.85s; }
+    .leader, .leader-knockout { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 0.4s ease-out 2.4s forwards; }
     @keyframes appear { to { opacity: 1; } }
     @keyframes appear-label { to { opacity: 0.9; } }
     @keyframes draw { to { stroke-dashoffset: 0; } }
@@ -902,7 +902,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
     if (inFlight > 0) { setTimeout(loop, 150); return; }
     setTimeout(loop, call() + PAUSE * (0.6 + Math.random()));
   }
-  setTimeout(loop, 2800); // after the drawing has annotated itself
+  setTimeout(loop, 4500); // after the drawing has annotated itself and had a moment to rest
 })();
 </script>
 
