@@ -264,6 +264,7 @@
   footer .note { width: 100%; margin-top: 18px; font-size: 15px; color: var(--muted); }
 
   @media (max-width: 960px) { .nav .sections { display: none; } .nav a.gh { margin-left: auto; } }
+  @media (max-width: 380px) { .nav .brand { font-size: 15px; } .nav a.gh { font-size: 12.5px; padding: 6px 9px; margin-left: 12px; } .nav a.lang { margin-left: 10px; } }
   @media (max-width: 860px) {
     .rule .chain { white-space: normal; font-size: 17px; }
     .hero-grid { grid-template-columns: 1fr; padding: 24px 0 64px; gap: 12px; }
@@ -314,11 +315,9 @@
         <p class="eyebrow">Domain-Centric Development</p>
         <h1>The dom<span class="ai" title="yes, it is in there">ai</span>n at the center.<br>Everything else <span class="accent">points inward</span>.</h1>
         <p class="lede">Business rules end up in controllers, database entities and service classes —
-        scattered, partly duplicated, with no single source of truth. We put them in the domain, the core
-        in the drawing; web, rest and persistence sit on the boundary as adapters and stay out. An
-        architecture test fails the build when technology reaches into the domain — in Java and .NET.
-        That keeps the software maintainable: business and technology are cleanly separated, and what
-        belongs together changes together.</p>
+        scattered, partly duplicated, with no single source of truth. Domain-Centric Architecture (DCA) places business rules in the domain; web,
+        REST and persistence are adapters outside it. An architecture test fails the build when
+        technology reaches into the domain — in Java and .NET.</p>
         <p class="gain"><span>What you get</span> a framework update leaves the business logic alone, the
         build names the boundary that broke, and an agent is held to the same expectations as a colleague.</p>
         <div class="cta-row">
@@ -403,7 +402,7 @@ Infrastructure
 selects  classes in *.domain..
 checks   no dependency on
          *.infrastructure..</pre>
-        <p>One of 113 rules with the same id in Java and .NET. It runs in the build, so the mistake is
+        <p>A structural rule shared by Java and .NET. It runs in the build, so the mistake is
         a red test rather than a review comment.</p>
       </div>
       <div class="step">
@@ -426,8 +425,7 @@ checkout.adapter.outgoing
     <p class="kicker">The guide</p>
     <h2>The decisions, before the code</h2>
     <p class="section-lede">Every pattern here was decided once and written down once. The guide is the
-    place those decisions live — short enough to read in an afternoon, structured so you can look one
-    thing up a year later.</p>
+    place those decisions live — short enough to read in an afternoon, structured for looking up individual decisions later.</p>
 
     <div class="cards">
       <article class="card">
@@ -453,8 +451,8 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Reading path</p>
         <h3>Three documents, in this order</h3>
-        <p><b>Elements</b> for the vocabulary, <b>Rules</b> for what the build will hold you to,
-        <b>Package structure</b> for where to put the file you are about to write. The rest is
+        <p><b>Elements</b> for the vocabulary, <b>Rules</b> for the constraints the build checks,
+        <b>Package structure</b> for where each file belongs. The rest is
         lookup.</p>
       </article>
     </div>
@@ -469,9 +467,8 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">The reference implementation</p>
     <h2>A shop that runs, not a snippet</h2>
-    <p class="section-lede">Every pattern in the guide is demonstrated in a working webshop — twice,
-    in Java and in .NET, with the same routes, the same markup and the same seed data. Either
-    end-user suite runs against either shop, so a difference in behaviour breaks a build.</p>
+    <p class="section-lede">Two working webshops demonstrate DCA, in Java and .NET, with the same routes,
+    markup and seed data. End-user tests check both implementations.</p>
 
     <div class="tabs">
       <div class="tabrow">
@@ -481,7 +478,7 @@ checkout.adapter.outgoing
         </div>
         <div class="viewswitch" role="group" aria-label="Screenshot size">
           <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
-          <button type="button" data-view="phone" aria-pressed="false">Phone</button>
+          <button type="button" data-view="phone" aria-pressed="false">Mobile</button>
         </div>
       </div>
 
@@ -490,7 +487,7 @@ checkout.adapter.outgoing
         <figure class="shot shot--desktop">
           <img src="assets/shop-java.webp" width="1800" height="1125"
                alt="The Java shop on a desktop browser: the domaincentric.commerce home page with its hero and an orange JAVA ribbon in the corner">
-          <figcaption>docker compose up --build &mdash; localhost:8080. The ribbon says which shop you are on.</figcaption>
+          <figcaption>docker compose up --build &mdash; localhost:8080. The ribbon says which stack is running.</figcaption>
         </figure>
         <figure class="shot shot--phone">
           <img src="assets/shop-java-mobile.webp" width="589" height="1200" loading="lazy"
@@ -502,8 +499,7 @@ checkout.adapter.outgoing
           publication registry as the outbox.</span></li>
           <li><b>8 bounded contexts</b><span>account, product, pricing, inventory, cart, checkout,
           portal, backoffice — each with its own model.</span></li>
-          <li><b>113 rules in the build</b><span><code>./gradlew test-architecture</code>. Break a
-          boundary and the build names the rule that caught you.</span></li>
+          <li><b>Architecture checks in the build</b><span><code>./gradlew test-architecture</code>. A boundary violation fails the build with the rule id.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">The Java shop on GitHub</a>
@@ -525,8 +521,7 @@ checkout.adapter.outgoing
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
           solution layout instead of a module system.</span></li>
-          <li><b>The same shop</b><span>same routes, same markup, same seed data — either end-user
-          suite runs against either shop.</span></li>
+          <li><b>The same shop</b><span>same routes, same markup; the end-user tests run against both shops.</span></li>
           <li><b>The same rule ids</b><span><code>dotnet test</code>, on ArchUnitNET. A finding means
           the same thing in both stacks, plus six <code>DCA-NET</code> rules that only exist here.</span></li>
         </ul>
@@ -549,17 +544,16 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Guide</p>
         <h3>The compact guide</h3>
-        <p>The decisions, once, in a form you can hand to a new team member or an agent: tactical DDD,
-        ports &amp; adapters, naming, package layout and what each rule is for. A few pages, not a book.</p>
+        <p>The guide documents the architectural decisions for team members and agents: tactical DDD,
+        ports &amp; adapters, naming, package layout and the purpose of each rule.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
       </article>
       <article class="card">
         <p class="tag">Building blocks</p>
         <h3>Markers and rules as libraries</h3>
-        <p>Add two dependencies and the architecture becomes a test your build runs. Marker interfaces
-        for the DDD and hexagonal building blocks, plus 113 rule identifiers shared by Java and .NET —
-        what each one selects and checks is documented per platform. The markers carry no dependencies;
-        frameworks appear only as presets. On Maven Central and NuGet.</p>
+        <p>The libraries provide marker interfaces for DDD and hexagonal Building Blocks, plus architecture
+        checks for Java and .NET. The markers have no dependencies; frameworks appear only as presets.
+        The libraries are available on Maven Central and NuGet.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
@@ -567,34 +561,31 @@ checkout.adapter.outgoing
         <p class="tag">Reference implementation · Java</p>
         <h3>A working webshop</h3>
         <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns — and the rule catalog
-        that fails the build when a structural rule is broken. Clone it, run it, break one and watch it happen.</p>
+        that fails the build when a structural rule is broken.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · .NET</p>
         <h3>The same shop, built twice</h3>
-        <p>ASP.NET Core, one project per bounded context, the same routes, markup and ubiquitous
-        language, the same six end-user flows. The style is demonstrated in two stacks rather than
-        argued.</p>
+        <p>ASP.NET Core, one project per bounded context and the same Ubiquitous Language as
+        the Java sample. It exists to answer one question: does DCA transfer to C# without changing the architecture?</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge catalog</p>
         <h3>Knowledge that travels, machine-readable</h3>
-        <p>Point an agent at this instead of hoping it remembers: the guide text, the marker contracts
-        and every rule as one cross-linked graph, so it builds from the catalog and cites the node it
-        used. Over 500 typed nodes — rules, sections, templates, pitfalls, decisions, recipes —
-        generated from the sources, never written by hand. Tool-agnostic.</p>
+        <p>The knowledge catalog combines the guide text, marker contracts and rules in one cross-linked graph
+        for agents to consult and cite. Over 500 typed nodes include rules, sections, templates,
+        pitfalls, decisions and recipes. The bundle is generated from its sources and is tool-agnostic.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Tooling</p>
-        <h3>Three plugins, plain skill folders</h3>
-        <p>Install the method instead of explaining it every session. <code>dca-core</code> bootstraps,
-        scaffolds and reviews; <code>dca-factory</code> runs one story from plan to documentation with a
-        gate between the stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs
-        without DCA assumptions. Plain skill folders — Claude Code, Codex and OpenCode read the same
-        ones.</p>
+        <h3>Three plugins distributed as plain skill folders</h3>
+        <p>The plugins package the method as skills. <code>dca-core</code> bootstraps, scaffolds and
+        reviews; <code>dca-factory</code> runs one story from plan to documentation with a gate between
+        stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs without DCA
+        assumptions. Claude Code, Codex and OpenCode read the same skill folders.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
@@ -606,7 +597,7 @@ checkout.adapter.outgoing
     <p class="kicker">Start small</p>
     <h2>One bootstrap, one architecture test</h2>
     <p class="section-lede">Adopting DCA does not begin with a rewrite. It begins with one test that
-    fails when a dependency points the wrong way — on the project you already have.</p>
+    fails when a dependency points the wrong way — in an existing project.</p>
 
     <div class="plate">
 <pre><span class="c"># in Claude Code — the same skill folders work in Codex and OpenCode</span>
@@ -633,7 +624,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <li>
         <span class="step-no">02</span>
         <div>
-          <h3>Select what you are ready for</h3>
+          <h3>Select the rules for the project</h3>
           <p>Rules come in sets and are selected per project. A rule that does not fit yet is switched
           off by id, in writing — not quietly ignored.</p>
         </div>
@@ -649,7 +640,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <li>
         <span class="step-no">04</span>
         <div>
-          <h3>Deliver through the pipeline, if you want it</h3>
+          <h3>Deliver through the optional pipeline</h3>
           <p>One story through plan, test, build, tidy, judge and document, with a gate between the
           stages that reads the project's own test reports rather than a stage's word for it. Optional:
           the architecture works without it.</p>
@@ -659,15 +650,12 @@ dotnet test                   <span class="c"># .NET — the architecture projec
 
     <div class="limits">
       <h3>What the checks do and do not show</h3>
-      <p>The rule suites check <b>structure</b>: where a type may live, what it may depend on, what it
-      must be named, which layer may reach which. 113 shared identifiers in Java and .NET, plus six
-      .NET-specific ones, each with its selector and its check written down — so a green run says
-      exactly which encoded expectations held, and the catalogs say which those were.</p>
-      <p>It does not say the domain model is correct, that the behaviour is right, or that a use case
-      does what the business meant. Those need behaviour tests, a domain expert and review — and the
-      rules mark what needs judgement as informational rather than quietly assuming it. Architecture
-      tests check structure; behaviour tests and domain review check whether the software does the
-      right thing.</p>
+      <p>The rule suites check <b>structure</b>: where a type may live, what it may depend on,
+      how it must be named and which layer may reach which. A green run means the selected checks
+      passed; the rule catalogs document their scope.</p>
+      <p>A green run does not establish that the domain model is correct or that a use case
+      does what the business meant. Those need behaviour tests, a domain expert and review. Rules
+      that need judgement are marked as informational.</p>
     </div>
   </div>
 </section>
@@ -676,11 +664,13 @@ dotnet test                   <span class="c"># .NET — the architecture projec
   <div class="wrap">
     <p class="kicker">Why it is built this way</p>
     <h2>Architecture an agent can be held to</h2>
-    <p class="section-lede">A model that writes fast needs a boundary it cannot argue with. The aim is
-    to make a non-deterministic writer produce a <em>deterministic result</em> wherever a machine can
-    decide it — the structure of the code, and the evidence that a criterion was red before it was
-    green. How repeatably an agent gets the <em>domain</em> right is not measured yet, and is not
-    claimed here.</p>
+    <p class="section-lede">DCA is the architecture: a synthesis of Hexagonal Architecture, Clean Architecture
+    and Domain-Driven Design, and the rule suite checks that the code keeps to it. Domain-Centric
+    Development is how software is built with it, with AI support from dca-factory and the knowledge
+    catalog. Domain-Centric Development aims for a
+    deterministic result wherever a machine can check it: code structure and evidence that an
+    acceptance test failed before it passed. How repeatably an agent gets the domain right is
+    not measured yet.</p>
 
     <ol class="steps">
       <li>
@@ -699,31 +689,27 @@ dotnet test                   <span class="c"># .NET — the architecture projec
         <span class="step-no">02</span>
         <div>
           <h3>The knowledge is machine-readable</h3>
-          <p>Guide text, marker contracts and every rule as one cross-linked graph in Open Knowledge
-          Format. The agent builds from the catalog instead of from a half-remembered blog post — and
-          cites the node it used.</p>
+          <p>The catalog connects guide text, marker contracts and rules in a graph.
+          Agents can look up the relevant node and cite it in their work.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>The pipeline decides, not the stage</h3>
-          <p>One story runs through plan, test, build, tidy, judge and document, each stage handing over
-          a file rather than a conversation. Between them sits a gate that is a script: one end-user test
-          per acceptance criterion, <b>red before green</b> read out of the runner's own report — an exit
-          code says how a process ended, not that a test ran — then the architecture suite and, at the
-          end, every documentation claim checked against the repository. No stage declares its own work
-          done; three rounds without convergence stop and ask a human.</p>
+          <p>A story runs through plan, test, build, tidy, judge and document, with a file
+          handed over at each stage. Gate scripts require an end-user test per acceptance criterion
+          and read red-before-green evidence from the test runner’s report; an exit code alone does
+          not show that a test ran. They also check the architecture suite and documentation claims
+          against the repository. Three rounds without convergence require human review.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>Two webshops, as evidence and as the experiment field</h3>
-          <p>The same shop in Java and .NET, drafted mainly by Claude, directed and reviewed by the
-          author, green against the shared rule ids and the same six flows. They also exist to find the
-          places where two agents build one story differently — each difference is a gap to close in a
-          rule, a marker or the catalog rather than in the code.</p>
+          <p>Two agents build the same story in both shops. Every difference between the two results
+          is a gap in a rule, a marker or the catalog, not in the code, and is closed there.</p>
         </div>
       </li>
     </ol>
@@ -733,17 +719,16 @@ dotnet test                   <span class="c"># .NET — the architecture projec
 <section id="principles" class="principles">
   <div class="wrap">
     <p class="kicker">Principles</p>
-    <h2>Opinionated where it pays, pragmatic where it doesn't</h2>
-    <p class="section-lede" style="color: rgba(232,234,240,0.8)">Conventions you can check: humans and
-    AI start from the same architectural expectations, and the ones that can be encoded are encoded.
-    The rest is named as a judgement call rather than assumed.</p>
+    <h2>Structural rules are checked; design choices need review</h2>
+    <p class="section-lede" style="color: rgba(232,234,240,0.8)">The rule suites encode structural conventions for developers and agents.
+    </p>
     <ul class="plist">
       <li><span class="dot"></span><div><b>Framework-free domain</b>
         <span>Business logic depends on nothing. Spring lives in adapters and infrastructure.</span></div></li>
       <li><span class="dot"></span><div><b>Ports &amp; adapters</b>
         <span>Use cases behind typed input ports; repositories, stores and publishers behind output ports.</span></div></li>
       <li><span class="dot"></span><div><b>Architecture as tests</b>
-        <span>Structural rules are executable tests — ArchUnit in Java, ArchUnitNET in .NET, same rule ids. What needs judgement is marked as review, not quietly assumed. Erosion fails the build, not the retrospective.</span></div></li>
+        <span>Structural rules are executable tests — ArchUnit in Java, ArchUnitNET in .NET, same rule ids. A structural violation fails the build.</span></div></li>
       <li><span class="dot"></span><div><b>Ubiquitous language</b>
         <span>Names come from the domain, per bounded context. The rules refuse technical suffixes on domain types — <code>Helper</code>, <code>Util</code>, <code>Impl</code> — and packages named after patterns instead of concepts. A domain word that happens to sound technical is not on that list.</span></div></li>
       <li><span class="dot"></span><div><b>Progressive complexity</b>
@@ -780,7 +765,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Blömer.
     The guide, the rules and the catalog are tool-agnostic: any LLM, any harness, any editor.<br>
-    Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025. The architecture rules in every build are part of how that work is verified.</p>
+    Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025.</p>
   </div>
 </footer>
 

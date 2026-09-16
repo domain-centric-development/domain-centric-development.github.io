@@ -264,6 +264,7 @@
   footer .note { width: 100%; margin-top: 18px; font-size: 15px; color: var(--muted); }
 
   @media (max-width: 960px) { .nav .sections { display: none; } .nav a.gh { margin-left: auto; } }
+  @media (max-width: 380px) { .nav .brand { font-size: 15px; } .nav a.gh { font-size: 12.5px; padding: 6px 9px; margin-left: 12px; } .nav a.lang { margin-left: 10px; } }
   @media (max-width: 860px) {
     .rule .chain { white-space: normal; font-size: 17px; }
     .hero-grid { grid-template-columns: 1fr; padding: 24px 0 64px; gap: 12px; }
@@ -314,11 +315,9 @@
         <p class="eyebrow">Domain-Centric Development</p>
         <h1>Die Domäne im Zentrum.<br>Alles andere <span class="accent">zeigt nach innen</span>.</h1>
         <p class="lede">Fachregeln landen in Controllern, Datenbank-Entities und Service-Klassen –
-        verstreut, teils doppelt, ohne eine Quelle der Wahrheit. Wir legen sie in die Domäne, den Kern in
-        der Zeichnung; web, rest, persistence sitzen als Adapter auf der Grenze und kommen nicht hinein.
-        Ein Architekturtest bricht den Build, wenn Technik in die Domäne greift – in Java und .NET. So
-        bleibt die Software wartbar: Fachlichkeit und Technik sind sauber getrennt, und was
-        zusammengehört, wird zusammen geändert.</p>
+        verstreut, teils doppelt, ohne eine Quelle der Wahrheit. Domain-Centric Architecture (DCA) legt Fachregeln in die Domäne; Web,
+        REST und Persistence liegen als Adapter außerhalb. Ein Architekturtest bricht den Build,
+        wenn Technik in die Domäne greift – in Java und .NET.</p>
         <p class="gain"><span>Was ihr davon habt</span> ein Framework-Update fasst die Fachlogik nicht an,
         der Build nennt die verletzte Grenze beim Namen, und ein Agent wird an denselben Erwartungen
         gemessen wie ein Kollege.</p>
@@ -404,7 +403,7 @@ Infrastructure
 selects  classes in *.domain..
 checks   no dependency on
          *.infrastructure..</pre>
-        <p>Eine von 113 Regeln mit derselben Id in Java und .NET. Sie läuft im Build, also ist der Fehler
+        <p>Eine Strukturregel, die Java und .NET teilen. Sie läuft im Build, also ist der Fehler
         ein roter Test und kein Review-Kommentar.</p>
       </div>
       <div class="step">
@@ -428,7 +427,7 @@ checkout.adapter.outgoing
     <h2>Die Entscheidungen, vor dem Code</h2>
     <p class="section-lede">Jedes Pattern hier wurde einmal entschieden und einmal aufgeschrieben. Der
     Guide ist der Ort, an dem diese Entscheidungen stehen – kurz genug für einen Nachmittag, so
-    gegliedert, dass ihr ein Jahr später eine Sache nachschlagen könnt.</p>
+    gegliedert, dass man eine Entscheidung später nachschlagen kann.</p>
 
     <div class="cards">
       <article class="card">
@@ -440,9 +439,9 @@ checkout.adapter.outgoing
       </article>
       <article class="card">
         <p class="tag">topics/</p>
-        <h3>Wo er auf einen Stack trifft</h3>
+        <h3>Wo DCA auf einen Stack trifft</h3>
         <p>Regeln mit ArchUnit erzwingen · Kontexte als Spring-Modulith-Module · dieselbe Architektur in
-        C#/.NET · was ihn von Clean Architecture unterscheidet · Deployment vom modularen Monolithen bis
+        C#/.NET · was DCA von Clean Architecture unterscheidet · Deployment vom modularen Monolithen bis
         zu Self-Contained Systems · Teams und Grenzen · End-User-Tests.</p>
       </article>
       <article class="card">
@@ -455,8 +454,8 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Lesereihenfolge</p>
         <h3>Drei Dokumente, in dieser Reihenfolge</h3>
-        <p><b>Elements</b> für das Vokabular, <b>Rules</b> für das, woran der Build euch messen wird,
-        <b>Package structure</b> für die Frage, wohin die Datei gehört, die ihr gerade schreibt. Der Rest
+        <p><b>Elements</b> für das Vokabular, <b>Rules</b> für die Vorgaben, die der Build prüft,
+        <b>Package structure</b> für die Zuordnung der Dateien. Der Rest
         ist Nachschlagen.</p>
       </article>
     </div>
@@ -471,9 +470,8 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Die Referenzimplementierung</p>
     <h2>Ein Shop, der läuft, kein Snippet</h2>
-    <p class="section-lede">Jedes Pattern aus dem Guide steht in einem laufenden Webshop – zweimal, in
-    Java und in .NET, mit denselben Routen, demselben Markup und denselben Stammdaten. Jede der beiden
-    End-User-Suiten läuft gegen jeden der beiden Shops; ein Unterschied im Verhalten bricht einen Build.</p>
+    <p class="section-lede">Zwei laufende Webshops zeigen DCA, in Java und .NET, mit denselben Routen,
+    demselben Markup und denselben Seed-Daten. End-User-Tests prüfen beide Implementierungen.</p>
 
     <div class="tabs">
       <div class="tabrow">
@@ -483,7 +481,7 @@ checkout.adapter.outgoing
         </div>
         <div class="viewswitch" role="group" aria-label="Screenshot-Größe">
           <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
-          <button type="button" data-view="phone" aria-pressed="false">Telefon</button>
+          <button type="button" data-view="phone" aria-pressed="false">Mobil</button>
         </div>
       </div>
 
@@ -491,12 +489,12 @@ checkout.adapter.outgoing
         <h3>Java · Spring Boot</h3>
         <figure class="shot shot--desktop">
           <img src="../assets/shop-java.webp" width="1800" height="1125"
-               alt="Der Java-Shop im Desktop-Browser: die Startseite von domaincentric.commerce mit Hero und einer orangen JAVA-Banderole in der Ecke">
-          <figcaption>docker compose up --build &mdash; localhost:8080. Die Banderole sagt, in welchem Shop ihr seid.</figcaption>
+               alt="Der Java-Shop im Desktop-Browser: die Startseite von domaincentric.commerce mit Hero und einer orangen JAVA-Markierung in der Ecke">
+          <figcaption>docker compose up --build &mdash; localhost:8080. Die Markierung zeigt den laufenden Stack.</figcaption>
         </figure>
         <figure class="shot shot--phone">
           <img src="../assets/shop-java-mobile.webp" width="589" height="1200" loading="lazy"
-               alt="Derselbe Java-Shop auf dem Telefon: das Logo in einer eigenen Zeile, alle Links darunter, die orange JAVA-Marke oben rechts">
+               alt="Derselbe Java-Shop auf dem Smartphone: das Logo in einer eigenen Zeile, alle Links darunter, die orange JAVA-Marke oben rechts">
           <figcaption>Dieselbe Seite bei 393&nbsp;px &mdash; Links unter dem Logo, die Stack-Marke in der Ecke.</figcaption>
         </figure>
         <ul class="facts">
@@ -504,8 +502,7 @@ checkout.adapter.outgoing
           Registry als Outbox.</span></li>
           <li><b>8 Bounded Contexts</b><span>account, product, pricing, inventory, cart, checkout, portal,
           backoffice – jeder mit eigenem Modell.</span></li>
-          <li><b>113 Regeln im Build</b><span><code>./gradlew test-architecture</code>. Verletzt eine Grenze,
-          und der Build nennt die Regel, die euch erwischt hat.</span></li>
+          <li><b>Architekturprüfungen im Build</b><span><code>./gradlew test-architecture</code>. Eine Grenzverletzung bricht den Build mit der Regel-Id.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">Der Java-Shop auf GitHub</a>
@@ -516,19 +513,18 @@ checkout.adapter.outgoing
         <h3>.NET · ASP.NET Core</h3>
         <figure class="shot shot--desktop">
           <img src="../assets/shop-dotnet.webp" width="1800" height="1125" loading="lazy"
-               alt="Der .NET-Shop im Desktop-Browser: die Startseite von domaincentric.commerce mit Hero und einer violetten .NET-Banderole in der Ecke">
+               alt="Der .NET-Shop im Desktop-Browser: die Startseite von domaincentric.commerce mit Hero und einer violetten .NET-Markierung in der Ecke">
           <figcaption>docker compose up --build &mdash; localhost:5080. Dieselbe Seite, bis in die Formulierung.</figcaption>
         </figure>
         <figure class="shot shot--phone">
           <img src="../assets/shop-dotnet-mobile.webp" width="589" height="1200" loading="lazy"
-               alt="Derselbe .NET-Shop auf dem Telefon: das Logo in einer eigenen Zeile, alle Links darunter, die violette .NET-Marke oben rechts">
+               alt="Derselbe .NET-Shop auf dem Smartphone: das Logo in einer eigenen Zeile, alle Links darunter, die violette .NET-Marke oben rechts">
           <figcaption>Dieselbe Seite bei 393&nbsp;px &mdash; Links unter dem Logo, die Stack-Marke in der Ecke.</figcaption>
         </figure>
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>ein Projekt pro Bounded Context; die Grenzen trägt das Solution-Layout
           statt eines Modulsystems.</span></li>
-          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup, dieselben Stammdaten – jede
-          End-User-Suite läuft gegen jeden Shop.</span></li>
+          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup; die End-User-Tests laufen gegen beide Shops.</span></li>
           <li><b>Dieselben Regel-Ids</b><span><code>dotnet test</code>, auf ArchUnitNET. Ein Befund heißt in
           beiden Stacks dasselbe, dazu sechs <code>DCA-NET</code>-Regeln, die es nur hier gibt.</span></li>
         </ul>
@@ -552,19 +548,17 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Guide</p>
         <h3>Der kompakte Guide</h3>
-        <p>Die Entscheidungen, einmal, in einer Form, die ihr einem neuen Kollegen oder einem Agenten in
-        die Hand geben könnt: taktisches DDD, Ports &amp; Adapter, Benennung, Package-Layout und wofür
-        jede Regel da ist. Ein paar Seiten, kein Buch.</p>
+        <p>Der Guide dokumentiert die Architekturentscheidungen für Kollegen und Agenten: taktisches
+        DDD, Ports &amp; Adapter, Benennung, Package-Layout und den Zweck jeder Regel.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
       </article>
       <article class="card">
         <p class="tag">Building Blocks</p>
         <h3>Marker und Regeln als Bibliotheken</h3>
-        <p>Zwei Dependencies, und die Architektur wird zu einem Test, den euer Build ausführt.
-        Marker-Interfaces für die Bausteine aus DDD und Hexagonaler Architektur, dazu 113 Regel-Ids,
-        die Java und .NET teilen – was jede selektiert und prüft, steht je Plattform dokumentiert. Die
-        Marker haben keine Abhängigkeiten; Frameworks tauchen nur als Presets auf. Auf Maven Central
-        und NuGet.</p>
+        <p>Die Bibliotheken liefern Marker-Interfaces für die Building Blocks aus DDD und Hexagonaler
+        Architektur sowie Architekturprüfungen für Java und .NET. Die Marker haben keine
+        Abhängigkeiten; Frameworks tauchen nur als Presets auf. Die Bibliotheken sind auf
+        Maven Central und NuGet verfügbar.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
@@ -572,36 +566,33 @@ checkout.adapter.outgoing
         <p class="tag">Referenzimplementierung · Java</p>
         <h3>Ein laufender Webshop</h3>
         <p>Java 25, Spring Boot 4, acht Bounded Contexts, alle taktischen Patterns – und der Regelkatalog,
-        der den Build bricht, wenn eine Strukturregel verletzt ist. Klonen, starten, eine Regel brechen
-        und zusehen.</p>
+        der den Build bricht, wenn eine Strukturregel verletzt ist.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Referenzimplementierung · .NET</p>
         <h3>Derselbe Shop, zweimal gebaut</h3>
-        <p>ASP.NET Core, ein Projekt pro Bounded Context, dieselben Routen, dasselbe Markup, dieselbe
-        Ubiquitous Language, dieselben sechs End-User-Flows. Der Stil wird in zwei Stacks gezeigt statt
-        behauptet.</p>
+        <p>ASP.NET Core, ein Projekt pro Bounded Context und dieselbe Ubiquitous Language wie
+        im Java-Sample. Er beantwortet eine Frage: lässt sich DCA auf C# übertragen, ohne die
+        Architektur zu ändern?</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge Catalog</p>
         <h3>Wissen, das mitkommt – maschinenlesbar</h3>
-        <p>Zeigt dem Agenten hierauf, statt zu hoffen, dass er sich erinnert: der Text des Guides, die
-        Marker-Verträge und jede Regel als ein verlinkter Graph, damit er aus dem Katalog baut und den
-        Knoten nennt, den er benutzt hat. Über 500 typisierte Knoten – Regeln, Abschnitte, Vorlagen,
-        Pitfalls, Entscheidungen, Rezepte – aus den Quellen generiert, nie von Hand geschrieben.
-        Unabhängig vom Werkzeug.</p>
+        <p>Der Knowledge Catalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph, den Agenten nachschlagen und zitieren können. Über 500 typisierte Knoten enthalten
+        Regeln, Abschnitte, Templates, Pitfalls, Entscheidungen und Rezepte. Das Bundle wird aus
+        seinen Quellen generiert und ist unabhängig vom Werkzeug.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Werkzeuge</p>
-        <h3>Drei Plugins, einfache Skill-Ordner</h3>
-        <p>Installiert die Methode, statt sie in jeder Session neu zu erklären. <code>dca-core</code>
-        bootstrappt, scaffoldet und reviewt; <code>dca-factory</code> führt eine Story vom Plan bis zur
-        Dokumentation, mit einem Gate zwischen den Stufen; <code>software-craftsmanship</code> bringt
-        TDD, Clean Code und ADRs ohne DCA-Annahmen mit. Einfache Skill-Ordner – Claude Code, Codex und
-        OpenCode lesen dieselben.</p>
+        <h3>Drei Plugins als einfache Skill-Ordner</h3>
+        <p>Die Plugins liefern die Methode als Skills. <code>dca-core</code> richtet ein, legt
+        Strukturen an und reviewt; <code>dca-factory</code> führt eine Story vom Plan bis zur
+        Dokumentation mit einem Gate zwischen den Stufen; <code>software-craftsmanship</code> bringt
+        TDD, Clean Code und ADRs ohne DCA-Annahmen mit. Claude Code, Codex und OpenCode lesen
+        dieselben Skill-Ordner.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
@@ -613,8 +604,7 @@ checkout.adapter.outgoing
     <p class="kicker">Klein anfangen</p>
     <h2>Ein Bootstrap, ein Architekturtest</h2>
     <p class="section-lede">DCA einzuführen beginnt nicht mit einem Rewrite. Es beginnt mit einem Test,
-    der rot wird, wenn eine Abhängigkeit in die falsche Richtung zeigt – in dem Projekt, das ihr schon
-    habt.</p>
+    der rot wird, wenn eine Abhängigkeit in die falsche Richtung zeigt – in einem bestehenden Projekt.</p>
 
     <div class="plate">
 <pre><span class="c"># in Claude Code – dieselben Skill-Ordner funktionieren in Codex und OpenCode</span>
@@ -641,7 +631,7 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
       <li>
         <span class="step-no">02</span>
         <div>
-          <h3>Wählen, wofür ihr bereit seid</h3>
+          <h3>Regeln für das Projekt auswählen</h3>
           <p>Regeln kommen in Sets und werden je Projekt ausgewählt. Eine Regel, die noch nicht passt,
           wird per Id abgeschaltet, schriftlich – nicht stillschweigend ignoriert.</p>
         </div>
@@ -657,7 +647,7 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
       <li>
         <span class="step-no">04</span>
         <div>
-          <h3>Über die Pipeline liefern, wenn ihr wollt</h3>
+          <h3>Über die optionale Pipeline liefern</h3>
           <p>Eine Story durch Plan, Test, Build, Tidy, Judge und Document, mit einem Gate zwischen den
           Stufen, das die Testberichte des Projekts liest statt dem Wort einer Stufe zu glauben. Optional:
           die Architektur funktioniert auch ohne.</p>
@@ -667,15 +657,12 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
 
     <div class="limits">
       <h3>Was die Prüfungen zeigen und was nicht</h3>
-      <p>Die Regel-Suiten prüfen <b>Struktur</b>: wo ein Typ liegen darf, wovon er abhängen darf, wie er
-      heißen muss, welcher Layer welchen erreichen darf. 113 gemeinsame Ids in Java und .NET, dazu sechs
-      nur für .NET, jede mit Selektor und Prüfung aufgeschrieben – ein grüner Lauf sagt also genau,
-      welche kodierten Erwartungen gehalten haben, und die Kataloge sagen, welche das waren.</p>
-      <p>Sie sagen nicht, dass das Domänenmodell richtig ist, dass das Verhalten stimmt oder dass ein
-      Use Case tut, was das Business gemeint hat. Dafür braucht es Verhaltenstests, einen Fachexperten
-      und Review – und die Regeln markieren, was Urteil braucht, als informativ, statt es stillschweigend
-      anzunehmen. Architekturtests prüfen Struktur; Verhaltenstests und fachliches Review prüfen, ob die
-      Software das Richtige tut.</p>
+      <p>Die Rule Suites prüfen <b>Struktur</b>: wo ein Typ liegen darf, wovon er abhängen
+      darf, wie er heißen muss und welcher Layer welchen erreichen darf. Ein grüner Lauf bedeutet,
+      dass die ausgewählten Prüfungen bestanden wurden. Die Regelkataloge dokumentieren ihren Umfang.</p>
+      <p>Ein grüner Lauf belegt nicht, dass das Domänenmodell richtig ist oder ein Use Case
+      tut, was das Business gemeint hat. Dafür braucht es Verhaltenstests, einen Fachexperten und
+      Review. Regeln, die eine fachliche Beurteilung brauchen, sind als informativ markiert.</p>
     </div>
   </div>
 </section>
@@ -684,11 +671,13 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
   <div class="wrap">
     <p class="kicker">Warum es so gebaut ist</p>
     <h2>Architektur, an der man einen Agenten messen kann</h2>
-    <p class="section-lede">Ein Modell, das schnell schreibt, braucht eine Grenze, mit der es nicht
-    diskutieren kann. Das Ziel: Ein nichtdeterministischer Schreiber liefert überall dort ein
-    <em>deterministisches Ergebnis</em>, wo eine Maschine es entscheiden kann – die Struktur des Codes
-    und der Nachweis, dass ein Kriterium rot war, bevor es grün wurde. Wie verlässlich ein Agent die
-    <em>Domäne</em> richtig trifft, ist noch nicht gemessen und wird hier nicht behauptet.</p>
+    <p class="section-lede">DCA ist die Architektur: eine Synthese aus Hexagonaler Architektur, Clean Architecture
+    und Domain-Driven Design; die Rule Suite prüft, ob der Code sie einhält. Domain-Centric Development
+    ist die Art, damit zu entwickeln, KI-gestützt mit dca-factory und dem Knowledge Catalog.
+    Das Ziel von Domain-Centric Development ist ein
+    deterministisches Ergebnis dort, wo eine Maschine es prüfen kann: die Codestruktur und der
+    Nachweis, dass ein Akzeptanztest rot war, bevor er grün wurde. Wie verlässlich ein Agent die
+    Domäne richtig trifft, ist noch nicht gemessen.</p>
 
     <ol class="steps">
       <li>
@@ -707,31 +696,29 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
         <span class="step-no">02</span>
         <div>
           <h3>Das Wissen ist maschinenlesbar</h3>
-          <p>Guide-Text, Marker-Verträge und jede Regel als ein verlinkter Graph im Open Knowledge Format.
-          Der Agent baut aus dem Katalog statt aus einem halb erinnerten Blogpost – und nennt den Knoten,
-          den er benutzt hat.</p>
+          <p>Der Katalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph.
+          Agenten können den passenden Knoten nachschlagen und in ihrer Arbeit zitieren.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>Die Pipeline entscheidet, nicht die Stufe</h3>
-          <p>Eine Story läuft durch Plan, Test, Build, Tidy, Judge und Document; jede Stufe übergibt eine
-          Datei statt eines Gesprächs. Dazwischen sitzt ein Gate, das ein Skript ist: ein End-User-Test je
-          Akzeptanzkriterium, <b>rot vor grün</b>, gelesen aus dem Bericht des Test-Runners – ein Exit-Code
-          sagt, wie ein Prozess endete, nicht, dass ein Test lief –, dann die Architektur-Suite und am Ende
-          jede Aussage der Dokumentation gegen das Repository geprüft. Keine Stufe erklärt ihre eigene
-          Arbeit für fertig; drei Runden ohne Annäherung halten an und fragen einen Menschen.</p>
+          <p>Eine Story läuft durch Plan, Test, Build, Tidy, Judge und Document. Jede Stufe
+          übergibt eine Datei. Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und
+          lesen den Nachweis für rot vor grün aus dem Bericht des Test-Runners; ein Exit-Code allein
+          belegt nicht, dass ein Test lief. Sie prüfen außerdem die Architektur-Suite und Aussagen
+          der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
+          ein menschliches Review.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>Zwei Webshops, als Beleg und als Experimentierfeld</h3>
-          <p>Derselbe Shop in Java und .NET, hauptsächlich von Claude geschrieben, vom Autor gesteuert und
-          reviewt, grün gegen die gemeinsamen Regel-Ids und dieselben sechs Flows. Sie sind auch da, um die
-          Stellen zu finden, an denen zwei Agenten eine Story unterschiedlich bauen – jeder Unterschied ist
-          eine Lücke, die in einer Regel, einem Marker oder dem Katalog zu schließen ist, nicht im Code.</p>
+          <p>Zwei Agenten bauen dieselbe Story in beiden Shops. Jeder Unterschied zwischen den beiden
+          Ergebnissen ist eine Lücke in einer Regel, einem Marker oder dem Katalog, nicht im Code, und
+          wird dort geschlossen.</p>
         </div>
       </li>
     </ol>
@@ -741,23 +728,21 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
 <section id="principles" class="principles">
   <div class="wrap">
     <p class="kicker">Prinzipien</p>
-    <h2>Streng, wo es sich auszahlt, pragmatisch, wo nicht</h2>
-    <p class="section-lede" style="color: rgba(232,234,240,0.8)">Konventionen, die sich prüfen lassen:
-    Menschen und KI gehen von denselben Architekturerwartungen aus, und was sich kodieren lässt, ist
-    kodiert. Der Rest wird als Ermessensfrage benannt, nicht angenommen.</p>
+    <h2>Strukturregeln werden geprüft; Designentscheidungen brauchen Review</h2>
+    <p class="section-lede" style="color: rgba(232,234,240,0.8)">Die Rule Suites kodieren Strukturkonventionen für Entwickler und Agenten.</p>
     <ul class="plist">
       <li><span class="dot"></span><div><b>Domäne ohne Framework</b>
         <span>Die Fachlogik hängt von nichts ab. Spring lebt in Adaptern und Infrastruktur.</span></div></li>
       <li><span class="dot"></span><div><b>Ports &amp; Adapter</b>
         <span>Use Cases hinter typisierten Input Ports; Repositories, Stores und Publisher hinter Output Ports.</span></div></li>
       <li><span class="dot"></span><div><b>Architektur als Tests</b>
-        <span>Strukturregeln sind ausführbare Tests – ArchUnit in Java, ArchUnitNET in .NET, dieselben Regel-Ids. Was Urteil braucht, ist als Review markiert, nicht stillschweigend angenommen. Erosion bricht den Build, nicht die Retrospektive.</span></div></li>
+        <span>Strukturregeln sind ausführbare Tests – ArchUnit in Java, ArchUnitNET in .NET, dieselben Regel-Ids. Eine Strukturverletzung bricht den Build.</span></div></li>
       <li><span class="dot"></span><div><b>Ubiquitous Language</b>
         <span>Namen kommen aus der Domäne, je Bounded Context. Die Regeln verweigern technische Suffixe an Domänentypen – <code>Helper</code>, <code>Util</code>, <code>Impl</code> – und Packages, die nach Patterns statt nach Begriffen heißen. Ein Fachwort, das zufällig technisch klingt, steht nicht auf der Liste.</span></div></li>
       <li><span class="dot"></span><div><b>Schrittweise Komplexität</b>
         <span>Vier Layer und eine einheitliche Tiefe im Application Layer: Use Cases liegen flach darunter oder gruppiert in fachlich benannten Features. <code>DCA-USE-014</code> akzeptiert beides und verweigert die Mischung in einem Modul – die Wahl ist Sache des Projekts, die Konsistenz wird geprüft.</span></div></li>
-      <li><span class="dot"></span><div><b>Pattern-Wahl je Subdomäne</b>
-        <span>Kern-Subdomänen bekommen den ganzen taktischen Werkzeugkasten; unterstützende dürfen einfach bleiben.</span></div></li>
+      <li><span class="dot"></span><div><b>Pattern-Wahl je Subdomain</b>
+        <span>Core Subdomains bekommen die taktischen DDD-Patterns; Supporting Subdomains dürfen einfach bleiben.</span></div></li>
     </ul>
   </div>
 </section>
@@ -788,7 +773,7 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
     </nav>
     <p class="note">Domain-Centric Development ist ein offenes Projekt von Christoph Blömer.
     Guide, Regeln und Katalog sind unabhängig vom Werkzeug: jedes LLM, jeder Harness, jeder Editor.<br>
-    Mit KI geschrieben – überwiegend von Claude formuliert, vom Autor seit 2025 gesteuert und reviewt. Die Architekturregeln in jedem Build sind Teil davon, wie diese Arbeit geprüft wird.</p>
+    Mit KI geschrieben – überwiegend von Claude formuliert, vom Autor seit 2025 gesteuert und reviewt.</p>
   </div>
 </footer>
 
