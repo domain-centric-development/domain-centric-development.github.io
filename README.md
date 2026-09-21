@@ -1,40 +1,48 @@
 # domaincentric.dev
 
-Statische Landing Page für Domain-Centric Development. Eine Datei, kein Build.
+Statische Landing Page für Domain-Centric Development in zwei Sprachen. Kein Build, keine
+Abhängigkeiten außer den Google Fonts.
 
-## Deployment (GitHub Pages)
+## Dateien
 
-1. Repo anlegen (z. B. `domain-centric-development/website` oder
-   `domain-centric-development/domain-centric-development.github.io`) und diesen
-   Ordner pushen (`index.html`, `favicon.svg`, `CNAME`).
-2. Repo → Settings → Pages → Source: `main`, root.
-3. Custom Domain: `domaincentric.dev` eintragen (die `CNAME`-Datei liegt schon bei).
-4. **DNS beim Registrar** (Apex-Domain → A/AAAA auf GitHub Pages):
+| Pfad | Inhalt |
+|---|---|
+| `index.html` | englische Seite, kanonisch unter `https://domaincentric.dev/` |
+| `de/index.html` | deutsche Seite unter `/de/`; beide tragen `hreflang`-Alternates und den Sprachwechsel in Nav und Footer |
+| `assets/` | `og-image.png` (1200 × 630) und die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) |
+| `favicon.svg`, `CNAME` | Marke und Domain für GitHub Pages |
 
-   ```
-   A     @    185.199.108.153
-   A     @    185.199.109.153
-   A     @    185.199.110.153
-   A     @    185.199.111.153
-   AAAA  @    2606:50c0:8000::153
-   AAAA  @    2606:50c0:8001::153
-   AAAA  @    2606:50c0:8002::153
-   AAAA  @    2606:50c0:8003::153
-   CNAME www  <org>.github.io.
-   ```
+## Veröffentlichung
 
-5. In den Pages-Settings „Enforce HTTPS" aktivieren, sobald das Zertifikat
-   provisioniert ist (automatisch via Let's Encrypt; .dev erzwingt HTTPS ohnehin).
+`domaincentric.dev` läuft bereits über GitHub Pages aus dem Repo
+`domain-centric-development/domain-centric-development.github.io` (Checkout: `../website-placeholder`),
+Branch `main`, Root, CNAME und HTTPS eingerichtet. Dort liegt heute der Platzhalter; diese Seite ist
+unter `/preview/` und `/preview/de/` mit `noindex, nofollow` erreichbar.
+
+Dieses Repo hat kein Remote. Veröffentlichen heißt: Inhalt dieses Repos in das Pages-Repo übernehmen
+und den Platzhalter ersetzen. Die Entscheidung dazu ist offen.
 
 ## Pflege
 
-- Farben/Typo folgen `../branding/README.md` (Teal `#148f96`, Space Grotesk + Newsreader + JetBrains Mono).
-- Die Karte „Knowledge catalog" hat noch keinen Link — nachtragen, sobald das
-  Catalog-Repo ein öffentliches Remote hat.
-- GitHub-Links zeigen seit 2026-08-31 auf `domain-centric-development/*`. Einzige
-  Ausnahme: `dca-marketplace` liegt noch unter `chbloemer/` (Transfer offen, WP-01) —
-  nach dem Umzug nachziehen.
-- Stand der Artefakt-Karten (6): Guide, Building Blocks (`dca-java` auf Maven Central
-  `0.1.0` + `dca-dotnet`), Java-Sample, .NET-Sample, Knowledge Catalog (coming soon),
-  Tooling. NuGet-Release für `dca-dotnet` steht noch aus — erst dann die Karte um
-  Paketkoordinaten ergänzen.
+- **Zwei Sprachen, vier Dateien.** Jede Textänderung geht in `index.html`, `de/index.html` und in die
+  beiden Kopien unter `../website-placeholder/preview/`. Die Kopien unterscheiden sich von den Quellen
+  nur durch die `noindex`-Zeile; `diff <(grep -v noindex preview/index.html) index.html` muss leer sein.
+- **Stimme.** Prosa folgt `../branding/voice.md`: konkrete Subjekte (DCA, Guide, Tests, Plugins), kein
+  Projekt-„wir“, „you/ihr“ nur für Nutzen und Einstieg, Fachbegriffe englisch, keine Sprüche. Der Hero
+  schreibt „Domain-Centric Architecture (DCA)“ einmal aus; der Abschnitt „Why it is built this way“
+  erklärt den Unterschied zu Domain-Centric Development.
+- **Gestaltung.** Farben und Schriften nach `../branding/README.md`: Teal `#148f96`, Space Grotesk,
+  Newsreader, JetBrains Mono. Die Marke ist der Hex Graph ohne Speichen.
+- **Zahlen sind geprüft.** 113 gemeinsame Regel-Ids (Java: 108 erzwungen, 5 informativ), .NET 119
+  (112 erzwungen, 4 informativ, 3 nicht anwendbar) aus `rules.json` der Bibliotheken; „über 500 Knoten“
+  aus `manifest.json` des Katalog-Bundles (545). Vor einer Änderung der Zahl die Quelle lesen.
+- **Layout.** Unter 960 px verschwinden die Abschnittslinks, unter 380 px schrumpft der Header, damit
+  der Sprachwechsel bei 320 px im Bild bleibt. Nach Änderungen am Header bei 320, 390 und 1280 px
+  prüfen; die Seite darf nie horizontal scrollen.
+
+## Stand der Artefakt-Karten
+
+Sechs Karten: Guide, Building Blocks (`dca-java` auf Maven Central, `dca-dotnet` auf NuGet),
+Java-Sample, .NET-Sample, Knowledge Catalog, Tooling (`dca-marketplace`). Alle Links zeigen auf
+`github.com/domain-centric-development/*`; die Regel-Links auf die `RULES.md` von `dca-java` und
+`dca-dotnet`.
