@@ -318,7 +318,7 @@
         verstreut, teils doppelt, ohne eine Quelle der Wahrheit. Domain-Centric Architecture (DCA) legt Fachregeln in die Domäne; Web,
         REST und Persistence liegen als Adapter außerhalb. Ein Architekturtest bricht den Build,
         wenn Technik in die Domäne greift – in Java und .NET.</p>
-        <p class="gain"><span>Was ihr davon habt</span> ein Framework-Update fasst die Fachlogik nicht an,
+        <p class="gain"><span>Was ihr davon habt</span> ein Framework-Update reicht nicht in die Domäne,
         der Build nennt die verletzte Grenze beim Namen, und ein Agent wird an denselben Erwartungen
         gemessen wie ein Kollege.</p>
         <div class="cta-row">
@@ -524,7 +524,8 @@ checkout.adapter.outgoing
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>ein Projekt pro Bounded Context; die Grenzen trägt das Solution-Layout
           statt eines Modulsystems.</span></li>
-          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup; die End-User-Tests laufen gegen beide Shops.</span></li>
+          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup; zwei gespiegelte End-User-Suiten
+          über dieselben 22 Szenarien, eine pro Shop.</span></li>
           <li><b>Dieselben Regel-Ids</b><span><code>dotnet test</code>, auf ArchUnitNET. Ein Befund heißt in
           beiden Stacks dasselbe, dazu sechs <code>DCA-NET</code>-Regeln, die es nur hier gibt.</span></li>
         </ul>
@@ -541,8 +542,8 @@ checkout.adapter.outgoing
     <p class="kicker">Eine Architektur, sechs Artefakte</p>
     <h2>Alles beschreibt dasselbe System</h2>
     <p class="section-lede">Guide, Building Blocks, zwei Referenzimplementierungen, Knowledge Catalog und
-    Werkzeuge werden miteinander konsistent gehalten – ändert sich ein Pattern in einem, ziehen die
-    anderen nach.</p>
+    Werkzeuge beschreiben ein System. Der Knowledge Catalog wird aus Guide und Regeln generiert, kann von
+    ihnen also nicht abweichen; den Rest in Deckung zu halten ist Pflegearbeit, keine Automatik.</p>
 
     <div class="cards">
       <article class="card">
@@ -716,9 +717,10 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
         <span class="step-no">04</span>
         <div>
           <h3>Zwei Webshops, als Beleg und als Experimentierfeld</h3>
-          <p>Zwei Agenten bauen dieselbe Story in beiden Shops. Jeder Unterschied zwischen den beiden
-          Ergebnissen ist eine Lücke in einer Regel, einem Marker oder dem Katalog, nicht im Code, und
-          wird dort geschlossen.</p>
+          <p>Dieselbe Story wurde am 10. September 2026 einmal pro Stack von einem Agenten gebaut. Dabei
+          traten zwei Abweichungen zwischen den Ergebnissen auf – geschlossen wurden beide in einer Regel und
+          im Katalog, nicht im Shop-Code. Genau dafür ist das Paar da: ein Unterschied zwischen den
+          Implementierungen zeigt auf eine Lücke in den gemeinsamen Artefakten.</p>
         </div>
       </li>
     </ol>
@@ -772,7 +774,9 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
       <a href="../" hreflang="en" lang="en">English</a>
     </nav>
     <p class="note">Domain-Centric Development ist ein offenes Projekt von Christoph Blömer.
-    Guide, Regeln und Katalog sind unabhängig vom Werkzeug: jedes LLM, jeder Harness, jeder Editor.<br>
+    Guide, Regeln und Katalog sind einfache Dateien – Markdown und Bibliotheken, die jeder Build aufrufen
+    kann; nichts davon bindet euch an einen Editor oder einen Assistenten. Gebaut und getestet mit Claude
+    Code; andere Harnesses sind noch nicht durchgängig erprobt.<br>
     Mit KI geschrieben – überwiegend von Claude formuliert, vom Autor seit 2025 gesteuert und reviewt.</p>
   </div>
 </footer>

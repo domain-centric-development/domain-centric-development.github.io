@@ -318,7 +318,7 @@
         scattered, partly duplicated, with no single source of truth. Domain-Centric Architecture (DCA) places business rules in the domain; web,
         REST and persistence are adapters outside it. An architecture test fails the build when
         technology reaches into the domain — in Java and .NET.</p>
-        <p class="gain"><span>What you get</span> a framework update leaves the business logic alone, the
+        <p class="gain"><span>What you get</span> a framework update does not reach the domain, the
         build names the boundary that broke, and an agent is held to the same expectations as a colleague.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Add architecture checks</a>
@@ -521,7 +521,8 @@ checkout.adapter.outgoing
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
           solution layout instead of a module system.</span></li>
-          <li><b>The same shop</b><span>same routes, same markup; the end-user tests run against both shops.</span></li>
+          <li><b>The same shop</b><span>same routes, same markup; two mirrored end-user suites covering the
+          same 22 scenarios, one per shop.</span></li>
           <li><b>The same rule ids</b><span><code>dotnet test</code>, on ArchUnitNET. A finding means
           the same thing in both stacks, plus six <code>DCA-NET</code> rules that only exist here.</span></li>
         </ul>
@@ -538,7 +539,8 @@ checkout.adapter.outgoing
     <p class="kicker">One architecture, six artifacts</p>
     <h2>Everything describes the same system</h2>
     <p class="section-lede">Guide, building blocks, two reference implementations, knowledge catalog and
-    tooling are kept consistent with each other — change a pattern in one, and the others follow.</p>
+    tooling describe one system. The knowledge catalog is generated from the guide and the rules, so it
+    cannot drift from them; keeping the rest in step is maintenance work, not automation.</p>
 
     <div class="cards">
       <article class="card">
@@ -708,8 +710,10 @@ dotnet test                   <span class="c"># .NET — the architecture projec
         <span class="step-no">04</span>
         <div>
           <h3>Two webshops, as evidence and as the experiment field</h3>
-          <p>Two agents build the same story in both shops. Every difference between the two results
-          is a gap in a rule, a marker or the catalog, not in the code, and is closed there.</p>
+          <p>The same story was built once per stack, by an agent, on 10 September 2026. It surfaced two
+          divergences between the two results — and both were closed in a rule and in the catalog, not in the
+          shop code. That is what the pair is for: a difference between the implementations points at a gap in
+          the shared artifacts.</p>
         </div>
       </li>
     </ol>
@@ -764,7 +768,9 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       <a href="de/" hreflang="de" lang="de">Deutsch</a>
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Bloemer.
-    The guide, the rules and the catalog are tool-agnostic: any LLM, any harness, any editor.<br>
+    The guide, the rules and the catalog are plain files — markdown, and libraries any build can call — so
+    nothing here binds you to one editor or one assistant. Built and tested with Claude Code; other harnesses
+    are not yet exercised end to end.<br>
     Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025.</p>
   </div>
 </footer>
