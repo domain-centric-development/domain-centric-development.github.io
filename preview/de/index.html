@@ -306,8 +306,8 @@
         <a href="#guide">Guide</a>
         <a href="#sample">Beispiel</a>
         <a href="#artifacts">Artefakte</a>
-        <a href="#start">Einstieg</a>
         <a href="#with-ai">Werkzeuge</a>
+        <a href="#start">Einstieg</a>
         <a href="#factory">Factory</a>
         <a href="#principles">Prinzipien</a>
       </span>
@@ -615,6 +615,68 @@ checkout.adapter.outgoing
   </div>
 </section>
 
+<section id="with-ai" class="with-ai">
+  <div class="wrap">
+    <p class="kicker">Warum es so gebaut ist</p>
+    <h2>Architektur, an der man einen Agenten messen kann</h2>
+    <p class="section-lede">DCA ist die Architektur: eine Synthese aus Domain-Driven Design, Hexagonaler Architektur
+    und Clean Architecture; die Rule Suite prüft, ob der Code sie einhält. Domain-Centric Development
+    ist die Art, damit zu entwickeln, KI-gestützt mit dca-factory und dem Knowledge Catalog.
+    Das Ziel von Domain-Centric Development ist ein
+    deterministisches Ergebnis dort, wo eine Maschine es prüfen kann: die Codestruktur und der
+    Nachweis, dass ein Akzeptanztest rot war, bevor er grün wurde. Wie verlässlich ein Agent die
+    Domäne richtig trifft, ist noch nicht gemessen.</p>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>Die Regeln sind ausführbar und haben Ids</h3>
+          <p>119 gemeinsame Ids wie <code>DCA-USE-009</code>, als Bibliothek für beide Stacks. Java erzwingt
+          113 und markiert 6 als informativ; .NET erzwingt 119 seiner 125 – sechs sind .NET-spezifisch –,
+          markiert 5 als informativ und nennt die eine, die nicht anwendbar ist, mit Begründung. Eine
+          gemeinsame Id heißt dieselbe Absicht; was sie selektiert und prüft, steht je Plattform
+          aufgeschrieben statt als identisch angenommen. Die Zahlen sind der Katalog 0.5.0; die verlinkten
+          generierten Listen sind immer aktuell.</p>
+          <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">was die Regeln prüfen</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">Java und .NET im Vergleich</a></p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>Das Wissen ist maschinenlesbar</h3>
+          <p>Der Katalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph.
+          Agenten können den passenden Knoten nachschlagen und in ihrer Arbeit zitieren.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>Die Pipeline entscheidet, nicht die Stufe</h3>
+          <p>Eine Story läuft durch Plan, Test, Build, Tidy, Judge und Document. Jede Stufe
+          übergibt eine Datei. Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und
+          lesen den Nachweis für rot vor grün aus dem Bericht des Test-Runners; ein Exit-Code allein
+          belegt nicht, dass ein Test lief. Sie prüfen außerdem die Architektur-Suite und Aussagen
+          der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
+          ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
+          Menschen, bevor sie als geliefert gilt.</p>
+          <p style="margin-top:10px"><a href="#factory-run">einen Lauf ansehen, vom Backlog bis zur App</a></p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>Zwei Webshops, als Beleg und als Experimentierfeld</h3>
+          <p>Dieselbe Story wurde am 10. September 2026 einmal pro Stack von einem Agenten gebaut. Dabei
+          traten zwei Abweichungen zwischen den Ergebnissen auf – geschlossen wurden beide in einer Regel und
+          im Katalog, nicht im Shop-Code. Genau dafür ist das Paar da: ein Unterschied zwischen den
+          Implementierungen zeigt auf eine Lücke in den gemeinsamen Artefakten.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section id="start" class="start">
   <div class="wrap">
     <p class="kicker">Klein anfangen</p>
@@ -681,68 +743,6 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
       tut, was das Business gemeint hat. Dafür braucht es Verhaltenstests, einen Fachexperten und
       Review. Regeln, die eine fachliche Beurteilung brauchen, sind als informativ markiert.</p>
     </div>
-  </div>
-</section>
-
-<section id="with-ai" class="with-ai">
-  <div class="wrap">
-    <p class="kicker">Warum es so gebaut ist</p>
-    <h2>Architektur, an der man einen Agenten messen kann</h2>
-    <p class="section-lede">DCA ist die Architektur: eine Synthese aus Domain-Driven Design, Hexagonaler Architektur
-    und Clean Architecture; die Rule Suite prüft, ob der Code sie einhält. Domain-Centric Development
-    ist die Art, damit zu entwickeln, KI-gestützt mit dca-factory und dem Knowledge Catalog.
-    Das Ziel von Domain-Centric Development ist ein
-    deterministisches Ergebnis dort, wo eine Maschine es prüfen kann: die Codestruktur und der
-    Nachweis, dass ein Akzeptanztest rot war, bevor er grün wurde. Wie verlässlich ein Agent die
-    Domäne richtig trifft, ist noch nicht gemessen.</p>
-
-    <ol class="steps">
-      <li>
-        <span class="step-no">01</span>
-        <div>
-          <h3>Die Regeln sind ausführbar und haben Ids</h3>
-          <p>119 gemeinsame Ids wie <code>DCA-USE-009</code>, als Bibliothek für beide Stacks. Java erzwingt
-          113 und markiert 6 als informativ; .NET erzwingt 119 seiner 125 – sechs sind .NET-spezifisch –,
-          markiert 5 als informativ und nennt die eine, die nicht anwendbar ist, mit Begründung. Eine
-          gemeinsame Id heißt dieselbe Absicht; was sie selektiert und prüft, steht je Plattform
-          aufgeschrieben statt als identisch angenommen. Die Zahlen sind der Katalog 0.5.0; die verlinkten
-          generierten Listen sind immer aktuell.</p>
-          <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">was die Regeln prüfen</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">Java und .NET im Vergleich</a></p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">02</span>
-        <div>
-          <h3>Das Wissen ist maschinenlesbar</h3>
-          <p>Der Katalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph.
-          Agenten können den passenden Knoten nachschlagen und in ihrer Arbeit zitieren.</p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">03</span>
-        <div>
-          <h3>Die Pipeline entscheidet, nicht die Stufe</h3>
-          <p>Eine Story läuft durch Plan, Test, Build, Tidy, Judge und Document. Jede Stufe
-          übergibt eine Datei. Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und
-          lesen den Nachweis für rot vor grün aus dem Bericht des Test-Runners; ein Exit-Code allein
-          belegt nicht, dass ein Test lief. Sie prüfen außerdem die Architektur-Suite und Aussagen
-          der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
-          ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
-          Menschen, bevor sie als geliefert gilt.</p>
-          <p style="margin-top:10px"><a href="#factory-run">einen Lauf ansehen, vom Backlog bis zur App</a></p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">04</span>
-        <div>
-          <h3>Zwei Webshops, als Beleg und als Experimentierfeld</h3>
-          <p>Dieselbe Story wurde am 10. September 2026 einmal pro Stack von einem Agenten gebaut. Dabei
-          traten zwei Abweichungen zwischen den Ergebnissen auf – geschlossen wurden beide in einer Regel und
-          im Katalog, nicht im Shop-Code. Genau dafür ist das Paar da: ein Unterschied zwischen den
-          Implementierungen zeigt auf eine Lücke in den gemeinsamen Artefakten.</p>
-        </div>
-      </li>
-    </ol>
   </div>
 </section>
 

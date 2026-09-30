@@ -306,8 +306,8 @@
         <a href="#guide">Guide</a>
         <a href="#sample">Sample</a>
         <a href="#artifacts">Artifacts</a>
-        <a href="#start">Getting started</a>
         <a href="#with-ai">AI tooling</a>
+        <a href="#start">Getting started</a>
         <a href="#factory">Factory</a>
         <a href="#principles">Principles</a>
       </span>
@@ -609,6 +609,67 @@ checkout.adapter.outgoing
   </div>
 </section>
 
+<section id="with-ai" class="with-ai">
+  <div class="wrap">
+    <p class="kicker">Why it is built this way</p>
+    <h2>Architecture an agent can be held to</h2>
+    <p class="section-lede">DCA is the architecture: a synthesis of Domain-Driven Design, Hexagonal Architecture
+    and Clean Architecture, and the rule suite checks that the code keeps to it. Domain-Centric
+    Development is how software is built with it, with AI support from dca-factory and the knowledge
+    catalog. Domain-Centric Development aims for a
+    deterministic result wherever a machine can check it: code structure and evidence that an
+    acceptance test failed before it passed. How repeatably an agent gets the domain right is
+    not measured yet.</p>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>The rules are executable, and they have ids</h3>
+          <p>119 shared identifiers like <code>DCA-USE-009</code>, in a library for both stacks. Java
+          enforces 113 and marks 6 informational; .NET enforces 119 of its 125 — six are .NET-specific —
+          marks 5 informational and names the one that is not applicable, with the reason. A shared id means the same
+          intent; what it selects and checks is written down per platform rather than assumed
+          identical. The figures are the 0.5.0 catalog; the generated lists linked below are always
+          current.</p>
+          <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>The knowledge is machine-readable</h3>
+          <p>The catalog connects guide text, marker contracts and rules in a graph.
+          Agents can look up the relevant node and cite it in their work.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>The pipeline decides, not the stage</h3>
+          <p>A story runs through plan, test, build, tidy, judge and document, with a file
+          handed over at each stage. Gate scripts require an end-user test per acceptance criterion
+          and read red-before-green evidence from the test runner’s report; an exit code alone does
+          not show that a test ran. They also check the architecture suite and documentation claims
+          against the repository. Three rounds without convergence require human review, and a story
+          with a page waits for a person's acceptance before it counts as delivered.</p>
+          <p style="margin-top:10px"><a href="#factory-run">watch one run, from the backlog to the app</a></p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>Two webshops, as evidence and as the experiment field</h3>
+          <p>The same story was built once per stack, by an agent, on 10 September 2026. It surfaced two
+          divergences between the two results — and both were closed in a rule and in the catalog, not in the
+          shop code. That is what the pair is for: a difference between the implementations points at a gap in
+          the shared artifacts.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section id="start" class="start">
   <div class="wrap">
     <p class="kicker">Start small</p>
@@ -675,67 +736,6 @@ dotnet test                   <span class="c"># .NET — the architecture projec
       does what the business meant. Those need behaviour tests, a domain expert and review. Rules
       that need judgement are marked as informational.</p>
     </div>
-  </div>
-</section>
-
-<section id="with-ai" class="with-ai">
-  <div class="wrap">
-    <p class="kicker">Why it is built this way</p>
-    <h2>Architecture an agent can be held to</h2>
-    <p class="section-lede">DCA is the architecture: a synthesis of Domain-Driven Design, Hexagonal Architecture
-    and Clean Architecture, and the rule suite checks that the code keeps to it. Domain-Centric
-    Development is how software is built with it, with AI support from dca-factory and the knowledge
-    catalog. Domain-Centric Development aims for a
-    deterministic result wherever a machine can check it: code structure and evidence that an
-    acceptance test failed before it passed. How repeatably an agent gets the domain right is
-    not measured yet.</p>
-
-    <ol class="steps">
-      <li>
-        <span class="step-no">01</span>
-        <div>
-          <h3>The rules are executable, and they have ids</h3>
-          <p>119 shared identifiers like <code>DCA-USE-009</code>, in a library for both stacks. Java
-          enforces 113 and marks 6 informational; .NET enforces 119 of its 125 — six are .NET-specific —
-          marks 5 informational and names the one that is not applicable, with the reason. A shared id means the same
-          intent; what it selects and checks is written down per platform rather than assumed
-          identical. The figures are the 0.5.0 catalog; the generated lists linked below are always
-          current.</p>
-          <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">02</span>
-        <div>
-          <h3>The knowledge is machine-readable</h3>
-          <p>The catalog connects guide text, marker contracts and rules in a graph.
-          Agents can look up the relevant node and cite it in their work.</p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">03</span>
-        <div>
-          <h3>The pipeline decides, not the stage</h3>
-          <p>A story runs through plan, test, build, tidy, judge and document, with a file
-          handed over at each stage. Gate scripts require an end-user test per acceptance criterion
-          and read red-before-green evidence from the test runner’s report; an exit code alone does
-          not show that a test ran. They also check the architecture suite and documentation claims
-          against the repository. Three rounds without convergence require human review, and a story
-          with a page waits for a person's acceptance before it counts as delivered.</p>
-          <p style="margin-top:10px"><a href="#factory-run">watch one run, from the backlog to the app</a></p>
-        </div>
-      </li>
-      <li>
-        <span class="step-no">04</span>
-        <div>
-          <h3>Two webshops, as evidence and as the experiment field</h3>
-          <p>The same story was built once per stack, by an agent, on 10 September 2026. It surfaced two
-          divergences between the two results — and both were closed in a rule and in the catalog, not in the
-          shop code. That is what the pair is for: a difference between the implementations points at a gap in
-          the shared artifacts.</p>
-        </div>
-      </li>
-    </ol>
   </div>
 </section>
 
