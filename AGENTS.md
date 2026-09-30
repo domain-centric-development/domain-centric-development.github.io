@@ -20,6 +20,13 @@ says must match them, and it must not contradict the principles every DCA reposi
 When the talk or the site claims something about DCA, check it against `dca-guide` (patterns) and `dca-java` /
 `dca-dotnet` (rules) in the monorepo checkout before publishing.
 
+## The preview is a snapshot
+
+`preview/` is a copy of the site whose source is `website/` in the monorepo checkout, plus one
+`noindex, nofollow` line. It is never edited here. A change goes into `website/`, is committed there, and
+`website/snapshot-preview.sh` writes the snapshot; it is committed here as `chore(preview): snapshot of website
+<sha>`. Pushing publishes it under `/preview/`.
+
 ## Working here
 
 - Keep it static and small; no build step unless the full site replaces it.
