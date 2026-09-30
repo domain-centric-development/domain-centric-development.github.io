@@ -305,6 +305,7 @@
         <a href="#artifacts">Artifacts</a>
         <a href="#start">Getting started</a>
         <a href="#with-ai">AI tooling</a>
+        <a href="#factory">Factory</a>
         <a href="#principles">Principles</a>
       </span>
       <a class="gh ext" href="https://github.com/domain-centric-development" rel="noopener">GitHub</a>
@@ -730,6 +731,77 @@ dotnet test                   <span class="c"># .NET — the architecture projec
   </div>
 </section>
 
+<section id="factory" class="start">
+  <div class="wrap">
+    <p class="kicker">Deliver with the factory</p>
+    <h2>Set it up once, then work the backlog</h2>
+    <p class="section-lede">dca-factory runs one story at a time from plan to documentation, with a gate
+    between the stages. It needs three things from a project: a description of what is to be built, a
+    backlog of stories, and a stack profile with the build and test commands. <code>/factory-setup</code>
+    adds only what is missing.</p>
+
+    <div class="plate">
+<pre><span class="c"># once per machine, next to dca-core from above</span>
+/plugin install dca-craft@dca-marketplace     <span class="c"># the craft the stages load: tests, reviews, glossary</span>
+/plugin install dca-factory@dca-marketplace
+
+<span class="c"># once per project</span>
+<span class="t">/factory-setup</span>      <span class="c"># project description, git, runner, gate and commit hook,
+                    # the stack profile detected from the build — only what is missing</span>
+
+<span class="c"># for every story</span>
+<span class="t">/factory-backlog</span>    <span class="c"># the epic and the story, with criteria the gate can check</span>
+<span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
+<span class="t">/factory-status</span>     <span class="c"># what runs, what waits for you, what each story cost</span>
+<span class="t">/factory-decisions</span>  <span class="c"># answer what a run may not decide, accept what you looked at</span>
+
+<span class="c"># unattended, from a shell: one tool process per stage</span>
+bash .agents/factory/factory.sh run</pre>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <span class="step-no">01</span>
+        <div>
+          <h3>The description comes first</h3>
+          <p><code>/factory-setup</code> starts with <code>project/</code>: the product, the technical
+          decisions and the designed domain. <code>/dca-describe</code> writes them with you, one question
+          per heading. Every stage reads them, and none invents what they leave open.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <div>
+          <h3>The profile belongs to the project</h3>
+          <p><code>dca-factory.profile.yaml</code> holds the build and test commands, one per test source
+          set, the architecture suite and the formatter. Detection prefills it and a person corrects it.
+          A run never guesses a command.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <div>
+          <h3>A person releases the story</h3>
+          <p><code>/factory-backlog</code> writes a story with scenarios and asks what it does not know. A
+          story runs only with <code>status: approved</code>. A question a stage may not answer stops the
+          run and waits in <code>/factory-decisions</code>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <div>
+          <h3>In a session or unattended</h3>
+          <p><code>/factory-run</code> runs the stages in the session, in subagents. <code>factory.sh
+          run</code> starts one process per stage from a shell, for runs nobody watches. Both write the
+          same files, so <code>/factory-status</code> shows either. <code>/factory-update</code> replaces
+          the installed pipeline and leaves profile, description and backlog alone.</p>
+          <p style="margin-top:10px"><a href="#factory-run">watch one run below</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-guide/blob/main/process/factory.md" rel="noopener">read how the stages and gates work</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">install the plugins</a></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section id="factory-run" class="teaser">
   <div class="wrap">
     <p class="kicker">Example</p>
@@ -751,7 +823,8 @@ dotnet test                   <span class="c"># .NET — the architecture projec
     <p class="ai-note">This video is AI-generated, built by Claude from the logs of a real factory run on
     30&nbsp;September 2026 (dca-factory 0.51.6, Opus 5.5). Tool calls, gate output, times, tokens and
     costs are the run&rsquo;s; the prompts and the session&rsquo;s own wording are reconstructed, and the
-    run itself was started from a shell.</p>
+    run itself was started from a shell. The video is not real time: its two and a half minutes stand for the
+    42 minutes the run took, and the clock above the terminal shows the run&rsquo;s own time.</p>
 
     <ul class="facts">
       <li><b>4 of 4 delivered</b><span>39 minutes of work, and no stage stopped with a question.</span></li>
