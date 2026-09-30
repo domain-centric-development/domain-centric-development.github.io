@@ -37,7 +37,8 @@ und den Platzhalter ersetzen. Die Entscheidung dazu ist offen.
 - **Zahlen sind geprüft.** 113 gemeinsame Regel-Ids (Java: 108 erzwungen, 5 informativ), .NET 119
   (112 erzwungen, 4 informativ, 3 nicht anwendbar) aus `rules.json` der Bibliotheken; „über 500 Knoten“
   aus `manifest.json` des Katalog-Bundles (545). Vor einer Änderung der Zahl die Quelle lesen.
-- **Layout.** Unter 960 px verschwinden die Abschnittslinks, unter 380 px schrumpft der Header, damit
+- **Layout.** Die Kopfzeile steht fest (`.topbar`, `position: sticky`); Sprungziele haben `scroll-margin-top`, damit
+  eine Überschrift nicht unter ihr landet. Unter 960 px verschwinden die Abschnittslinks, unter 380 px schrumpft der Header, damit
   der Sprachwechsel bei 320 px im Bild bleibt. Nach Änderungen am Header bei 320, 390 und 1280 px
   prüfen; die Seite darf nie horizontal scrollen.
 
