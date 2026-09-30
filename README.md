@@ -9,7 +9,7 @@ Abhängigkeiten außer den Google Fonts.
 |---|---|
 | `index.html` | englische Seite, kanonisch unter `https://domaincentric.dev/` |
 | `de/index.html` | deutsche Seite unter `/de/`; beide tragen `hreflang`-Alternates und den Sprachwechsel in Nav und Footer |
-| `assets/` | `og-image.png` (1200 × 630) und die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) |
+| `assets/` | `og-image.png` (1200 × 630), die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) und das Factory-Video `factory-run-demo.mp4` (DE) und `factory-run-demo-en.mp4` (EN) mit Postern (Quellen: `../dca-demo/interactive-demo.html` und `interactive-demo-en.html`, KI-generiert aus dem Lauf vom 30.09.2026; neu aufnehmen mit `record.mjs`, dann H.264 mit ffmpeg) |
 | `favicon.svg`, `CNAME` | Marke und Domain für GitHub Pages |
 
 ## Veröffentlichung
@@ -24,9 +24,10 @@ und den Platzhalter ersetzen. Die Entscheidung dazu ist offen.
 
 ## Pflege
 
-- **Zwei Sprachen, vier Dateien.** Jede Textänderung geht in `index.html`, `de/index.html` und in die
-  beiden Kopien unter `../website-placeholder/preview/`. Die Kopien unterscheiden sich von den Quellen
-  nur durch die `noindex`-Zeile; `diff <(grep -v noindex preview/index.html) index.html` muss leer sein.
+- **Zwei Sprachen, eine Quelle.** Jede Textänderung geht in `index.html` und `de/index.html` und wird hier
+  committet. Die Preview unter `../website-placeholder/preview/` ist ein Snapshot mit einer `noindex`-Zeile,
+  nie von Hand bearbeitet: `./snapshot-preview.sh` schreibt ihn und bricht ab, wenn eine Seite sich über
+  diese Zeile hinaus unterscheidet; danach dort committen (siehe `AGENTS.md`).
 - **Stimme.** Prosa folgt `../branding/voice.md`: konkrete Subjekte (DCA, Guide, Tests, Plugins), kein
   Projekt-„wir“, „you/ihr“ nur für Nutzen und Einstieg, Fachbegriffe englisch, keine Sprüche. Der Hero
   schreibt „Domain-Centric Architecture (DCA)“ einmal aus; der Abschnitt „Why it is built this way“

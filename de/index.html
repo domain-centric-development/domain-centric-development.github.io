@@ -85,6 +85,8 @@
   .teaser .cta-row { margin-top: 36px; }
   .shot { margin-top: 40px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #ffffff; }
   .shot img { display: block; width: 100%; height: auto; }
+  .shot video { display: block; width: 100%; height: auto; background: #0b0c0f; }
+  .ai-note { margin-top: 18px; font-size: 14.5px; color: var(--muted); max-width: 72ch; }
   .shot figcaption { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding: 12px 18px; border-top: 1px solid var(--line); }
   .facts { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; list-style: none; }
   .facts b { font-family: var(--display); font-size: 19px; display: block; margin-bottom: 4px; }
@@ -718,6 +720,7 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
           der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
           ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
           Menschen, bevor sie als geliefert gilt.</p>
+          <p style="margin-top:10px"><a href="#factory-run">einen Lauf ansehen, vom Backlog bis zur App</a></p>
         </div>
       </li>
       <li>
@@ -731,6 +734,39 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
         </div>
       </li>
     </ol>
+  </div>
+</section>
+
+<section id="factory-run" class="teaser">
+  <div class="wrap">
+    <p class="kicker">Beispiel</p>
+    <h2>Ein Factory-Lauf, nachgespielt</h2>
+    <p class="section-lede">Vier Stories einer kleinen Aufgabenliste, vom Backlog bis zur laufenden App, in
+    einer Claude-Code-Session. <code>/factory-backlog</code> schreibt die Stories, und ein Mensch gibt sie
+    frei. <code>/factory-run</code> liefert sie nacheinander, und eine zweite Session liest den Stand,
+    während der Lauf weitergeht. Der Judge schickt die dritte Story einmal zurück: Ihr Browsertest prüfte
+    den Text der Aufgabenzahl, aber nicht, dass sie über der Liste steht.</p>
+
+    <figure class="shot">
+      <video controls preload="none" playsinline width="1440" height="900"
+             poster="../assets/factory-run-demo-poster.webp"
+             aria-label="Nachgespielte Claude-Code-Session: vier Stories geschrieben, freigegeben und von der Factory geliefert, mit einer Judge-Runde, dem Stand aus einer zweiten Session, der fertigen App und dem Endstand">
+        <source src="../assets/factory-run-demo.mp4" type="video/mp4">
+      </video>
+      <figcaption>2&nbsp;min&nbsp;33 &mdash; Untertitel und Session auf Deutsch, die Ausgaben der Pipeline auf Englisch.</figcaption>
+    </figure>
+    <p class="ai-note">Dieses Video ist KI-generiert. Claude hat es aus den Logs eines echten Factory-Laufs
+    vom 30.&nbsp;September 2026 gebaut (dca-factory 0.51.6, Opus 5.5). Tool-Aufrufe, Gate-Ausgaben,
+    Zeiten, Tokens und Kosten stammen aus dem Lauf. Die Prompts und die Formulierungen der Session sind
+    nachgestellt, und gestartet wurde der Lauf selbst aus einer Shell.</p>
+
+    <ul class="facts">
+      <li><b>4 von 4 geliefert</b><span>39 Minuten Arbeit, und keine Stage hat mit einer Frage angehalten.</span></li>
+      <li><b>1 Judge-Runde</b><span>Die dritte Story ging zurück zur Test-Stage. Ein Break-Patch hat gezeigt,
+      dass der verschärfte Test greift.</span></li>
+      <li><b>20,8&nbsp;Mio. Tokens · 13,98&nbsp;$</b><span>Pro Story in der Status-Ansicht, gelesen aus dem
+      Journal des Laufs.</span></li>
+    </ul>
   </div>
 </section>
 

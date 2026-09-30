@@ -85,6 +85,8 @@
   .teaser .cta-row { margin-top: 36px; }
   .shot { margin-top: 40px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #ffffff; }
   .shot img { display: block; width: 100%; height: auto; }
+  .shot video { display: block; width: 100%; height: auto; background: #0b0c0f; }
+  .ai-note { margin-top: 18px; font-size: 14.5px; color: var(--muted); max-width: 72ch; }
   .shot figcaption { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding: 12px 18px; border-top: 1px solid var(--line); }
   .facts { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; list-style: none; }
   .facts b { font-family: var(--display); font-size: 19px; display: block; margin-bottom: 4px; }
@@ -711,6 +713,7 @@ dotnet test                   <span class="c"># .NET — the architecture projec
           not show that a test ran. They also check the architecture suite and documentation claims
           against the repository. Three rounds without convergence require human review, and a story
           with a page waits for a person's acceptance before it counts as delivered.</p>
+          <p style="margin-top:10px"><a href="#factory-run">watch one run, from the backlog to the app</a></p>
         </div>
       </li>
       <li>
@@ -724,6 +727,39 @@ dotnet test                   <span class="c"># .NET — the architecture projec
         </div>
       </li>
     </ol>
+  </div>
+</section>
+
+<section id="factory-run" class="teaser">
+  <div class="wrap">
+    <p class="kicker">Example</p>
+    <h2>One factory run, replayed</h2>
+    <p class="section-lede">Four stories of a small task list, from the backlog to the running app, in one
+    Claude Code session. <code>/factory-backlog</code> writes the stories and a person releases them,
+    <code>/factory-run</code> delivers them one after the other, and a second session reads the status
+    while the run goes on. The judge sends the third story back once: its browser test checked the
+    wording of the task count, not that it stands above the list.</p>
+
+    <figure class="shot">
+      <video controls preload="none" playsinline width="1440" height="900"
+             poster="assets/factory-run-demo-en-poster.webp"
+             aria-label="Replay of a Claude Code session: four stories written, released, delivered by the factory with one judge round, the status from a second session, the finished app and the final status">
+        <source src="assets/factory-run-demo-en.mp4" type="video/mp4">
+      </video>
+      <figcaption>2&nbsp;min&nbsp;33 &mdash; the stories and the app are in German, as the product is.</figcaption>
+    </figure>
+    <p class="ai-note">This video is AI-generated, built by Claude from the logs of a real factory run on
+    30&nbsp;September 2026 (dca-factory 0.51.6, Opus 5.5). Tool calls, gate output, times, tokens and
+    costs are the run&rsquo;s; the prompts and the session&rsquo;s own wording are reconstructed, and the
+    run itself was started from a shell.</p>
+
+    <ul class="facts">
+      <li><b>4 of 4 delivered</b><span>39 minutes of work, and no stage stopped with a question.</span></li>
+      <li><b>1 judge round</b><span>The third story went back to the test stage; a break patch proved the
+      stronger test bites.</span></li>
+      <li><b>20.8&nbsp;M tokens · $13.98</b><span>Per story in the status view, read from the run&rsquo;s own
+      journal.</span></li>
+    </ul>
   </div>
 </section>
 
