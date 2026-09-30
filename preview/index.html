@@ -795,7 +795,8 @@ bash .agents/factory/factory.sh run</pre>
           <p><code>/factory-run</code> runs the stages in the session, in subagents. <code>factory.sh
           run</code> starts one process per stage from a shell, for runs nobody watches. Both write the
           same files, so <code>/factory-status</code> shows either. <code>/factory-update</code> replaces
-          the installed pipeline and leaves profile, description and backlog alone.</p>
+          the installed pipeline. Profile, description and backlog stay as written; in a project with an older
+          layout it moves them into place once and prints every move.</p>
           <p style="margin-top:10px"><a href="#factory-run">watch one run below</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-guide/blob/main/process/factory.md" rel="noopener">read how the stages and gates work</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">install the plugins</a></p>
         </div>
       </li>
