@@ -592,11 +592,12 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Werkzeuge</p>
         <h3>Drei Plugins als einfache Skill-Ordner</h3>
-        <p>Die Plugins liefern die Methode als Skills. <code>dca-core</code> richtet ein, legt
-        Strukturen an und reviewt; <code>dca-factory</code> führt eine Story vom Plan bis zur
-        Dokumentation mit einem Gate zwischen den Stufen; <code>software-craftsmanship</code> bringt
-        TDD, Clean Code und ADRs ohne DCA-Annahmen mit. Claude Code, Codex und OpenCode lesen
-        dieselben Skill-Ordner.</p>
+        <p>Die Plugins liefern die Methode als Skills. <code>dca-core</code> beschreibt, erzeugt und
+        reviewt ein Projekt – in einem leeren Verzeichnis mit <code>/dca-new</code>, in einem
+        bestehenden mit <code>/dca-init</code>; <code>dca-factory</code> führt eine Story vom Plan bis zur
+        Dokumentation mit einem Gate zwischen den Stufen, und was es zu sehen gibt, nimmt ein Mensch ab,
+        bevor es zählt; <code>dca-craft</code> bringt TDD, Clean Code, ADRs und die Review-Perspektiven
+        ohne DCA-Annahmen mit. Claude Code, Codex und OpenCode lesen dieselben Skill-Ordner.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
@@ -606,7 +607,7 @@ checkout.adapter.outgoing
 <section id="start" class="start">
   <div class="wrap">
     <p class="kicker">Klein anfangen</p>
-    <h2>Ein Bootstrap, ein Architekturtest</h2>
+    <h2>Ein Befehl, ein Architekturtest</h2>
     <p class="section-lede">DCA einzuführen beginnt nicht mit einem Rewrite. Es beginnt mit einem Test,
     der rot wird, wenn eine Abhängigkeit in die falsche Richtung zeigt – in einem bestehenden Projekt.</p>
 
@@ -616,8 +617,9 @@ checkout.adapter.outgoing
 /plugin install dca-core@dca-marketplace
 
 <span class="c"># in einem bestehenden Java- oder .NET-Projekt</span>
-<span class="t">/dca-bootstrap</span>   <span class="c"># fügt die Building Blocks und einen Architekturtest hinzu,
+<span class="t">/dca-init</span>        <span class="c"># fügt die Building Blocks und einen Architekturtest hinzu,
                   # verdrahtet mit dem Layout, das dieses Projekt wirklich hat</span>
+<span class="t">/dca-new</span>         <span class="c"># oder, in einem leeren Verzeichnis: ein Projekt aus dem Generator des Stacks</span>
 
 ./gradlew test-architecture   <span class="c"># Java</span>
 dotnet test                   <span class="c"># .NET – das Architekturprojekt, Debug-Build</span></pre>
@@ -714,7 +716,8 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
           lesen den Nachweis für rot vor grün aus dem Bericht des Test-Runners; ein Exit-Code allein
           belegt nicht, dass ein Test lief. Sie prüfen außerdem die Architektur-Suite und Aussagen
           der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
-          ein menschliches Review.</p>
+          ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
+          Menschen, bevor sie als geliefert gilt.</p>
         </div>
       </li>
       <li>

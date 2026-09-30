@@ -586,9 +586,11 @@ checkout.adapter.outgoing
       <article class="card">
         <p class="tag">Tooling</p>
         <h3>Three plugins distributed as plain skill folders</h3>
-        <p>The plugins package the method as skills. <code>dca-core</code> bootstraps, scaffolds and
-        reviews; <code>dca-factory</code> runs one story from plan to documentation with a gate between
-        stages; <code>software-craftsmanship</code> carries TDD, clean code and ADRs without DCA
+        <p>The plugins package the method as skills. <code>dca-core</code> describes, creates and
+        reviews a project — from an empty directory with <code>/dca-new</code>, in an existing one with
+        <code>/dca-init</code>; <code>dca-factory</code> runs one story from plan to documentation with a
+        gate between stages, and a person accepts what there is to see before it counts;
+        <code>dca-craft</code> carries TDD, clean code, ADRs and the review perspectives without DCA
         assumptions. Claude Code, Codex and OpenCode read the same skill folders.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
@@ -599,7 +601,7 @@ checkout.adapter.outgoing
 <section id="start" class="start">
   <div class="wrap">
     <p class="kicker">Start small</p>
-    <h2>One bootstrap, one architecture test</h2>
+    <h2>One command, one architecture test</h2>
     <p class="section-lede">Adopting DCA does not begin with a rewrite. It begins with one test that
     fails when a dependency points the wrong way — in an existing project.</p>
 
@@ -609,8 +611,9 @@ checkout.adapter.outgoing
 /plugin install dca-core@dca-marketplace
 
 <span class="c"># on an existing Java or .NET project</span>
-<span class="t">/dca-bootstrap</span>   <span class="c"># adds the Building Blocks and one architecture test,
+<span class="t">/dca-init</span>        <span class="c"># adds the Building Blocks and one architecture test,
                   # wired to the layout this project actually has</span>
+<span class="t">/dca-new</span>         <span class="c"># or, in an empty directory: a project from the stack's own generator</span>
 
 ./gradlew test-architecture   <span class="c"># Java</span>
 dotnet test                   <span class="c"># .NET — the architecture project, Debug build</span></pre>
@@ -706,7 +709,8 @@ dotnet test                   <span class="c"># .NET — the architecture projec
           handed over at each stage. Gate scripts require an end-user test per acceptance criterion
           and read red-before-green evidence from the test runner’s report; an exit code alone does
           not show that a test ran. They also check the architecture suite and documentation claims
-          against the repository. Three rounds without convergence require human review.</p>
+          against the repository. Three rounds without convergence require human review, and a story
+          with a page waits for a person's acceptance before it counts as delivered.</p>
         </div>
       </li>
       <li>
