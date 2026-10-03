@@ -7,27 +7,32 @@ Abhängigkeiten außer den Google Fonts.
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | englische Seite, kanonisch unter `https://domaincentric.dev/` |
+| `index.html` | die Live-Seite unter `https://domaincentric.dev/`, heute der Platzhalter |
+| `preview.html` | englische Seite, bis zur Veröffentlichung unter `/preview.html`; kanonisch schon `https://domaincentric.dev/` |
 | `de/index.html` | deutsche Seite unter `/de/`; beide tragen `hreflang`-Alternates und den Sprachwechsel in Nav und Footer |
-| `assets/` | `og-image.png` (1200 × 630), die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) und das Factory-Video `factory-run-demo.mp4` (DE) und `factory-run-demo-en.mp4` (EN) mit Postern (Quellen: `../dca-demo/interactive-demo.html` und `interactive-demo-en.html`, KI-generiert aus dem Lauf vom 30.09.2026; neu aufnehmen mit `record.mjs`, dann H.264 mit ffmpeg) |
+| `assets/` | `og-image.png` (1200 × 630), die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) und das Factory-Video `factory-cockpit-demo.mp4` (DE) und `factory-cockpit-demo-en.mp4` (EN) mit Postern (Quellen: `../dca-demo/cockpit-demo.html` und `cockpit-demo-en.html`, KI-generiert aus dem Lauf vom 02.10.2026; neu aufnehmen mit `record.mjs`, dann H.264 mit ffmpeg); die älteren `factory-run-demo*` sind nicht mehr verlinkt |
 | `favicon.svg`, `CNAME` | Marke und Domain für GitHub Pages |
+| `robots.txt` | hält `/preview.html` und `/de/` aus Suchmaschinen, solange der Platzhalter live ist |
 
 ## Veröffentlichung
 
-`domaincentric.dev` läuft bereits über GitHub Pages aus dem Repo
-`domain-centric-development/domain-centric-development.github.io` (Checkout: `../website-placeholder`),
-Branch `main`, Root, CNAME und HTTPS eingerichtet. Dort liegt heute der Platzhalter; diese Seite ist
-unter `/preview/` und `/preview/de/` mit `noindex, nofollow` erreichbar.
+Dieses Repo ist das Pages-Repo: `origin` ist `domain-centric-development/domain-centric-development.github.io`,
+GitHub Pages baut `main` aus dem Root, CNAME und HTTPS sind eingerichtet. Ein Push auf `main` ist sofort live.
+Die Historie des früheren Platzhalter-Checkouts (`../website-placeholder`) ist hier hineingemergt.
 
-Dieses Repo hat kein Remote. Veröffentlichen heißt: Inhalt dieses Repos in das Pages-Repo übernehmen
-und den Platzhalter ersetzen. Die Entscheidung dazu ist offen.
+Bis zur Veröffentlichung zeigt `index.html` den Platzhalter, die Seite liegt unter `/preview.html` und `/de/`.
+Veröffentlichen ersetzt den Platzhalter:
+
+```bash
+git mv index.html placeholder.html
+git mv preview.html index.html
+printf 'User-agent: *\nAllow: /\n' > robots.txt
+```
 
 ## Pflege
 
-- **Zwei Sprachen, eine Quelle.** Jede Textänderung geht in `index.html` und `de/index.html` und wird hier
-  committet. Die Preview unter `../website-placeholder/preview/` ist ein Snapshot mit einer `noindex`-Zeile,
-  nie von Hand bearbeitet: `./snapshot-preview.sh` schreibt ihn und bricht ab, wenn eine Seite sich über
-  diese Zeile hinaus unterscheidet; danach dort committen (siehe `AGENTS.md`).
+- **Zwei Sprachen, eine Quelle.** Jede Textänderung geht in `preview.html` und `de/index.html` und wird hier
+  committet. Ein Push auf `main` veröffentlicht sie; gepusht wird nur auf Wunsch.
 - **Stimme.** Prosa folgt `../branding/voice.md`: konkrete Subjekte (DCA, Guide, Tests, Plugins), kein
   Projekt-„wir“, „you/ihr“ nur für Nutzen und Einstieg, Fachbegriffe englisch, keine Sprüche. Der Hero
   schreibt „Domain-Centric Architecture (DCA)“ einmal aus; der Abschnitt „Why it is built this way“
