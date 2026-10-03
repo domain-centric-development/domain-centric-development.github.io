@@ -652,7 +652,7 @@ checkout.adapter.outgoing
           not show that a test ran. They also check the architecture suite and documentation claims
           against the repository. Three rounds without convergence require human review, and a story
           with a page waits for a person's acceptance before it counts as delivered.</p>
-          <p style="margin-top:10px"><a href="#factory-run">watch one run, from the backlog to the app</a></p>
+          <p style="margin-top:10px"><a href="#factory-run">watch one cycle in the cockpit, from the first topic to the app</a></p>
         </div>
       </li>
       <li>
@@ -814,32 +814,37 @@ bash .agents/factory/factory.sh run</pre>
 <section id="factory-run" class="teaser">
   <div class="wrap">
     <p class="kicker">Example</p>
-    <h2>One factory run, replayed</h2>
-    <p class="section-lede">Four stories of a small task list, from the backlog to the running app, in one
-    Claude Code session. <code>/factory-backlog</code> writes the stories and a person releases them,
-    <code>/factory-run</code> delivers them one after the other, and a second session reads the status
-    while the run goes on. The judge sends the third story back once: its browser test checked the
-    wording of the task count, not that it stands above the list.</p>
+    <h2>One factory cycle, steered from the cockpit</h2>
+    <p class="section-lede">A small task list, from the first topic to the running app, steered from
+    <code>dca-factory-cockpit</code>: an optional plugin for Claude Code that shows the cycle beside the
+    session. It reads only what <code>factory.sh</code> prints as JSON. A button marked ✦ sends its command
+    into the session, and Claude does the work there: <code>/factory-discover</code> writes the report,
+    <code>/factory-backlog</code> turns its proposal into an epic and cuts four stories, and a person
+    releases them. The cockpit's worker starts <code>factory.sh run</code> in the background and delivers
+    the stories one after the other. The judge sends the second story back once: its test checked the use
+    case, not the page.</p>
 
     <figure class="shot">
       <video controls preload="none" playsinline width="1440" height="900"
-             poster="assets/factory-run-demo-en-poster.webp"
-             aria-label="Replay of a Claude Code session: four stories written, released, delivered by the factory with one judge round, the status from a second session, the finished app and the final status">
-        <source src="assets/factory-run-demo-en.mp4" type="video/mp4">
+             poster="assets/factory-cockpit-demo-en-poster.webp"
+             aria-label="Replay of a Claude Code session with the factory cockpit beside it: a discovery report, an epic, four stories suggested and released, the worker delivering them with one judge round, the delivered stories with time, tokens and cost, and the finished app">
+        <source src="assets/factory-cockpit-demo-en.mp4" type="video/mp4">
       </video>
-      <figcaption>2&nbsp;min&nbsp;33 &mdash; the stories and the app are in German, as the product is.</figcaption>
+      <figcaption>2&nbsp;min&nbsp;22 &mdash; the stories and the app are in German, as the product is.</figcaption>
     </figure>
     <p class="ai-note">This video is AI-generated, built by Claude from the logs of a real factory run on
-    30&nbsp;September 2026 (dca-factory 0.51.6, Opus 5.5). Tool calls, gate output, times, tokens and
-    costs are the run&rsquo;s; the prompts and the session&rsquo;s own wording are reconstructed, and the
-    run itself was started from a shell. The video is not real time: its two and a half minutes stand for the
-    42 minutes the run took, and the clock above the terminal shows the run&rsquo;s own time.</p>
+    2&nbsp;October 2026 (dca-factory 0.61.0, Opus 5.5). The run's journal, the worker's output, times, tokens
+    and costs are the run's, and every cockpit view shows what <code>factory.sh</code> reports for the
+    project at that point. The discovery report, the session's tool calls and wording and the app stills
+    are reconstructed; the run itself was started from a shell with the same <code>factory.sh run</code>
+    the worker starts. The video is not real time: the 50 minutes of the run take one minute, on the
+    run's own clock.</p>
 
     <ul class="facts">
-      <li><b>4 of 4 delivered</b><span>42 minutes on the clock, 39 of them stage work as the status view counts it. No stage stopped with a question.</span></li>
-      <li><b>1 judge round</b><span>The third story went back to the test stage; a break patch proved the
+      <li><b>4 of 4 delivered</b><span>50 minutes on the clock, 59 minutes of stage work as the status view counts it: the three reviews run at once. No stage stopped with a question.</span></li>
+      <li><b>1 judge round</b><span>The second story went back to the test stage; a break patch proved the
       stronger test bites.</span></li>
-      <li><b>20.8&nbsp;M tokens · $13.98</b><span>Per story in the status view, read from the run&rsquo;s own
+      <li><b>26.5&nbsp;M tokens · $22.03</b><span>Per story in the cockpit, read from the run&rsquo;s own
       journal.</span></li>
     </ul>
   </div>

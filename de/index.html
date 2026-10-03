@@ -659,7 +659,7 @@ checkout.adapter.outgoing
           der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
           ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
           Menschen, bevor sie als geliefert gilt.</p>
-          <p style="margin-top:10px"><a href="#factory-run">einen Lauf ansehen, vom Backlog bis zur App</a></p>
+          <p style="margin-top:10px"><a href="#factory-run">einen Zyklus im Cockpit ansehen, vom ersten Thema bis zur App</a></p>
         </div>
       </li>
       <li>
@@ -822,32 +822,37 @@ bash .agents/factory/factory.sh run</pre>
 <section id="factory-run" class="teaser">
   <div class="wrap">
     <p class="kicker">Beispiel</p>
-    <h2>Ein Factory-Lauf, nachgespielt</h2>
-    <p class="section-lede">Vier Stories einer kleinen Aufgabenliste, vom Backlog bis zur laufenden App, in
-    einer Claude-Code-Session. <code>/factory-backlog</code> schreibt die Stories, und ein Mensch gibt sie
-    frei. <code>/factory-run</code> liefert sie nacheinander, und eine zweite Session liest den Stand,
-    während der Lauf weitergeht. Der Judge schickt die dritte Story einmal zurück: Ihr Browsertest prüfte
-    den Text der Aufgabenzahl, aber nicht, dass sie über der Liste steht.</p>
+    <h2>Ein Factory-Zyklus, gesteuert aus dem Cockpit</h2>
+    <p class="section-lede">Eine kleine Aufgabenliste vom ersten Thema bis zur laufenden App, gesteuert aus
+    <code>dca-factory-cockpit</code>: einem optionalen Plugin für Claude Code, das den Zyklus neben der
+    Session zeigt. Es liest nur, was <code>factory.sh</code> als JSON ausgibt. Ein Knopf mit ✦ schickt
+    seinen Befehl in die Session, und Claude macht dort die Arbeit: <code>/factory-discover</code> schreibt
+    den Bericht, <code>/factory-backlog</code> macht aus seinem Vorschlag ein Epic und schneidet vier
+    Stories, und ein Mensch gibt sie frei. Der Worker des Cockpits startet <code>factory.sh run</code> im
+    Hintergrund und liefert die Stories nacheinander. Der Judge schickt die zweite Story einmal zurück: Ihr
+    Test prüfte den Use Case, aber nicht die Seite.</p>
 
     <figure class="shot">
       <video controls preload="none" playsinline width="1440" height="900"
-             poster="../assets/factory-run-demo-poster.webp"
-             aria-label="Nachgespielte Claude-Code-Session: vier Stories geschrieben, freigegeben und von der Factory geliefert, mit einer Judge-Runde, dem Stand aus einer zweiten Session, der fertigen App und dem Endstand">
-        <source src="../assets/factory-run-demo.mp4" type="video/mp4">
+             poster="../assets/factory-cockpit-demo-poster.webp"
+             aria-label="Nachgespielte Claude-Code-Session mit dem Factory-Cockpit daneben: ein Discovery-Bericht, ein Epic, vier vorgeschlagene und freigegebene Stories, der Worker liefert sie mit einer Judge-Runde, die gelieferten Stories mit Zeit, Tokens und Kosten und die fertige App">
+        <source src="../assets/factory-cockpit-demo.mp4" type="video/mp4">
       </video>
-      <figcaption>2&nbsp;min&nbsp;33 &mdash; Untertitel und Session auf Deutsch, die Ausgaben der Pipeline auf Englisch.</figcaption>
+      <figcaption>2&nbsp;min&nbsp;22 &mdash; Untertitel und Session auf Deutsch, das Cockpit und die Ausgaben der Pipeline auf Englisch.</figcaption>
     </figure>
     <p class="ai-note">Dieses Video ist KI-generiert. Claude hat es aus den Logs eines echten Factory-Laufs
-    vom 30.&nbsp;September 2026 gebaut (dca-factory 0.51.6, Opus 5.5). Tool-Aufrufe, Gate-Ausgaben,
-    Zeiten, Tokens und Kosten stammen aus dem Lauf. Die Prompts und die Formulierungen der Session sind
-    nachgestellt, und gestartet wurde der Lauf selbst aus einer Shell. Das Video läuft nicht in Echtzeit: Seine
-    zweieinhalb Minuten stehen für die 42 Minuten des Laufs, und die Uhr über dem Terminal zeigt dessen Zeit.</p>
+    vom 2.&nbsp;Oktober 2026 gebaut (dca-factory 0.61.0, Opus 5.5). Journal, Ausgabe des Workers, Zeiten,
+    Tokens und Kosten stammen aus dem Lauf, und jede Ansicht des Cockpits zeigt, was <code>factory.sh</code>
+    zu diesem Zeitpunkt über das Projekt meldet. Der Discovery-Bericht, die Tool-Aufrufe und
+    Formulierungen der Session und die Bilder der App sind nachgestellt; gestartet wurde der Lauf selbst
+    aus einer Shell, mit demselben <code>factory.sh run</code>, das der Worker startet. Das Video läuft
+    nicht in Echtzeit: Die 50 Minuten des Laufs dauern eine Minute, auf der Uhr des Laufs.</p>
 
     <ul class="facts">
-      <li><b>4 von 4 geliefert</b><span>42 Minuten auf der Uhr, davon 39 Minuten Arbeit der Stages, wie die Status-Ansicht sie zählt. Keine Stage hat mit einer Frage angehalten.</span></li>
-      <li><b>1 Judge-Runde</b><span>Die dritte Story ging zurück zur Test-Stage. Ein Break-Patch hat gezeigt,
+      <li><b>4 von 4 geliefert</b><span>50 Minuten auf der Uhr, 59 Minuten Arbeit der Stages, wie die Status-Ansicht sie zählt: Die drei Reviews laufen gleichzeitig. Keine Stage hat mit einer Frage angehalten.</span></li>
+      <li><b>1 Judge-Runde</b><span>Die zweite Story ging zurück zur Test-Stage. Ein Break-Patch hat gezeigt,
       dass der verschärfte Test greift.</span></li>
-      <li><b>20,8&nbsp;Mio. Tokens · 13,98&nbsp;$</b><span>Pro Story in der Status-Ansicht, gelesen aus dem
+      <li><b>26,5&nbsp;Mio. Tokens · 22,03&nbsp;$</b><span>Pro Story im Cockpit, gelesen aus dem
       Journal des Laufs.</span></li>
     </ul>
   </div>
