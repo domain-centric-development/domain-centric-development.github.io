@@ -759,15 +759,16 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
 /plugin install dca-craft@dca-marketplace     <span class="c"># das Handwerk der Stages: Tests, Reviews, Glossar</span>
 /plugin install dca-factory@dca-marketplace
 
-<span class="c"># einmal pro Projekt</span>
+<span class="c"># die Grundlage — einmal pro Projekt, und wenn sich etwas bewegt</span>
 <span class="t">/factory-setup</span>      <span class="c"># Projektbeschreibung, git, Runner, Gate und Commit-Hook,
                     # das Stack-Profil aus dem Build erkannt — nur, was fehlt</span>
 
-<span class="c"># für jede Story</span>
+<span class="c"># der Zyklus — discover → backlog → run → decide → delivered</span>
+<span class="t">/factory-discover</span>   <span class="c"># optional: welches Problem sich zu lösen lohnt, vorgeschlagene Epics</span>
 <span class="t">/factory-backlog</span>    <span class="c"># Epic und Story, mit Kriterien, die das Gate prüfen kann</span>
 <span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
-<span class="t">/factory-status</span>     <span class="c"># was läuft, was auf euch wartet, was jede Story gekostet hat</span>
 <span class="t">/factory-decisions</span>  <span class="c"># beantworten, was ein Lauf nicht entscheiden darf, abnehmen, was ihr angesehen habt</span>
+<span class="t">/factory-status</span>     <span class="c"># was geliefert ist, was läuft, was auf euch wartet, was es gekostet hat</span>
 
 <span class="c"># unbeaufsichtigt, aus einer Shell: ein Tool-Prozess pro Stage</span>
 bash .agents/factory/factory.sh run</pre>

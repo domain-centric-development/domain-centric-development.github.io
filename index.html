@@ -752,15 +752,16 @@ dotnet test                   <span class="c"># .NET — the architecture projec
 /plugin install dca-craft@dca-marketplace     <span class="c"># the craft the stages load: tests, reviews, glossary</span>
 /plugin install dca-factory@dca-marketplace
 
-<span class="c"># once per project</span>
+<span class="c"># the foundation — once per project, and when something moves</span>
 <span class="t">/factory-setup</span>      <span class="c"># project description, git, runner, gate and commit hook,
                     # the stack profile detected from the build — only what is missing</span>
 
-<span class="c"># for every story</span>
+<span class="c"># the cycle — discover → backlog → run → decide → delivered</span>
+<span class="t">/factory-discover</span>   <span class="c"># optional: which problem is worth solving, proposed epics</span>
 <span class="t">/factory-backlog</span>    <span class="c"># the epic and the story, with criteria the gate can check</span>
 <span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
-<span class="t">/factory-status</span>     <span class="c"># what runs, what waits for you, what each story cost</span>
 <span class="t">/factory-decisions</span>  <span class="c"># answer what a run may not decide, accept what you looked at</span>
+<span class="t">/factory-status</span>     <span class="c"># what is delivered, what runs, what waits for you, what it cost</span>
 
 <span class="c"># unattended, from a shell: one tool process per stage</span>
 bash .agents/factory/factory.sh run</pre>
