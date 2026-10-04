@@ -18,7 +18,6 @@ Abhängigkeiten außer den Google Fonts.
 
 Dieses Repo ist das Pages-Repo: `origin` ist `domain-centric-development/domain-centric-development.github.io`,
 GitHub Pages baut `main` aus dem Root, CNAME und HTTPS sind eingerichtet. Ein Push auf `main` ist sofort live.
-Die Historie des früheren Platzhalter-Checkouts (`../website-placeholder`) ist hier hineingemergt.
 
 Bis zur Veröffentlichung zeigt `index.html` den Platzhalter, die Seite liegt unter `/preview.html` und `/de/`.
 Veröffentlichen ersetzt den Platzhalter:
