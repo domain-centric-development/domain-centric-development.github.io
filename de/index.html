@@ -217,6 +217,7 @@
   .card a.more + a.more { margin-top: 4px; }
   .card code { font-family: var(--mono); font-size: 0.84em; background: var(--mist); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
   .card a.more, .card p { overflow-wrap: anywhere; }
+  .card ul.plugins { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 17px; color: #39414e; }
   .card .soon { font-family: var(--display); font-size: 15.5px; font-weight: 500; color: var(--muted); }
 
   /* why AI */
@@ -321,13 +322,11 @@
       <div>
         <p class="eyebrow">Domain-Centric Development</p>
         <h1>Die Domäne im Zentrum.<br>Alles andere <span class="accent">zeigt nach innen</span>.</h1>
-        <p class="lede">Fachregeln landen in Controllern, Datenbank-Entities und Service-Klassen –
-        verstreut, teils doppelt, ohne eine Quelle der Wahrheit. Domain-Centric Architecture (DCA) legt Fachregeln in die Domäne; Web,
-        REST und Persistence liegen als Adapter außerhalb. Ein Architekturtest bricht den Build,
-        wenn Technik in die Domäne greift – in Java und .NET.</p>
-        <p class="gain"><span>Was ihr davon habt</span> ein Framework-Update reicht nicht in die Domäne,
-        der Build nennt die verletzte Grenze beim Namen, und ein Agent wird an denselben Erwartungen
-        gemessen wie ein Kollege.</p>
+        <p class="lede">Fachregeln landen verstreut in Controllern, Entities und Services.
+        Domain-Centric Architecture (DCA) legt sie in die Domäne; Web und Persistence bleiben außen, als
+        Adapter. Ein Architekturtest bricht den Build, wenn Technik hineingreift – in Java und .NET.</p>
+        <p class="gain"><span>Was ihr davon habt</span> Framework-Updates bleiben aus der Domäne,
+        der Build nennt die verletzte Grenze, und ein Agent wird gemessen wie ein Kollege.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Architekturtest einbauen</a>
           <span class="cta-break" aria-hidden="true"></span>
@@ -373,7 +372,7 @@
           <polyline class="leader" points="54.5,52.5 30,16 16,16"/>
           <text class="node-label core-name" x="13" y="18.4" text-anchor="end">domain</text>
         </svg>
-        <p class="caption">die Marke ist die Architektur: ein Bounded Context – Adapter auf der Grenze, die Domäne im Kern, ein Aufruf kommt herein, seine Antworten gehen hinaus; Nachbarkontexte mit je einem eigenen Kern</p>
+        <p class="caption">die Marke ist die Architektur: Adapter auf der Grenze, die Domäne im Kern, daneben Nachbarkontexte mit eigenem Kern</p>
       </div>
     </div>
   </div>
@@ -383,8 +382,8 @@
   <div class="wrap">
     <p class="chain">Infrastructure <span class="arrow">&rarr;</span> Adapter <span class="arrow">&rarr;</span> Application <span class="arrow">&rarr;</span> <span class="domain">Domain</span></p>
     <p>Eine Regel steht über allem: Abhängigkeiten zeigen nach innen. Die Domäne kennt kein Framework,
-    keine Datenbank, kein Protokoll – und eine ArchUnit-Suite bricht den Build, wenn das jemand vergisst.
-    Sie prüft die Struktur; ob das Modell <em>richtig</em> ist, bleibt eine Frage an Menschen.</p>
+    keine Datenbank, kein Protokoll, und der Build prüft das. Ob das Modell <em>richtig</em> ist, bleibt
+    eine Frage an Menschen.</p>
   </div>
 </div>
 
@@ -398,8 +397,8 @@
 import shop.checkout
   .<span class="bad">infrastructure.persistence</span>
   .<span class="bad">OrderRow</span>;</pre>
-        <p>Eine Entity greift nach der Tabellenzeile, in der sie zufällig gespeichert wird. Nichts hält
-        sie davon ab, und ein Jahr später lässt sich das Modell nicht mehr ohne die Datenbank ändern.</p>
+        <p>Eine Entity greift nach ihrer Tabellenzeile. Ein Jahr später lässt sich das Modell nicht mehr
+        ohne die Datenbank ändern.</p>
       </div>
       <div class="step">
         <b>2 · die Regel, die das fängt</b>
@@ -410,8 +409,8 @@ Infrastructure
 selects  classes in *.domain..
 checks   no dependency on
          *.infrastructure..</pre>
-        <p>Eine Strukturregel, die Java und .NET teilen. Sie läuft im Build, also ist der Fehler
-        ein roter Test und kein Review-Kommentar.</p>
+        <p>Eine Strukturregel, dieselbe in Java und .NET. Der Fehler wird ein roter Test, kein
+        Review-Kommentar.</p>
       </div>
       <div class="step">
         <b>3 · die Grenze</b>
@@ -421,8 +420,8 @@ checks   no dependency on
 checkout.adapter.outgoing
   .persistence
   <span class="good">JpaOrderRepository</span></pre>
-        <p>Die Application sagt, was sie braucht; der Adapter setzt es um. Die Abhängigkeit zeigt jetzt
-        nach innen, und dieselbe Regel beweist, dass das so bleibt.</p>
+        <p>Die Application nennt, was sie braucht; der Adapter setzt es um. Dieselbe Regel hält es
+        so.</p>
       </div>
     </div>
   </div>
@@ -432,38 +431,33 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Der Guide</p>
     <h2>Die Entscheidungen, vor dem Code</h2>
-    <p class="section-lede">Jedes Pattern hier wurde einmal entschieden und einmal aufgeschrieben. Der
-    Guide ist der Ort, an dem diese Entscheidungen stehen – kurz genug für einen Nachmittag, so
-    gegliedert, dass man eine Entscheidung später nachschlagen kann.</p>
+    <p class="section-lede">Jedes Pattern ist einmal entschieden und im Guide aufgeschrieben – an
+    einem Nachmittag gelesen, später zum Nachschlagen.</p>
 
     <div class="cards">
       <article class="card">
         <p class="tag">architecture/</p>
         <h3>Der Stil selbst</h3>
-        <p>Die vier Layer und was in jedem liegt · das Use-Case-Pattern · Aggregates, Value Objects und
-        die zwei Ports für Persistenz · der Regelkatalog in Prosa · Package-Vorlagen und schrittweise
-        Komplexität · in welche Richtung Abhängigkeiten laufen · Integration zwischen Kontexten.</p>
+        <p>Die vier Layer · Use Cases · Aggregates und Value Objects · die Richtung der Abhängigkeiten ·
+        Integration zwischen Kontexten · der Regelkatalog in Prosa.</p>
       </article>
       <article class="card">
         <p class="tag">topics/</p>
         <h3>Wo DCA auf einen Stack trifft</h3>
-        <p>Regeln mit ArchUnit erzwingen · Kontexte als Spring-Modulith-Module · dieselbe Architektur in
-        C#/.NET · was DCA von Clean Architecture unterscheidet · Deployment vom modularen Monolithen bis
-        zu Self-Contained Systems · Teams und Grenzen · End-User-Tests.</p>
+        <p>ArchUnit · Spring Modulith · C#/.NET · der Unterschied zu Clean Architecture · Deployment ·
+        Teams und Grenzen · End-User-Tests.</p>
       </article>
       <article class="card">
         <p class="tag">process/</p>
         <h3>Wie geliefert wird</h3>
-        <p>Eine Story vom Plan bis zur Dokumentation, mit einem Gate zwischen den Stufen – und die Vorlage,
-        um eine Architekturentscheidung so festzuhalten, dass der nächste Leser das Warum kennt, nicht nur
-        das Was.</p>
+        <p>Eine Story vom Plan bis zur Doku, mit einem Gate zwischen den Stufen · ADRs, die das Warum
+        festhalten.</p>
       </article>
       <article class="card">
         <p class="tag">Lesereihenfolge</p>
         <h3>Drei Dokumente, in dieser Reihenfolge</h3>
-        <p><b>Elements</b> für das Vokabular, <b>Rules</b> für die Vorgaben, die der Build prüft,
-        <b>Package structure</b> dafür, wo Domäne, Use Cases und Adapter liegen. Der Rest
-        ist Nachschlagen.</p>
+        <p><b>Elements</b> für das Vokabular, <b>Rules</b> für die Vorgaben, <b>Package structure</b>
+        für die Ablage. Der Rest ist Nachschlagen.</p>
       </article>
     </div>
 
@@ -531,10 +525,10 @@ checkout.adapter.outgoing
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>ein Projekt pro Bounded Context; die Grenzen trägt das Solution-Layout
           statt eines Modulsystems.</span></li>
-          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup; zwei gespiegelte End-User-Suiten
-          über dieselben 22 Szenarien, eine pro Shop.</span></li>
-          <li><b>Dieselben Regel-Ids</b><span><code>dotnet test</code>, auf ArchUnitNET. Ein Befund heißt in
-          beiden Stacks dasselbe, dazu sechs <code>DCA-NET</code>-Regeln, die es nur hier gibt.</span></li>
+          <li><b>Derselbe Shop</b><span>dieselben Routen, dasselbe Markup; beide End-User-Suiten prüfen
+          dieselben 22 Szenarien.</span></li>
+          <li><b>Dieselben Regel-Ids</b><span><code>dotnet test</code> auf ArchUnitNET, dazu sechs
+          <code>DCA-NET</code>-Regeln nur für .NET.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">Der .NET-Shop auf GitHub</a>
@@ -548,64 +542,58 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Eine Architektur, sechs Artefakte</p>
     <h2>Alles beschreibt dasselbe System</h2>
-    <p class="section-lede">Guide, Building Blocks, zwei Referenzimplementierungen, Knowledge Catalog und
-    Werkzeuge beschreiben ein System. Der Knowledge Catalog wird aus Guide und Regeln generiert, kann von
-    ihnen also nicht abweichen; den Rest in Deckung zu halten ist Pflegearbeit, keine Automatik.</p>
+    <p class="section-lede">Guide, Bibliotheken, zwei Shops, Katalog und Plugins beschreiben ein
+    System. Der Katalog wird generiert; den Rest hält Pflege in Deckung.</p>
 
     <div class="cards">
       <article class="card">
         <p class="tag">Guide</p>
         <h3>Der kompakte Guide</h3>
-        <p>Der Guide dokumentiert die Architekturentscheidungen für Kollegen und Agenten: taktisches
-        DDD, Ports &amp; Adapter, Benennung, Package-Layout und den Zweck jeder Regel.</p>
+        <p>Die Architekturentscheidungen für Kollegen und Agenten: taktisches DDD, Ports &amp; Adapter,
+        Benennung, Package-Layout, der Zweck jeder Regel.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
       </article>
       <article class="card">
         <p class="tag">Building Blocks</p>
         <h3>Marker und Regeln als Bibliotheken</h3>
-        <p>Die Bibliotheken liefern Marker-Interfaces für die Building Blocks aus DDD und Hexagonaler
-        Architektur sowie Architekturprüfungen für Java und .NET. Die Marker haben keine
-        Abhängigkeiten; Frameworks tauchen nur als Presets auf. Die Bibliotheken sind auf
-        Maven Central und NuGet verfügbar.</p>
-        <p>Ihr nutzt schon <b>jMolecules</b>? Zehn Marker überschneiden sich. Die Regeln lösen
-        Building Blocks über konfigurierte Namen auf – zeigt man sie auf
-        <code>org.jmolecules.ddd.types.*</code>, gilt der ganze Katalog für ein bestehendes Modell,
-        ohne einen einzigen Typ zu migrieren.</p>
+        <p>Marker-Interfaces für die Bausteine aus DDD und Hexagonaler Architektur, dazu die
+        Architekturregeln, auf Maven Central und NuGet. Die Marker haben keine Abhängigkeiten.</p>
+        <p>Ihr nutzt schon <b>jMolecules</b>? Die Regeln lassen sich auf
+        <code>org.jmolecules.ddd.types.*</code> zeigen – ohne einen Typ zu migrieren.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Referenzimplementierung · Java</p>
         <h3>Ein laufender Webshop</h3>
-        <p>Java 25, Spring Boot 4, acht Bounded Contexts, alle taktischen Patterns – und der Regelkatalog,
-        der den Build bricht, wenn eine Strukturregel verletzt ist.</p>
+        <p>Java 25, Spring Boot 4, acht Bounded Contexts, alle taktischen Patterns. Die Regeln laufen im
+        Build.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Referenzimplementierung · .NET</p>
         <h3>Derselbe Shop, zweimal gebaut</h3>
-        <p>ASP.NET Core, ein Projekt pro Bounded Context und dieselbe Ubiquitous Language wie
-        im Java-Sample. Er beantwortet eine Frage: lässt sich DCA auf C# übertragen, ohne die
-        Architektur zu ändern?</p>
+        <p>ASP.NET Core, ein Projekt pro Bounded Context, dieselbe Ubiquitous Language. Der Beleg, dass
+        DCA ohne Umbau auf C# passt.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge Catalog</p>
         <h3>Wissen, das mitkommt – maschinenlesbar</h3>
-        <p>Der Knowledge Catalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph, den Agenten nachschlagen und zitieren können. Über 500 typisierte Knoten enthalten
-        Regeln, Abschnitte, Templates, Pitfalls, Entscheidungen und Rezepte. Das Bundle wird aus
-        seinen Quellen generiert und ist unabhängig vom Werkzeug.</p>
+        <p>Guide, Marker und Regeln als ein Graph mit über 500 Knoten, den Agenten nachschlagen und
+        zitieren. Generiert, unabhängig vom Werkzeug.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Werkzeuge</p>
-        <h3>Drei Plugins als einfache Skill-Ordner</h3>
-        <p>Die Plugins liefern die Methode als Skills. <code>dca-core</code> beschreibt, erzeugt und
-        reviewt ein Projekt – in einem leeren Verzeichnis mit <code>/dca-new</code>, in einem
-        bestehenden mit <code>/dca-init</code>; <code>dca-factory</code> führt eine Story vom Plan bis zur
-        Dokumentation mit einem Gate zwischen den Stufen, und was es zu sehen gibt, nimmt ein Mensch ab,
-        bevor es zählt; <code>dca-craft</code> bringt TDD, Clean Code, ADRs und die Review-Perspektiven
-        ohne DCA-Annahmen mit. Claude Code, Codex und OpenCode lesen dieselben Skill-Ordner.</p>
+        <h3>Drei Plugins als Skill-Ordner, ein viertes als Cockpit</h3>
+        <ul class="plugins">
+          <li><code>dca-core</code> beschreibt, erzeugt und reviewt ein Projekt.</li>
+          <li><code>dca-factory</code> liefert Stories, mit einem Gate zwischen den Stufen.</li>
+          <li><code>dca-craft</code> bringt TDD, Clean Code, ADRs und Reviews.</li>
+          <li><code>dca-factory-cockpit</code> zeigt und steuert den <a href="#factory-run">Zyklus</a>, nur in Claude Code.</li>
+        </ul>
+        <p>Claude Code, Codex und OpenCode lesen dieselben Skill-Ordner.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
@@ -616,25 +604,18 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Warum es so gebaut ist</p>
     <h2>Architektur, an der man einen Agenten messen kann</h2>
-    <p class="section-lede">DCA ist die Architektur: eine Synthese aus Domain-Driven Design, Hexagonaler Architektur
-    und Clean Architecture; die Rule Suite prüft, ob der Code sie einhält. Domain-Centric Development
-    ist die Art, damit zu entwickeln, KI-gestützt mit dca-factory und dem Knowledge Catalog.
-    Das Ziel von Domain-Centric Development ist ein
-    deterministisches Ergebnis dort, wo eine Maschine es prüfen kann: die Codestruktur und der
-    Nachweis, dass ein Akzeptanztest rot war, bevor er grün wurde. Wie verlässlich ein Agent die
-    Domäne richtig trifft, ist noch nicht gemessen.</p>
+    <p class="section-lede">DCA ist die Architektur, eine Synthese aus Domain-Driven Design, Hexagonaler
+    und Clean Architecture. Domain-Centric Development ist die Art, damit KI-gestützt zu entwickeln.
+    Deterministisch soll sein, was eine Maschine prüfen kann: die Struktur und rot vor grün. Ob ein Agent
+    die Domäne trifft, ist noch nicht gemessen.</p>
 
     <ol class="steps">
       <li>
         <span class="step-no">01</span>
         <div>
           <h3>Die Regeln sind ausführbar und haben Ids</h3>
-          <p>119 gemeinsame Ids wie <code>DCA-USE-009</code>, als Bibliothek für beide Stacks. Java erzwingt
-          113 und markiert 6 als informativ; .NET erzwingt 119 seiner 125 – sechs sind .NET-spezifisch –,
-          markiert 5 als informativ und nennt die eine, die nicht anwendbar ist, mit Begründung. Eine
-          gemeinsame Id heißt dieselbe Absicht; was sie selektiert und prüft, steht je Plattform
-          aufgeschrieben statt als identisch angenommen. Die Zahlen sind der Katalog 0.5.0; die verlinkten
-          generierten Listen sind immer aktuell.</p>
+          <p>119 gemeinsame Ids wie <code>DCA-USE-009</code>, für Java und .NET. Dieselbe Id heißt dieselbe
+          Absicht; was jede Plattform prüft, steht in ihrer Regelliste.</p>
           <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">was die Regeln prüfen</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">Java und .NET im Vergleich</a></p>
         </div>
       </li>
@@ -642,21 +623,17 @@ checkout.adapter.outgoing
         <span class="step-no">02</span>
         <div>
           <h3>Das Wissen ist maschinenlesbar</h3>
-          <p>Der Katalog verbindet Guide-Text, Marker-Verträge und Regeln in einem Graph.
-          Agenten können den passenden Knoten nachschlagen und in ihrer Arbeit zitieren.</p>
+          <p>Der Katalog verbindet Guide, Marker und Regeln in einem Graph. Agenten schlagen darin nach und
+          zitieren.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>Die Pipeline entscheidet, nicht die Stufe</h3>
-          <p>Eine Story läuft durch Plan, Test, Build, Tidy, Judge und Document. Jede Stufe
-          übergibt eine Datei. Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und
-          lesen den Nachweis für rot vor grün aus dem Bericht des Test-Runners; ein Exit-Code allein
-          belegt nicht, dass ein Test lief. Sie prüfen außerdem die Architektur-Suite und Aussagen
-          der Dokumentation gegen das Repository. Nach drei Runden ohne Annäherung braucht es
-          ein menschliches Review, und eine Story mit einer Seite wartet auf die Abnahme durch einen
-          Menschen, bevor sie als geliefert gilt.</p>
+          <p>Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und lesen rot vor grün aus
+          dem Testbericht, nicht aus einem Exit-Code. Eine Story mit Seite gilt erst als geliefert, wenn ein
+          Mensch sie abgenommen hat.</p>
           <p style="margin-top:10px"><a href="#factory-run">einen Zyklus im Cockpit ansehen, vom ersten Thema bis zur App</a></p>
         </div>
       </li>
@@ -664,10 +641,8 @@ checkout.adapter.outgoing
         <span class="step-no">04</span>
         <div>
           <h3>Zwei Webshops, als Beleg und als Experimentierfeld</h3>
-          <p>Dieselbe Story wurde am 10. September 2026 einmal pro Stack von einem Agenten gebaut. Dabei
-          traten zwei Abweichungen zwischen den Ergebnissen auf – geschlossen wurden beide in einer Regel und
-          im Katalog, nicht im Shop-Code. Genau dafür ist das Paar da: ein Unterschied zwischen den
-          Implementierungen zeigt auf eine Lücke in den gemeinsamen Artefakten.</p>
+          <p>Ein Agent hat dieselbe Story in beiden Stacks gebaut; dabei fielen zwei Abweichungen auf.
+          Geschlossen wurden beide in Regel und Katalog, nicht im Shop-Code – dafür ist das Paar da.</p>
         </div>
       </li>
     </ol>
@@ -678,18 +653,17 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Klein anfangen</p>
     <h2>Ein Befehl, ein Architekturtest</h2>
-    <p class="section-lede">DCA einzuführen beginnt nicht mit einem Rewrite. Es beginnt mit einem Test,
-    der rot wird, wenn eine Abhängigkeit in die falsche Richtung zeigt – in einem bestehenden Projekt.</p>
+    <p class="section-lede">DCA beginnt nicht mit einem Rewrite, sondern mit einem Test, der rot wird,
+    wenn eine Abhängigkeit falsch zeigt.</p>
 
     <div class="plate">
-<pre><span class="c"># in Claude Code – dieselben Skill-Ordner funktionieren in Codex und OpenCode</span>
+<pre><span class="c"># in Claude Code; Codex und OpenCode lesen dieselben Skill-Ordner</span>
 /plugin marketplace add domain-centric-development/dca-marketplace
 /plugin install dca-core@dca-marketplace
 
 <span class="c"># in einem bestehenden Java- oder .NET-Projekt</span>
-<span class="t">/dca-init</span>        <span class="c"># fügt die Building Blocks und einen Architekturtest hinzu,
-                  # verdrahtet mit dem Layout, das dieses Projekt wirklich hat</span>
-<span class="t">/dca-new</span>         <span class="c"># oder, in einem leeren Verzeichnis: ein Projekt aus dem Generator des Stacks</span>
+<span class="t">/dca-init</span>        <span class="c"># Building Blocks und Architekturtest, passend zum vorhandenen Layout</span>
+<span class="t">/dca-new</span>         <span class="c"># oder: ein neues Projekt im leeren Verzeichnis</span>
 
 ./gradlew test-architecture   <span class="c"># Java</span>
 dotnet test                   <span class="c"># .NET – das Architekturprojekt, Debug-Build</span></pre>
@@ -700,45 +674,40 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
         <span class="step-no">01</span>
         <div>
           <h3>Anpassen, nicht überschreiben</h3>
-          <p>Marker-ähnliche Interfaces, die ein Projekt schon hat, werden per Alias übernommen oder
-          behalten und in seiner Layout-Beschreibung deklariert. Nichts wird ersetzt, weil es anders heißt.</p>
+          <p>Vorhandene Marker-Interfaces werden übernommen oder per Alias deklariert. Nichts wird ersetzt,
+          nur weil es anders heißt.</p>
         </div>
       </li>
       <li>
         <span class="step-no">02</span>
         <div>
           <h3>Regeln für das Projekt auswählen</h3>
-          <p>Regeln kommen in Sets und werden je Projekt ausgewählt. Eine Regel, die noch nicht passt,
-          wird per Id abgeschaltet, schriftlich – nicht stillschweigend ignoriert.</p>
+          <p>Regeln kommen in Sets. Was noch nicht passt, wird per Id abgeschaltet – schriftlich, nicht
+          stillschweigend.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>Dann das Modell wachsen lassen</h3>
-          <p>Aggregates, Value Objects und Use Cases kommen als Nächstes, mit den Namenskonventionen und
-          dem Glossar je Kontext, die die Regeln prüfen.</p>
+          <p>Danach Aggregates, Value Objects und Use Cases, mit Namenskonventionen und Glossar je
+          Kontext.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>Über die optionale Pipeline liefern</h3>
-          <p>Eine Story durch Plan, Test, Build, Tidy, Judge und Document, mit einem Gate zwischen den
-          Stufen, das die Testberichte des Projekts liest statt dem Wort einer Stufe zu glauben. Optional:
-          die Architektur funktioniert auch ohne.</p>
+          <p>Eine Story mit Gates durch alle Stufen. Optional: Die Architektur funktioniert auch ohne.</p>
         </div>
       </li>
     </ol>
 
     <div class="limits">
       <h3>Was die Prüfungen zeigen und was nicht</h3>
-      <p>Die Rule Suites prüfen <b>Struktur</b>: wo ein Typ liegen darf, wovon er abhängen
-      darf, wie er heißen muss und welcher Layer welchen erreichen darf. Ein grüner Lauf bedeutet,
-      dass die ausgewählten Prüfungen bestanden wurden. Die Regelkataloge dokumentieren ihren Umfang.</p>
-      <p>Ein grüner Lauf belegt nicht, dass das Domänenmodell richtig ist oder ein Use Case
-      tut, was das Business gemeint hat. Dafür braucht es Verhaltenstests, einen Fachexperten und
-      Review. Regeln, die eine fachliche Beurteilung brauchen, sind als informativ markiert.</p>
+      <p>Die Rule Suites prüfen <b>Struktur</b>: wo ein Typ liegt, wovon er abhängt, wie er heißt. Ob
+      das Modell stimmt und ein Use Case tut, was das Business meint, zeigen Verhaltenstests, Fachexperten
+      und Review.</p>
     </div>
   </div>
 </section>
@@ -747,28 +716,26 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
   <div class="wrap">
     <p class="kicker">Liefern mit der Factory</p>
     <h2>Einmal aufsetzen, dann das Backlog abarbeiten</h2>
-    <p class="section-lede">dca-factory führt eine Story nach der anderen von Plan bis Dokumentation, mit
-    einem Gate zwischen den Stages. Sie braucht drei Dinge vom Projekt: eine Beschreibung dessen, was
-    gebaut wird, ein Backlog mit Stories und ein Stack-Profil mit den Build- und Testbefehlen.
-    <code>/factory-setup</code> ergänzt nur, was fehlt.</p>
+    <p class="section-lede">dca-factory liefert eine Story nach der anderen, mit einem Gate zwischen
+    den Stufen. Sie braucht Projektbeschreibung, Backlog und Stack-Profil; <code>/factory-setup</code>
+    ergänzt, was fehlt.</p>
 
     <div class="plate">
 <pre><span class="c"># einmal pro Rechner, neben dca-core von oben</span>
-/plugin install dca-craft@dca-marketplace     <span class="c"># das Handwerk der Stages: Tests, Reviews, Glossar</span>
+/plugin install dca-craft@dca-marketplace     <span class="c"># Tests, Reviews, Glossar für die Stages</span>
 /plugin install dca-factory@dca-marketplace
 
 <span class="c"># die Grundlage — einmal pro Projekt, und wenn sich etwas bewegt</span>
-<span class="t">/factory-setup</span>      <span class="c"># Projektbeschreibung, git, Runner, Gate und Commit-Hook,
-                    # das Stack-Profil aus dem Build erkannt — nur, was fehlt</span>
+<span class="t">/factory-setup</span>      <span class="c"># Beschreibung, git, Runner, Gate, Hook, Profil – nur, was fehlt</span>
 
 <span class="c"># der Zyklus — discover → backlog → run → decide → delivered</span>
-<span class="t">/factory-discover</span>   <span class="c"># optional: welches Problem sich zu lösen lohnt, vorgeschlagene Epics</span>
-<span class="t">/factory-backlog</span>    <span class="c"># Epic und Story, mit Kriterien, die das Gate prüfen kann</span>
+<span class="t">/factory-discover</span>   <span class="c"># optional: welches Problem sich lohnt</span>
+<span class="t">/factory-backlog</span>    <span class="c"># Epic und Story mit prüfbaren Kriterien</span>
 <span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
-<span class="t">/factory-decisions</span>  <span class="c"># beantworten, was ein Lauf nicht entscheiden darf, abnehmen, was ihr angesehen habt</span>
-<span class="t">/factory-status</span>     <span class="c"># was geliefert ist, was läuft, was auf euch wartet, was es gekostet hat</span>
+<span class="t">/factory-decisions</span>  <span class="c"># Fragen beantworten, Ergebnisse abnehmen</span>
+<span class="t">/factory-status</span>     <span class="c"># was geliefert ist, läuft, wartet, kostet</span>
 
-<span class="c"># unbeaufsichtigt, aus einer Shell: ein Tool-Prozess pro Stage</span>
+<span class="c"># unbeaufsichtigt, aus der Shell</span>
 bash .agents/factory/factory.sh run</pre>
     </div>
 
@@ -777,39 +744,32 @@ bash .agents/factory/factory.sh run</pre>
         <span class="step-no">01</span>
         <div>
           <h3>Zuerst die Beschreibung</h3>
-          <p><code>/factory-setup</code> beginnt mit <code>project/</code>: Produkt, technische
-          Entscheidungen und die entworfene Domäne. <code>/dca-describe</code> schreibt sie mit euch, eine
-          Frage pro Überschrift. Jede Stage liest sie, und keine erfindet, was dort offen bleibt.</p>
+          <p><code>/dca-describe</code> schreibt <code>project/</code> mit euch: Produkt, Technik, Domäne.
+          Jede Stage liest es; keine erfindet, was offen ist.</p>
         </div>
       </li>
       <li>
         <span class="step-no">02</span>
         <div>
           <h3>Das Profil gehört dem Projekt</h3>
-          <p><code>dca-factory.profile.yaml</code> enthält die Build- und Testbefehle, einen pro Test
-          Source Set, die Architektur-Suite und den Formatter. Die Erkennung füllt es vor, ein Mensch
-          korrigiert es. Ein Lauf rät nie einen Befehl.</p>
+          <p><code>dca-factory.profile.yaml</code> hält die Build- und Testbefehle. Die Erkennung füllt es
+          vor, ein Mensch korrigiert. Ein Lauf rät nie einen Befehl.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>Ein Mensch gibt die Story frei</h3>
-          <p><code>/factory-backlog</code> schreibt eine Story mit Szenarien und fragt nach, was es nicht
-          weiß. Eine Story läuft nur mit <code>status: approved</code>. Eine Frage, die eine Stage nicht
-          beantworten darf, hält den Lauf an und wartet in <code>/factory-decisions</code>.</p>
+          <p><code>/factory-backlog</code> schreibt Stories mit Szenarien. Nur <code>status: approved</code>
+          läuft; eine offene Frage hält den Lauf an und wartet in <code>/factory-decisions</code>.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>In der Session oder unbeaufsichtigt</h3>
-          <p><code>/factory-run</code> führt die Stages in der Session aus, in Subagents. <code>factory.sh
-          run</code> startet aus einer Shell einen Prozess pro Stage, für Läufe, bei denen niemand zusieht.
-          Beide schreiben dieselben Dateien, deshalb zeigt <code>/factory-status</code> beides.
-          <code>/factory-update</code> ersetzt die installierte Pipeline. Profil, Beschreibung und Backlog bleiben,
-          wie ihr sie geschrieben habt. Liegen sie noch im alten Layout, verschiebt es sie einmal und nennt jede
-          Verschiebung.</p>
+          <p><code>/factory-run</code> läuft in der Session, <code>factory.sh run</code> unbeaufsichtigt aus
+          der Shell. Beide schreiben dieselben Dateien; <code>/factory-status</code> zeigt beides.</p>
           <p style="margin-top:10px"><a href="#factory-run">einen Lauf ansehen, gleich darunter</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-guide/blob/main/process/factory.md" rel="noopener">nachlesen, wie Stages und Gates arbeiten</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">die Plugins installieren</a></p>
         </div>
       </li>
@@ -821,14 +781,8 @@ bash .agents/factory/factory.sh run</pre>
   <div class="wrap">
     <p class="kicker">Beispiel</p>
     <h2>Ein Factory-Zyklus, gesteuert aus dem Cockpit</h2>
-    <p class="section-lede">Eine kleine Aufgabenliste vom ersten Thema bis zur laufenden App, gesteuert aus
-    <code>dca-factory-cockpit</code>: einem optionalen Plugin für Claude Code, das den Zyklus neben der
-    Session zeigt. Es liest nur, was <code>factory.sh</code> als JSON ausgibt. Ein Knopf mit ✦ schickt
-    seinen Befehl in die Session, und Claude macht dort die Arbeit: <code>/factory-discover</code> schreibt
-    den Bericht, <code>/factory-backlog</code> macht aus seinem Vorschlag ein Epic und schneidet vier
-    Stories, und ein Mensch gibt sie frei. Der Worker des Cockpits startet <code>factory.sh run</code> im
-    Hintergrund und liefert die Stories nacheinander. Der Judge schickt die zweite Story einmal zurück: Ihr
-    Test prüfte den Use Case, aber nicht die Seite.</p>
+    <p class="section-lede">Eine kleine Aufgabenliste, vom ersten Thema bis zur laufenden App.
+    Claude schreibt Bericht und Stories, ein Mensch gibt sie frei, der Worker liefert sie.</p>
 
     <figure class="shot">
       <video controls preload="none" playsinline width="1440" height="900"
@@ -838,20 +792,15 @@ bash .agents/factory/factory.sh run</pre>
       </video>
       <figcaption>2&nbsp;min&nbsp;22 &mdash; Untertitel und Session auf Deutsch, das Cockpit und die Ausgaben der Pipeline auf Englisch.</figcaption>
     </figure>
-    <p class="ai-note">Dieses Video ist KI-generiert. Claude hat es aus den Logs eines echten Factory-Laufs
-    vom 2.&nbsp;Oktober 2026 gebaut (dca-factory 0.61.0, Opus 5.5). Journal, Ausgabe des Workers, Zeiten,
-    Tokens und Kosten stammen aus dem Lauf, und jede Ansicht des Cockpits zeigt, was <code>factory.sh</code>
-    zu diesem Zeitpunkt über das Projekt meldet. Der Discovery-Bericht, die Tool-Aufrufe und
-    Formulierungen der Session und die Bilder der App sind nachgestellt; gestartet wurde der Lauf selbst
-    aus einer Shell, mit demselben <code>factory.sh run</code>, das der Worker startet. Das Video läuft
-    nicht in Echtzeit: Die 50 Minuten des Laufs dauern eine Minute, auf der Uhr des Laufs.</p>
+    <p class="ai-note">KI-generiert aus den Logs eines echten Laufs vom 2.&nbsp;Oktober 2026
+    (dca-factory 0.61.0, Opus 5.5). Zeiten, Tokens und Kosten sind echt, Session und App-Bilder
+    nachgestellt. 50 Minuten Laufzeit dauern im Video eine Minute.</p>
 
     <ul class="facts">
-      <li><b>4 von 4 geliefert</b><span>50 Minuten auf der Uhr, 59 Minuten Arbeit der Stages, wie die Status-Ansicht sie zählt: Die drei Reviews laufen gleichzeitig. Keine Stage hat mit einer Frage angehalten.</span></li>
-      <li><b>1 Judge-Runde</b><span>Die zweite Story ging zurück zur Test-Stage. Ein Break-Patch hat gezeigt,
-      dass der verschärfte Test greift.</span></li>
-      <li><b>26,5&nbsp;Mio. Tokens · 22,03&nbsp;$</b><span>Pro Story im Cockpit, gelesen aus dem
-      Journal des Laufs.</span></li>
+      <li><b>4 von 4 geliefert</b><span>50 Minuten Laufzeit; keine Stage hat mit einer Frage angehalten.</span></li>
+      <li><b>1 Judge-Runde</b><span>Die zweite Story ging einmal zurück; ein Break-Patch zeigte, dass
+      der neue Test greift.</span></li>
+      <li><b>26,5&nbsp;Mio. Tokens · 22,03&nbsp;$</b><span>Je Story im Cockpit, aus dem Journal des Laufs.</span></li>
     </ul>
   </div>
 </section>
@@ -867,11 +816,11 @@ bash .agents/factory/factory.sh run</pre>
       <li><span class="dot"></span><div><b>Ports &amp; Adapter</b>
         <span>Use Cases hinter typisierten Input Ports; Repositories, Stores und Publisher hinter Output Ports.</span></div></li>
       <li><span class="dot"></span><div><b>Architektur als Tests</b>
-        <span>Strukturregeln sind ausführbare Tests – ArchUnit in Java, ArchUnitNET in .NET, dieselben Regel-Ids. Eine Strukturverletzung bricht den Build.</span></div></li>
+        <span>ArchUnit in Java, ArchUnitNET in .NET, dieselben Regel-Ids. Eine Verletzung bricht den Build.</span></div></li>
       <li><span class="dot"></span><div><b>Ubiquitous Language</b>
-        <span>Namen kommen aus der Domäne, je Bounded Context. Die Regeln verweigern technische Suffixe an Domänentypen – <code>Helper</code>, <code>Util</code>, <code>Impl</code> – und Packages, die nach Patterns statt nach Begriffen heißen. Ein Fachwort, das zufällig technisch klingt, steht nicht auf der Liste.</span></div></li>
+        <span>Namen kommen aus der Domäne, je Bounded Context. Technische Suffixe wie <code>Helper</code>, <code>Util</code> oder <code>Impl</code> an Domänentypen lehnen die Regeln ab.</span></div></li>
       <li><span class="dot"></span><div><b>Schrittweise Komplexität</b>
-        <span>Vier Layer und eine einheitliche Tiefe im Application Layer: Use Cases liegen flach darunter oder gruppiert in fachlich benannten Features. <code>DCA-USE-014</code> akzeptiert beides und verweigert die Mischung in einem Modul – die Wahl ist Sache des Projekts, die Konsistenz wird geprüft.</span></div></li>
+        <span>Vier Layer; Use Cases flach oder in fachlichen Features gruppiert – nur nicht gemischt in einem Modul.</span></div></li>
       <li><span class="dot"></span><div><b>Pattern-Wahl je Subdomain</b>
         <span>Core Subdomains bekommen die taktischen DDD-Patterns; Supporting Subdomains dürfen einfach bleiben.</span></div></li>
     </ul>
@@ -905,10 +854,9 @@ bash .agents/factory/factory.sh run</pre>
       <a href="../" hreflang="en" lang="en">English</a>
     </nav>
     <p class="note">Domain-Centric Development ist ein offenes Projekt von Christoph Blömer.
-    Guide, Regeln und Katalog sind einfache Dateien – Markdown und Bibliotheken, die jeder Build aufrufen
-    kann; nichts davon bindet euch an einen Editor oder einen Assistenten. Gebaut und getestet mit Claude
-    Code; andere Harnesses sind noch nicht durchgängig erprobt.<br>
-    Mit KI geschrieben – überwiegend von Claude formuliert, vom Autor seit 2025 gesteuert und reviewt.</p>
+    Guide, Regeln und Katalog sind einfache Dateien und binden an keinen Editor oder Assistenten. Gebaut mit
+    Claude Code; andere Harnesses sind noch nicht durchgängig erprobt.<br>
+    Mit KI geschrieben, vom Autor gesteuert und reviewt.</p>
   </div>
 </footer>
 

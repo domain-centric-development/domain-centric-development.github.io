@@ -217,6 +217,7 @@
   .card a.more + a.more { margin-top: 4px; }
   .card code { font-family: var(--mono); font-size: 0.84em; background: var(--mist); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
   .card a.more, .card p { overflow-wrap: anywhere; }
+  .card ul.plugins { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 17px; color: #39414e; }
   .card .soon { font-family: var(--display); font-size: 15.5px; font-weight: 500; color: var(--muted); }
 
   /* why AI */
@@ -321,12 +322,11 @@
       <div>
         <p class="eyebrow">Domain-Centric Development</p>
         <h1>The dom<span class="ai" title="yes, it is in there">ai</span>n at the center.<br>Everything else <span class="accent">points inward</span>.</h1>
-        <p class="lede">Business rules end up in controllers, database entities and service classes —
-        scattered, partly duplicated, with no single source of truth. Domain-Centric Architecture (DCA) places business rules in the domain; web,
-        REST and persistence are adapters outside it. An architecture test fails the build when
-        technology reaches into the domain — in Java and .NET.</p>
-        <p class="gain"><span>What you get</span> a framework update does not reach the domain, the
-        build names the boundary that broke, and an agent is held to the same expectations as a colleague.</p>
+        <p class="lede">Business rules end up scattered across controllers, entities and services.
+        Domain-Centric Architecture (DCA) puts them in the domain; web and persistence stay outside, as
+        adapters. An architecture test fails the build when technology reaches in — in Java and .NET.</p>
+        <p class="gain"><span>What you get</span> framework updates stay out of the domain, the build
+        names the boundary that broke, and an agent is held to the same bar as a colleague.</p>
         <div class="cta-row">
           <a class="btn primary" href="#start">Add architecture checks</a>
           <span class="cta-break" aria-hidden="true"></span>
@@ -372,7 +372,7 @@
           <polyline class="leader" points="54.5,52.5 30,16 16,16"/>
           <text class="node-label core-name" x="13" y="18.4" text-anchor="end">domain</text>
         </svg>
-        <p class="caption">the mark is the architecture: one bounded context — adapters on the boundary, the domain at the core, a call coming in and its answers going out; neighbor contexts each with a core of their own</p>
+        <p class="caption">the mark is the architecture: adapters on the boundary, the domain at the core, neighbor contexts with a core of their own</p>
       </div>
     </div>
   </div>
@@ -381,9 +381,9 @@
 <div class="rule">
   <div class="wrap">
     <p class="chain">Infrastructure <span class="arrow">&rarr;</span> Adapters <span class="arrow">&rarr;</span> Application <span class="arrow">&rarr;</span> <span class="domain">Domain</span></p>
-    <p>One rule governs everything: dependencies point inward. The domain layer knows no framework,
-    no database, no protocol — and an ArchUnit test suite fails the build when anyone forgets. It
-    checks structure; whether the model is <em>right</em> stays a human question.</p>
+    <p>One rule governs everything: dependencies point inward. The domain knows no framework, no
+    database, no protocol, and the build checks it. Whether the model is <em>right</em> stays a human
+    question.</p>
   </div>
 </div>
 
@@ -397,8 +397,8 @@
 import shop.checkout
   .<span class="bad">infrastructure.persistence</span>
   .<span class="bad">OrderRow</span>;</pre>
-        <p>An entity reaches for the row it happens to be stored in. Nothing stops it, and a year later
-        the model cannot be changed without the database.</p>
+        <p>An entity reaches for its table row. A year later the model cannot change without the
+        database.</p>
       </div>
       <div class="step">
         <b>2 · the rule that catches it</b>
@@ -409,8 +409,8 @@ Infrastructure
 selects  classes in *.domain..
 checks   no dependency on
          *.infrastructure..</pre>
-        <p>A structural rule shared by Java and .NET. It runs in the build, so the mistake is
-        a red test rather than a review comment.</p>
+        <p>One structural rule, the same in Java and .NET. The mistake becomes a red test, not a
+        review comment.</p>
       </div>
       <div class="step">
         <b>3 · the boundary</b>
@@ -420,8 +420,8 @@ checks   no dependency on
 checkout.adapter.outgoing
   .persistence
   <span class="good">JpaOrderRepository</span></pre>
-        <p>The application states what it needs; the adapter implements it. The dependency now points inward,
-        and the same rule proves it stays that way.</p>
+        <p>The application states what it needs; the adapter implements it. The same rule keeps it
+        that way.</p>
       </div>
     </div>
   </div>
@@ -431,36 +431,33 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">The guide</p>
     <h2>The decisions, before the code</h2>
-    <p class="section-lede">Every pattern here was decided once and written down once. The guide is the
-    place those decisions live — short enough to read in an afternoon, structured for looking up individual decisions later.</p>
+    <p class="section-lede">Every pattern is decided once and written down in the guide — read in an
+    afternoon, looked up later.</p>
 
     <div class="cards">
       <article class="card">
         <p class="tag">architecture/</p>
         <h3>The style itself</h3>
-        <p>The four layers and what lives in each · the use-case pattern · aggregates, value objects
-        and the two persistence-shaped ports · the rule catalog in prose · package templates and
-        progressive complexity · which way dependencies run · integration between contexts.</p>
+        <p>The four layers · use cases · aggregates and value objects · which way dependencies run ·
+        integration between contexts · the rule catalog in prose.</p>
       </article>
       <article class="card">
         <p class="tag">topics/</p>
         <h3>Where it meets a stack</h3>
-        <p>Enforcing the rules with ArchUnit · contexts as Spring Modulith modules · the same
-        architecture in C#/.NET · how it differs from Clean Architecture · deployment from modular
-        monolith to self-contained systems · teams and boundaries · end-user tests.</p>
+        <p>ArchUnit · Spring Modulith · C#/.NET · how it differs from Clean Architecture · deployment ·
+        teams and boundaries · end-user tests.</p>
       </article>
       <article class="card">
         <p class="tag">process/</p>
         <h3>How work is delivered</h3>
-        <p>One story from plan to documentation, with a gate between the stages — and the template for
-        recording an architectural decision so the next reader knows why, not just what.</p>
+        <p>One story from plan to documentation, with a gate between the stages · ADRs that record the
+        why.</p>
       </article>
       <article class="card">
         <p class="tag">Reading path</p>
         <h3>Three documents, in this order</h3>
-        <p><b>Elements</b> for the vocabulary, <b>Rules</b> for the constraints the build checks,
-        <b>Package structure</b> for where each file belongs. The rest is
-        lookup.</p>
+        <p><b>Elements</b> for the vocabulary, <b>Rules</b> for the constraints, <b>Package
+        structure</b> for where files go. The rest is lookup.</p>
       </article>
     </div>
 
@@ -528,10 +525,10 @@ checkout.adapter.outgoing
         <ul class="facts">
           <li><b>ASP.NET Core</b><span>one project per bounded context, the boundaries carried by the
           solution layout instead of a module system.</span></li>
-          <li><b>The same shop</b><span>same routes, same markup; two mirrored end-user suites covering the
-          same 22 scenarios, one per shop.</span></li>
-          <li><b>The same rule ids</b><span><code>dotnet test</code>, on ArchUnitNET. A finding means
-          the same thing in both stacks, plus six <code>DCA-NET</code> rules that only exist here.</span></li>
+          <li><b>The same shop</b><span>same routes, same markup; both end-user suites check the same 22
+          scenarios.</span></li>
+          <li><b>The same rule ids</b><span><code>dotnet test</code> on ArchUnitNET, plus six
+          <code>DCA-NET</code> rules for .NET only.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn primary ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">The .NET shop on GitHub</a>
@@ -545,61 +542,58 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">One architecture, six artifacts</p>
     <h2>Everything describes the same system</h2>
-    <p class="section-lede">Guide, Building Blocks, two reference implementations, knowledge catalog and
-    tooling describe one system. The knowledge catalog is generated from the guide and the rules, so it
-    cannot drift from them; keeping the rest in step is maintenance work, not automation.</p>
+    <p class="section-lede">Guide, libraries, two shops, catalog and plugins describe one system. The
+    catalog is generated; maintenance keeps the rest in step.</p>
 
     <div class="cards">
       <article class="card">
         <p class="tag">Guide</p>
         <h3>The compact guide</h3>
-        <p>The guide documents the architectural decisions for team members and agents: tactical DDD,
-        ports &amp; adapters, naming, package layout and the purpose of each rule.</p>
+        <p>The architectural decisions for team members and agents: tactical DDD, ports &amp; adapters,
+        naming, package layout, the purpose of each rule.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-guide" rel="noopener">dca-guide</a>
       </article>
       <article class="card">
         <p class="tag">Building Blocks</p>
         <h3>Markers and rules as libraries</h3>
-        <p>The libraries provide marker interfaces for DDD and hexagonal Building Blocks, plus architecture
-        checks for Java and .NET. The markers have no dependencies; frameworks appear only as presets.
-        The libraries are available on Maven Central and NuGet.</p>
-        <p>Already on <b>jMolecules</b>? Ten markers overlap. The rules resolve building blocks by
-        configured name, so pointing them at <code>org.jmolecules.ddd.types.*</code> puts the whole
-        catalog on an existing model without migrating a type.</p>
+        <p>Marker interfaces for the DDD and hexagonal building blocks, plus the architecture rules, on
+        Maven Central and NuGet. The markers have no dependencies.</p>
+        <p>Already on <b>jMolecules</b>? Point the rules at <code>org.jmolecules.ddd.types.*</code> —
+        no type needs migrating.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-java" rel="noopener">dca-java</a>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-dotnet" rel="noopener">dca-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · Java</p>
         <h3>A working webshop</h3>
-        <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns — and the rule catalog
-        that fails the build when a structural rule is broken.</p>
+        <p>Java 25, Spring Boot 4, eight bounded contexts, full tactical patterns. The rules run in the
+        build.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-java" rel="noopener">dca-ecommerce-sample-java</a>
       </article>
       <article class="card">
         <p class="tag">Reference implementation · .NET</p>
         <h3>The same shop, built twice</h3>
-        <p>ASP.NET Core, one project per bounded context and the same Ubiquitous Language as
-        the Java sample. It exists to answer one question: does DCA transfer to C# without changing the architecture?</p>
+        <p>ASP.NET Core, one project per bounded context, the same Ubiquitous Language. The evidence
+        that DCA carries over to C# unchanged.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-ecommerce-sample-dotnet" rel="noopener">dca-ecommerce-sample-dotnet</a>
       </article>
       <article class="card">
         <p class="tag">Knowledge catalog</p>
         <h3>Knowledge that travels, machine-readable</h3>
-        <p>The knowledge catalog combines the guide text, marker contracts and rules in one cross-linked graph
-        for agents to consult and cite. Over 500 typed nodes include rules, sections, templates,
-        pitfalls, decisions and recipes. The bundle is generated from its sources and is tool-agnostic.</p>
+        <p>Guide, markers and rules as one graph of over 500 nodes for agents to look up and cite.
+        Generated, tool-agnostic.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-knowledge-catalog" rel="noopener">dca-knowledge-catalog</a>
       </article>
       <article class="card">
         <p class="tag">Tooling</p>
-        <h3>Three plugins distributed as plain skill folders</h3>
-        <p>The plugins package the method as skills. <code>dca-core</code> describes, creates and
-        reviews a project — from an empty directory with <code>/dca-new</code>, in an existing one with
-        <code>/dca-init</code>; <code>dca-factory</code> runs one story from plan to documentation with a
-        gate between stages, and a person accepts what there is to see before it counts;
-        <code>dca-craft</code> carries TDD, clean code, ADRs and the review perspectives without DCA
-        assumptions. Claude Code, Codex and OpenCode read the same skill folders.</p>
+        <h3>Three plugins as skill folders, a fourth as a cockpit</h3>
+        <ul class="plugins">
+          <li><code>dca-core</code> describes, creates and reviews a project.</li>
+          <li><code>dca-factory</code> delivers stories, with a gate between the stages.</li>
+          <li><code>dca-craft</code> carries TDD, clean code, ADRs and reviews.</li>
+          <li><code>dca-factory-cockpit</code> shows and steers the <a href="#factory-run">cycle</a>, in Claude Code only.</li>
+        </ul>
+        <p>Claude Code, Codex and OpenCode read the same skill folders.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
       </article>
     </div>
@@ -610,25 +604,18 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Why it is built this way</p>
     <h2>Architecture an agent can be held to</h2>
-    <p class="section-lede">DCA is the architecture: a synthesis of Domain-Driven Design, Hexagonal Architecture
-    and Clean Architecture, and the rule suite checks that the code keeps to it. Domain-Centric
-    Development is how software is built with it, with AI support from dca-factory and the knowledge
-    catalog. Domain-Centric Development aims for a
-    deterministic result wherever a machine can check it: code structure and evidence that an
-    acceptance test failed before it passed. How repeatably an agent gets the domain right is
-    not measured yet.</p>
+    <p class="section-lede">DCA is the architecture, a synthesis of Domain-Driven Design, Hexagonal and
+    Clean Architecture. Domain-Centric Development is how software is built with it, with AI support.
+    What a machine can check should be deterministic: the structure and red before green. Whether an
+    agent gets the domain right is not measured yet.</p>
 
     <ol class="steps">
       <li>
         <span class="step-no">01</span>
         <div>
           <h3>The rules are executable, and they have ids</h3>
-          <p>119 shared identifiers like <code>DCA-USE-009</code>, in a library for both stacks. Java
-          enforces 113 and marks 6 informational; .NET enforces 119 of its 125 — six are .NET-specific —
-          marks 5 informational and names the one that is not applicable, with the reason. A shared id means the same
-          intent; what it selects and checks is written down per platform rather than assumed
-          identical. The figures are the 0.5.0 catalog; the generated lists linked below are always
-          current.</p>
+          <p>119 shared ids like <code>DCA-USE-009</code>, for Java and .NET. A shared id means the same
+          intent; what each platform checks is in its rule list.</p>
           <p style="margin-top:10px"><a class="ext" href="https://github.com/domain-centric-development/dca-java/blob/main/RULES.md" rel="noopener">see what the rules check</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-dotnet/blob/main/RULES.md" rel="noopener">compare Java and .NET coverage</a></p>
         </div>
       </li>
@@ -636,20 +623,17 @@ checkout.adapter.outgoing
         <span class="step-no">02</span>
         <div>
           <h3>The knowledge is machine-readable</h3>
-          <p>The catalog connects guide text, marker contracts and rules in a graph.
-          Agents can look up the relevant node and cite it in their work.</p>
+          <p>The catalog connects guide, markers and rules in one graph. Agents look things up in it and
+          cite them.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>The pipeline decides, not the stage</h3>
-          <p>A story runs through plan, test, build, tidy, judge and document, with a file
-          handed over at each stage. Gate scripts require an end-user test per acceptance criterion
-          and read red-before-green evidence from the test runner’s report; an exit code alone does
-          not show that a test ran. They also check the architecture suite and documentation claims
-          against the repository. Three rounds without convergence require human review, and a story
-          with a page waits for a person's acceptance before it counts as delivered.</p>
+          <p>Gate scripts require an end-user test per acceptance criterion and read red before green from
+          the test report, not from an exit code. A story with a page counts as delivered only once a person
+          has accepted it.</p>
           <p style="margin-top:10px"><a href="#factory-run">watch one cycle in the cockpit, from the first topic to the app</a></p>
         </div>
       </li>
@@ -657,10 +641,8 @@ checkout.adapter.outgoing
         <span class="step-no">04</span>
         <div>
           <h3>Two webshops, as evidence and as the experiment field</h3>
-          <p>The same story was built once per stack, by an agent, on 10 September 2026. It surfaced two
-          divergences between the two results — and both were closed in a rule and in the catalog, not in the
-          shop code. That is what the pair is for: a difference between the implementations points at a gap in
-          the shared artifacts.</p>
+          <p>An agent built the same story in both stacks, and two divergences showed. Both were closed in
+          a rule and the catalog, not in the shop code — that is what the pair is for.</p>
         </div>
       </li>
     </ol>
@@ -671,18 +653,17 @@ checkout.adapter.outgoing
   <div class="wrap">
     <p class="kicker">Start small</p>
     <h2>One command, one architecture test</h2>
-    <p class="section-lede">Adopting DCA does not begin with a rewrite. It begins with one test that
-    fails when a dependency points the wrong way — in an existing project.</p>
+    <p class="section-lede">DCA does not begin with a rewrite, but with one test that fails when a
+    dependency points the wrong way.</p>
 
     <div class="plate">
-<pre><span class="c"># in Claude Code — the same skill folders work in Codex and OpenCode</span>
+<pre><span class="c"># in Claude Code; Codex and OpenCode read the same skill folders</span>
 /plugin marketplace add domain-centric-development/dca-marketplace
 /plugin install dca-core@dca-marketplace
 
 <span class="c"># on an existing Java or .NET project</span>
-<span class="t">/dca-init</span>        <span class="c"># adds the Building Blocks and one architecture test,
-                  # wired to the layout this project actually has</span>
-<span class="t">/dca-new</span>         <span class="c"># or, in an empty directory: a project from the stack's own generator</span>
+<span class="t">/dca-init</span>        <span class="c"># Building Blocks and an architecture test, fitted to the existing layout</span>
+<span class="t">/dca-new</span>         <span class="c"># or: a new project in an empty directory</span>
 
 ./gradlew test-architecture   <span class="c"># Java</span>
 dotnet test                   <span class="c"># .NET — the architecture project, Debug build</span></pre>
@@ -693,45 +674,40 @@ dotnet test                   <span class="c"># .NET — the architecture projec
         <span class="step-no">01</span>
         <div>
           <h3>Adapt, do not overwrite</h3>
-          <p>Marker-like interfaces a project already has are aliased or kept and declared through its
-          layout description. Nothing is replaced because it has a different name.</p>
+          <p>Existing marker interfaces are kept or aliased. Nothing is replaced just because it has a
+          different name.</p>
         </div>
       </li>
       <li>
         <span class="step-no">02</span>
         <div>
           <h3>Select the rules for the project</h3>
-          <p>Rules come in sets and are selected per project. A rule that does not fit yet is switched
-          off by id, in writing — not quietly ignored.</p>
+          <p>Rules come in sets. One that does not fit yet is switched off by id — in writing, not
+          quietly.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>Then grow the model</h3>
-          <p>Aggregates, value objects and use cases come next, with the naming conventions and the
-          per-context glossary the rules check.</p>
+          <p>Then aggregates, value objects and use cases, with naming conventions and a glossary per
+          context.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>Deliver through the optional pipeline</h3>
-          <p>One story through plan, test, build, tidy, judge and document, with a gate between the
-          stages that reads the project's own test reports rather than a stage's word for it. Optional:
-          the architecture works without it.</p>
+          <p>One story through every stage, with gates. Optional: the architecture works without it.</p>
         </div>
       </li>
     </ol>
 
     <div class="limits">
       <h3>What the checks do and do not show</h3>
-      <p>The rule suites check <b>structure</b>: where a type may live, what it may depend on,
-      how it must be named and which layer may reach which. A green run means the selected checks
-      passed; the rule catalogs document their scope.</p>
-      <p>A green run does not establish that the domain model is correct or that a use case
-      does what the business meant. Those need behaviour tests, a domain expert and review. Rules
-      that need judgement are marked as informational.</p>
+      <p>The rule suites check <b>structure</b>: where a type lives, what it depends on, how it is
+      named. Whether the model is correct and a use case does what the business meant needs behaviour
+      tests, a domain expert and review.</p>
     </div>
   </div>
 </section>
@@ -740,28 +716,26 @@ dotnet test                   <span class="c"># .NET — the architecture projec
   <div class="wrap">
     <p class="kicker">Deliver with the factory</p>
     <h2>Set it up once, then deliver story by story</h2>
-    <p class="section-lede">dca-factory runs one story at a time from plan to documentation, with a gate
-    between the stages. It needs three things from a project: a description of what is to be built, a
-    backlog of stories, and a stack profile with the build and test commands. <code>/factory-setup</code>
-    adds only what is missing.</p>
+    <p class="section-lede">dca-factory delivers one story at a time, with a gate between the stages.
+    It needs a project description, a backlog and a stack profile; <code>/factory-setup</code> adds what
+    is missing.</p>
 
     <div class="plate">
 <pre><span class="c"># once per machine, next to dca-core from above</span>
-/plugin install dca-craft@dca-marketplace     <span class="c"># the craft the stages load: tests, reviews, glossary</span>
+/plugin install dca-craft@dca-marketplace     <span class="c"># tests, reviews, glossary for the stages</span>
 /plugin install dca-factory@dca-marketplace
 
 <span class="c"># the foundation — once per project, and when something moves</span>
-<span class="t">/factory-setup</span>      <span class="c"># project description, git, runner, gate and commit hook,
-                    # the stack profile detected from the build — only what is missing</span>
+<span class="t">/factory-setup</span>      <span class="c"># description, git, runner, gate, hook, profile — only what is missing</span>
 
 <span class="c"># the cycle — discover → backlog → run → decide → delivered</span>
-<span class="t">/factory-discover</span>   <span class="c"># optional: which problem is worth solving, proposed epics</span>
-<span class="t">/factory-backlog</span>    <span class="c"># the epic and the story, with criteria the gate can check</span>
+<span class="t">/factory-discover</span>   <span class="c"># optional: which problem is worth solving</span>
+<span class="t">/factory-backlog</span>    <span class="c"># epic and story with checkable criteria</span>
 <span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
-<span class="t">/factory-decisions</span>  <span class="c"># answer what a run may not decide, accept what you looked at</span>
-<span class="t">/factory-status</span>     <span class="c"># what is delivered, what runs, what waits for you, what it cost</span>
+<span class="t">/factory-decisions</span>  <span class="c"># answer questions, accept results</span>
+<span class="t">/factory-status</span>     <span class="c"># what is delivered, running, waiting, what it cost</span>
 
-<span class="c"># unattended, from a shell: one tool process per stage</span>
+<span class="c"># unattended, from a shell</span>
 bash .agents/factory/factory.sh run</pre>
     </div>
 
@@ -770,38 +744,32 @@ bash .agents/factory/factory.sh run</pre>
         <span class="step-no">01</span>
         <div>
           <h3>The description comes first</h3>
-          <p><code>/factory-setup</code> starts with <code>project/</code>: the product, the technical
-          decisions and the designed domain. <code>/dca-describe</code> writes them with you, one question
-          per heading. Every stage reads them, and none invents what they leave open.</p>
+          <p><code>/dca-describe</code> writes <code>project/</code> with you: product, technology,
+          domain. Every stage reads it; none invents what it leaves open.</p>
         </div>
       </li>
       <li>
         <span class="step-no">02</span>
         <div>
           <h3>The profile belongs to the project</h3>
-          <p><code>dca-factory.profile.yaml</code> holds the build and test commands, one per test source
-          set, the architecture suite and the formatter. Detection prefills it and a person corrects it.
-          A run never guesses a command.</p>
+          <p><code>dca-factory.profile.yaml</code> holds the build and test commands. Detection prefills it,
+          a person corrects it. A run never guesses a command.</p>
         </div>
       </li>
       <li>
         <span class="step-no">03</span>
         <div>
           <h3>A person releases the story</h3>
-          <p><code>/factory-backlog</code> writes a story with scenarios and asks what it does not know. A
-          story runs only with <code>status: approved</code>. A question a stage may not answer stops the
-          run and waits in <code>/factory-decisions</code>.</p>
+          <p><code>/factory-backlog</code> writes stories with scenarios. Only <code>status: approved</code>
+          runs; an open question stops the run and waits in <code>/factory-decisions</code>.</p>
         </div>
       </li>
       <li>
         <span class="step-no">04</span>
         <div>
           <h3>In a session or unattended</h3>
-          <p><code>/factory-run</code> runs the stages in the session, in subagents. <code>factory.sh
-          run</code> starts one process per stage from a shell, for runs nobody watches. Both write the
-          same files, so <code>/factory-status</code> shows either. <code>/factory-update</code> replaces
-          the installed pipeline. Profile, description and backlog stay as written; in a project with an older
-          layout it moves them into place once and prints every move.</p>
+          <p><code>/factory-run</code> runs in the session, <code>factory.sh run</code> unattended from a
+          shell. Both write the same files; <code>/factory-status</code> shows either.</p>
           <p style="margin-top:10px"><a href="#factory-run">watch one run below</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-guide/blob/main/process/factory.md" rel="noopener">read how the stages and gates work</a> · <a class="ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">install the plugins</a></p>
         </div>
       </li>
@@ -813,14 +781,8 @@ bash .agents/factory/factory.sh run</pre>
   <div class="wrap">
     <p class="kicker">Example</p>
     <h2>One factory cycle, steered from the cockpit</h2>
-    <p class="section-lede">A small task list, from the first topic to the running app, steered from
-    <code>dca-factory-cockpit</code>: an optional plugin for Claude Code that shows the cycle beside the
-    session. It reads only what <code>factory.sh</code> prints as JSON. A button marked ✦ sends its command
-    into the session, and Claude does the work there: <code>/factory-discover</code> writes the report,
-    <code>/factory-backlog</code> turns its proposal into an epic and cuts four stories, and a person
-    releases them. The cockpit's worker starts <code>factory.sh run</code> in the background and delivers
-    the stories one after the other. The judge sends the second story back once: its test checked the use
-    case, not the page.</p>
+    <p class="section-lede">A small task list, from the first topic to the running app.
+    Claude writes the report and the stories, a person releases them, the worker delivers them.</p>
 
     <figure class="shot">
       <video controls preload="none" playsinline width="1440" height="900"
@@ -830,20 +792,15 @@ bash .agents/factory/factory.sh run</pre>
       </video>
       <figcaption>2&nbsp;min&nbsp;22 &mdash; the stories and the app are in German, as the product is.</figcaption>
     </figure>
-    <p class="ai-note">This video is AI-generated, built by Claude from the logs of a real factory run on
-    2&nbsp;October 2026 (dca-factory 0.61.0, Opus 5.5). The run's journal, the worker's output, times, tokens
-    and costs are the run's, and every cockpit view shows what <code>factory.sh</code> reports for the
-    project at that point. The discovery report, the session's tool calls and wording and the app stills
-    are reconstructed; the run itself was started from a shell with the same <code>factory.sh run</code>
-    the worker starts. The video is not real time: the 50 minutes of the run take one minute, on the
-    run's own clock.</p>
+    <p class="ai-note">AI-generated from the logs of a real run on 2&nbsp;October 2026
+    (dca-factory 0.61.0, Opus 5.5). Times, tokens and costs are real; the session and the app stills are
+    reconstructed. 50 minutes of run time take one minute in the video.</p>
 
     <ul class="facts">
-      <li><b>4 of 4 delivered</b><span>50 minutes on the clock, 59 minutes of stage work as the status view counts it: the three reviews run at once. No stage stopped with a question.</span></li>
-      <li><b>1 judge round</b><span>The second story went back to the test stage; a break patch proved the
-      stronger test bites.</span></li>
-      <li><b>26.5&nbsp;M tokens · $22.03</b><span>Per story in the cockpit, read from the run&rsquo;s own
-      journal.</span></li>
+      <li><b>4 of 4 delivered</b><span>50 minutes of run time; no stage stopped with a question.</span></li>
+      <li><b>1 judge round</b><span>The second story went back once; a break patch proved the new test
+      bites.</span></li>
+      <li><b>26.5&nbsp;M tokens · $22.03</b><span>Per story in the cockpit, from the run&rsquo;s journal.</span></li>
     </ul>
   </div>
 </section>
@@ -860,11 +817,11 @@ bash .agents/factory/factory.sh run</pre>
       <li><span class="dot"></span><div><b>Ports &amp; adapters</b>
         <span>Use cases behind typed input ports; repositories, stores and publishers behind output ports.</span></div></li>
       <li><span class="dot"></span><div><b>Architecture as tests</b>
-        <span>Structural rules are executable tests — ArchUnit in Java, ArchUnitNET in .NET, same rule ids. A structural violation fails the build.</span></div></li>
+        <span>ArchUnit in Java, ArchUnitNET in .NET, same rule ids. A violation fails the build.</span></div></li>
       <li><span class="dot"></span><div><b>Ubiquitous language</b>
-        <span>Names come from the domain, per bounded context. The rules refuse technical suffixes on domain types — <code>Helper</code>, <code>Util</code>, <code>Impl</code> — and packages named after patterns instead of concepts. A domain word that happens to sound technical is not on that list.</span></div></li>
+        <span>Names come from the domain, per bounded context. The rules refuse technical suffixes like <code>Helper</code>, <code>Util</code> or <code>Impl</code> on domain types.</span></div></li>
       <li><span class="dot"></span><div><b>Progressive complexity</b>
-        <span>Four layers, and one consistent depth inside the application layer: use cases sit flat below it, or grouped into domain-named features. <code>DCA-USE-014</code> accepts either and refuses a mix within one module — the choice is the project's, the consistency is checked.</span></div></li>
+        <span>Four layers; use cases flat or grouped into domain-named features — just not mixed within one module.</span></div></li>
       <li><span class="dot"></span><div><b>Pattern choice per subdomain</b>
         <span>Core subdomains get the full tactical toolbox; supporting ones may stay simple.</span></div></li>
     </ul>
@@ -898,10 +855,9 @@ bash .agents/factory/factory.sh run</pre>
       <a href="de/" hreflang="de" lang="de">Deutsch</a>
     </nav>
     <p class="note">Domain-Centric Development is an open project by Christoph Bloemer.
-    The guide, the rules and the catalog are plain files — markdown, and libraries any build can call — so
-    nothing here binds you to one editor or one assistant. Built and tested with Claude Code; other harnesses
-    are not yet exercised end to end.<br>
-    Written with AI assistance — drafted mainly by Claude, directed and reviewed by the author since 2025.</p>
+    The guide, the rules and the catalog are plain files and bind you to no editor or assistant. Built with
+    Claude Code; other harnesses are not yet exercised end to end.<br>
+    Written with AI assistance, directed and reviewed by the author.</p>
   </div>
 </footer>
 
