@@ -1,7 +1,7 @@
 # domaincentric.dev
 
 Statische Landing Page für Domain-Centric Development in zwei Sprachen. Kein Build, keine
-Abhängigkeiten außer den Google Fonts.
+Abhängigkeiten; die Schriften liegen unter `assets/fonts/`, kein Aufruf geht an einen fremden Server.
 
 ## Dateien
 
@@ -12,6 +12,8 @@ Abhängigkeiten außer den Google Fonts.
 | `de/index.html` | deutsche Seite unter `/de/`; beide tragen `hreflang`-Alternates und den Sprachwechsel in Nav und Footer |
 | `assets/` | `og-image.png` (1200 × 630), die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) und das Factory-Video `factory-cockpit-demo.mp4` (DE) und `factory-cockpit-demo-en.mp4` (EN) mit Postern (Quellen: `../dca-demo/cockpit-demo.html` und `cockpit-demo-en.html`, KI-generiert aus dem Lauf vom 02.10.2026; neu aufnehmen mit `record.mjs`, dann H.264 mit ffmpeg); die älteren `factory-run-demo*` sind nicht mehr verlinkt |
 | `favicon.svg`, `CNAME` | Marke und Domain für GitHub Pages |
+| `imprint.html`, `privacy.html`, `de/impressum.html`, `de/datenschutz.html` | Impressum und Datenschutzerklärung, von jeder Seite und vom Platzhalter verlinkt; die deutsche Fassung ist verbindlich. Erklärt: keine Cookies, keine Zählung, nichts von fremden Servern — wer ein Embed, ein Analytics-Skript oder fremde Schriften einbaut, ändert beide Erklärungen mit |
+| `assets/fonts/` | Space Grotesk, Newsreader, JetBrains Mono als WOFF2 (latin, latin-ext) mit `fonts.css` und den OFL-Lizenzen |
 | `robots.txt` | hält `/preview.html` und `/de/` aus Suchmaschinen, solange der Platzhalter live ist |
 
 ## Veröffentlichung

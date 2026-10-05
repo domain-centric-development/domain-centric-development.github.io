@@ -6,9 +6,7 @@
 <title>Domain-Centric Development</title>
 <meta name="description" content="Domain-Centric Development — coming soon.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
@@ -26,6 +24,9 @@
   .mark { width: min(30vw, 152px); height: auto; overflow: visible; }
   h1 { margin-top: 0.52em; font-size: clamp(26px, 5vw, 40px); font-weight: 700; letter-spacing: -0.8px; color: #ffffff; }
   h1 .tld { color: #148f96; }
+  .legal { position: fixed; left: 0; right: 0; bottom: 20px; display: flex; justify-content: center; gap: 22px; }
+  .legal a { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: 13px; color: rgba(232,234,240,0.55); text-decoration: none; }
+  .legal a:hover { color: #148f96; }
   p { margin-top: 14px; font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: rgba(232,234,240,0.55); }
 </style>
 </head>
@@ -44,6 +45,11 @@
   <h1>domaincentric<span class="tld">.dev</span></h1>
   <p>coming soon</p>
 </main>
+<footer class="legal">
+  <a href="imprint.html">imprint</a>
+  <a href="privacy.html">privacy</a>
+  <a href="de/impressum.html" hreflang="de" lang="de">impressum</a>
+</footer>
 <script>
 // The mark at work: a call runs in along a dashed line whose pattern travels towards the core,
 // the domain takes it up and lights while doing so, and answers on one or two outgoing ports
