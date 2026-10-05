@@ -591,7 +591,7 @@ checkout.adapter.outgoing
           <li><code>dca-core</code> beschreibt, erzeugt und reviewt ein Projekt.</li>
           <li><code>dca-factory</code> liefert Stories, mit einem Gate zwischen den Stufen.</li>
           <li><code>dca-craft</code> bringt TDD, Clean Code, ADRs und Reviews.</li>
-          <li><code>dca-factory-cockpit</code> zeigt und steuert den <a href="#factory-run">Zyklus</a>, nur in Claude Code.</li>
+          <li><code>dca-factory-cockpit</code> zeigt und steuert den <a href="#factory-run">Ablauf</a>, nur in Claude Code.</li>
         </ul>
         <p>Claude Code, Codex und OpenCode lesen dieselben Skill-Ordner.</p>
         <a class="more ext" href="https://github.com/domain-centric-development/dca-marketplace" rel="noopener">dca-marketplace</a>
@@ -634,7 +634,7 @@ checkout.adapter.outgoing
           <p>Gate-Skripte verlangen einen End-User-Test je Akzeptanzkriterium und lesen rot vor grün aus
           dem Testbericht, nicht aus einem Exit-Code. Eine Story mit Seite gilt erst als geliefert, wenn ein
           Mensch sie abgenommen hat.</p>
-          <p style="margin-top:10px"><a href="#factory-run">einen Zyklus im Cockpit ansehen, vom ersten Thema bis zur App</a></p>
+          <p style="margin-top:10px"><a href="#factory-run">einen Ablauf im Cockpit ansehen, vom ersten Thema bis zur App</a></p>
         </div>
       </li>
       <li>
@@ -728,7 +728,7 @@ dotnet test                   <span class="c"># .NET – das Architekturprojekt,
 <span class="c"># die Grundlage — einmal pro Projekt, und wenn sich etwas bewegt</span>
 <span class="t">/factory-setup</span>      <span class="c"># Beschreibung, git, Runner, Gate, Hook, Profil – nur, was fehlt</span>
 
-<span class="c"># der Zyklus — discover → backlog → run → decide → delivered</span>
+<span class="c"># der Ablauf — discover → backlog → run → decide → delivered</span>
 <span class="t">/factory-discover</span>   <span class="c"># optional: welches Problem sich lohnt</span>
 <span class="t">/factory-backlog</span>    <span class="c"># Epic und Story mit prüfbaren Kriterien</span>
 <span class="t">/factory-run</span>        <span class="c"># plan → test → build → tidy → judge → document</span>
@@ -780,7 +780,7 @@ bash .agents/factory/factory.sh run</pre>
 <section id="factory-run" class="teaser">
   <div class="wrap">
     <p class="kicker">Beispiel</p>
-    <h2>Ein Factory-Zyklus, gesteuert aus dem Cockpit</h2>
+    <h2>Ein Factory-Ablauf, gesteuert aus dem Cockpit</h2>
     <p class="section-lede">Eine kleine Aufgabenliste, vom ersten Thema bis zur laufenden App.
     Claude schreibt Bericht und Stories, ein Mensch gibt sie frei, der Worker liefert sie.</p>
 
