@@ -40,8 +40,8 @@ printf 'User-agent: *\nAllow: /\n' > robots.txt
   erklärt den Unterschied zu Domain-Centric Development.
 - **Gestaltung.** Farben und Schriften nach `../branding/README.md`: Teal `#148f96`, Space Grotesk,
   Newsreader, JetBrains Mono. Die Marke ist der Hex Graph ohne Speichen.
-- **Zahlen sind geprüft.** 113 gemeinsame Regel-Ids (Java: 108 erzwungen, 5 informativ), .NET 119
-  (112 erzwungen, 4 informativ, 3 nicht anwendbar) aus `rules.json` der Bibliotheken; „über 500 Knoten“
+- **Zahlen sind geprüft.** 121 gemeinsame Regel-Ids (Java: 115 erzwungen, 6 informativ), .NET 127
+  (121 erzwungen, 5 informativ, 1 nicht anwendbar) aus `rules.json` der Bibliotheken (05.10.2026); „über 500 Knoten“
   aus `manifest.json` des Katalog-Bundles (545). Vor einer Änderung der Zahl die Quelle lesen.
 - **Layout.** Die Kopfzeile steht fest (`.topbar`, `position: sticky`); Sprungziele haben `scroll-margin-top`, damit
   eine Überschrift nicht unter ihr landet. Unter 960 px verschwinden die Abschnittslinks, unter 380 px schrumpft der Header, damit
