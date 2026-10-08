@@ -7,32 +7,24 @@ Abhängigkeiten; die Schriften liegen unter `assets/fonts/`, kein Aufruf geht an
 
 | Pfad | Inhalt |
 |---|---|
-| `index.html` | die Live-Seite unter `https://domaincentric.dev/`, heute der Platzhalter |
-| `preview.html` | englische Seite, bis zur Veröffentlichung unter `/preview.html`; kanonisch schon `https://domaincentric.dev/` |
+| `index.html` | englische Seite, live unter `https://domaincentric.dev/` |
 | `de/index.html` | deutsche Seite unter `/de/`; beide tragen `hreflang`-Alternates und den Sprachwechsel in Nav und Footer |
 | `assets/` | `og-image.png` (1200 × 630), die vier Shop-Screenshots (Java/.NET, Desktop/Mobil, WebP) und das Factory-Video `factory-cockpit-demo.mp4` (DE) und `factory-cockpit-demo-en.mp4` (EN) mit Postern (Quellen: `../dca-demo/cockpit-demo.html` und `cockpit-demo-en.html`, KI-generiert aus dem Lauf vom 02.10.2026; neu aufnehmen mit `record.mjs`, dann H.264 mit ffmpeg); die älteren `factory-run-demo*` sind nicht mehr verlinkt |
 | `favicon.svg`, `CNAME` | Marke und Domain für GitHub Pages |
 | `imprint.html`, `privacy.html`, `de/impressum.html`, `de/datenschutz.html` | Impressum und Datenschutzerklärung, von jeder Seite und vom Platzhalter verlinkt; die deutsche Fassung ist verbindlich. Erklärt: keine Cookies, keine Zählung, nichts von fremden Servern — wer ein Embed, ein Analytics-Skript oder fremde Schriften einbaut, ändert beide Erklärungen mit |
 | `assets/fonts/` | Space Grotesk, Newsreader, JetBrains Mono als WOFF2 (latin, latin-ext) mit `fonts.css` und den OFL-Lizenzen |
-| `robots.txt` | hält `/preview.html` und `/de/` aus Suchmaschinen, solange der Platzhalter live ist |
+| `robots.txt` | erlaubt alles |
+| `placeholder.html` | der frühere Platzhalter, nicht mehr verlinkt |
 
 ## Veröffentlichung
 
 Dieses Repo ist das Pages-Repo: `origin` ist `domain-centric-development/domain-centric-development.github.io`,
 GitHub Pages baut `main` aus dem Root, CNAME und HTTPS sind eingerichtet. Ein Push auf `main` ist sofort live.
 
-Bis zur Veröffentlichung zeigt `index.html` den Platzhalter, die Seite liegt unter `/preview.html` und `/de/`.
-Veröffentlichen ersetzt den Platzhalter:
-
-```bash
-git mv index.html placeholder.html
-git mv preview.html index.html
-printf 'User-agent: *\nAllow: /\n' > robots.txt
-```
 
 ## Pflege
 
-- **Zwei Sprachen, eine Quelle.** Jede Textänderung geht in `preview.html` und `de/index.html` und wird hier
+- **Zwei Sprachen, eine Quelle.** Jede Textänderung geht in `index.html` und `de/index.html` und wird hier
   committet. Ein Push auf `main` veröffentlicht sie; gepusht wird nur auf Wunsch.
 - **Stimme.** Prosa folgt `../branding/voice.md`: konkrete Subjekte (DCA, Guide, Tests, Plugins), kein
   Projekt-„wir“, „you/ihr“ nur für Nutzen und Einstieg, Fachbegriffe englisch, keine Sprüche. Der Hero

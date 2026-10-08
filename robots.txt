@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: /preview.html
-Disallow: /de/
+Allow: /

@@ -5,25 +5,17 @@ Pages from `domain-centric-development/domain-centric-development.github.io`, br
 only, no build step. `README.md` carries the maintenance rules (languages, voice, design, checked figures, layout);
 read it before a change.
 
-## Live page and preview in one repository
+## Pages
 
 | File | What it is |
 |---|---|
-| `index.html` | the live page at `https://domaincentric.dev/` — today the placeholder |
-| `preview.html` | the English site, reachable at `/preview.html` until it is published |
+| `index.html` | the English site at `https://domaincentric.dev/` |
 | `de/index.html` | the German site at `/de/` |
-| `robots.txt` | keeps `/preview.html` and `/de/` out of search engines while the placeholder is live |
+| `robots.txt` | allows everything |
+| `placeholder.html` | the former placeholder, no longer linked |
 
-Every text change goes into `preview.html` and `de/index.html`, in both languages, and is committed here.
-Pushing `main` publishes it at once; push only when asked. Publishing the site replaces the placeholder:
-
-```bash
-git mv index.html placeholder.html
-git mv preview.html index.html
-printf 'User-agent: *\nAllow: /\n' > robots.txt
-```
-
-The pages carry their final addresses already (canonical, `hreflang`, the language switch), so nothing else changes.
+Every text change goes into `index.html` and `de/index.html`, in both languages, and is committed here.
+Pushing `main` publishes it at once; push only when asked.
 
 ## Principles of the DCA project (apply here too)
 
